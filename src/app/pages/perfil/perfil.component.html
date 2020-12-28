@@ -1,0 +1,300 @@
+
+
+<h4>Mi pefil</h4>
+
+<hr>
+
+
+<!-- =====================
+== FOTOGRAFIA
+======================= --> 
+<div class="row animated fadeIn faster m-3 d-flex justify-content-center">
+
+  <div class="col-md-6">
+
+    <div class="card border-0">
+            
+      <h5>Fotografía</h5>
+      
+
+      <div class="d-flex justify-content-center">
+        <img *ngIf="!fotoTemporal" [src]="usuario.fotoUrl" [alt]="usuario.nombre" class="w-50 h-50" >
+        <img *ngIf="fotoTemporal" [src]="fotoTemporal" [alt]="usuario.nombre" class="w-50 h-50" >
+      </div>
+
+      <br>
+   
+      <input type="file"
+          (change)="changeFoto( $event?.target?.files[0] )">
+
+      <hr>
+
+      <button class="btn btn-success btn-block"
+          [disabled]="!fotoSubir"
+          (click)="uploadFoto()">
+          Subir fotografía
+      </button>
+
+  
+    </div>
+  
+  </div>
+  
+
+</div>
+<!-- =====================
+== FIN FOTOGRAFIA
+======================= --> 
+
+
+<!-- =====================
+== FORMULARIO ALUMNO
+======================= --> 
+
+<div class="row animated fadeIn faster m-3">
+    <div class="col">
+
+      <h5>Mis Datos</h5>
+      <br>
+      <h6>Datos Personales</h6>
+
+      <form [formGroup]="usuarioForm"
+            (submit)="guardar()"
+            autocomplete="off">
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Nombre</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="nombre"
+                   readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Apellido Paterno</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="apellido_paterno"
+                   readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Apellido Materno</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="apellido_materno"
+                   readonly>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Sexo</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="sexo"
+                   readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Fecha de nacimiento</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="fecha_nacimiento"
+                   readonly>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-md-8">
+            <label>Domicilio</label>
+            <input type="text" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'domicilio') }"
+                   placeholder="Domicilio"
+                   formControlName="domicilio">
+             <div *ngIf="campoNoValido( usuarioForm, 'domicilio')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'domicilio') }}
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Teléfono</label>
+            <input type="text" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'telefono') }"
+                   placeholder="Teléfono"
+                   formControlName="telefono">
+             <div *ngIf="campoNoValido( usuarioForm, 'telefono')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'telefono') }}
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Correo electrónico</label>
+            <input type="text" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'email') }"
+                   placeholder="ejemplo@ejemplo.com"
+                   formControlName="email">
+            <div *ngIf="campoNoValido( usuarioForm, 'email')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'email') }}
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Número de Seguro Social</label>
+            <input type="text" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'numero_seguro') }"
+                   placeholder="Número de Seguro social"
+                   formControlName="numero_seguro">
+             <div *ngIf="campoNoValido( usuarioForm, 'numero_seguro')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'numero_seguro') }}
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <h6>Datos Académicos</h6>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>No. de control</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="numero_control"
+                   readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Carrera</label> 
+            <input type="text" 
+                   class="form-control"
+                   formControlName="carrera"
+                   readonly> 
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Semestre</label>
+            <input type="number"
+                   class="form-control"
+                   formControlName="semestre"
+                   readonly>
+            <div class="invalid-feedback">
+              Mensjae errpr
+            </div>   
+          </div>
+          <div class="form-group col-md-6">
+            <label>Creditos Acumulados</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="creditos_acumulados"
+                   readonly>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="checkbox"
+                   formControlName="terminos">
+            <label class="form-check-label">
+              He leído y acepto la <a href="">Política de privacidad</a> al respecto del tratamiento de datos personales.
+            </label>
+            <div *ngIf="campoNoValido( usuarioForm, 'terminos')" >
+              <small class="text-danger">Debe aceptar la Política de privacidad.</small>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-primary btn-block"
+                    type="submit">
+            <i class="fas fa-save mr-2"></i>Guardar    
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+</div>
+<!-- =====================
+== FIN FORMULARIO ALUMNO
+======================= --> 
+
+
+<div class="row animated fadeIn faster m-3">
+
+  <div class="col-md-6">
+
+      <h5>Cambiar contraseña</h5>
+
+           
+          <form [formGroup]="changePasswordForm"
+                autocomplete="off"
+                (submit)="cambiarPassword()">
+
+                  <div class="form-group">
+                      <label>Contraseña anterior</label>
+                      <input type="password"
+                          class="form-control"
+                          [ngClass]="{'is-invalid': campoNoValido( changePasswordForm, 'old_password') }"
+                          placeholder="Contraseña anterior"
+                          formControlName="old_password">
+                          <div *ngIf="campoNoValido( changePasswordForm, 'old_password')" class="invalid-feedback">
+                              {{ mensajesError( changePasswordForm, 'old_password') }}
+                          </div>
+                  </div>
+      
+      
+                  <div class="form-group">
+                      <label>Nueva contraseña</label>
+                      <input type="password"
+                          class="form-control"
+                          [ngClass]="{'is-invalid': campoNoValido( changePasswordForm, 'new_password') }"
+                          placeholder="Nueva contraseña"
+                          formControlName="new_password">
+                          <div *ngIf="campoNoValido( changePasswordForm, 'new_password')" class="invalid-feedback">
+                              {{ mensajesError( changePasswordForm, 'new_password') }}
+                          </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Confirmar contraseña</label>
+                      <input type="password"
+                          class="form-control"
+                          [ngClass]="{'is-invalid': campoNoValido( changePasswordForm, 'confirm_password') }"
+                          placeholder="Confirmar contraseña"
+                          formControlName="confirm_password">
+                          <div *ngIf="campoNoValido( changePasswordForm, 'confirm_password')" class="invalid-feedback">
+                              {{ mensajesError( changePasswordForm, 'confirm_password') }}
+                          </div>
+                  </div>
+
+                  <hr>
+
+                  <div class="form-group text-center">
+                      <button type="submit"
+                              class="btn btn-primary btn-block">
+                      Cambiar contraseña  
+                      </button>
+                  </div>
+
+              </form>
+
+      
+  </div>
+
+</div>
+
+
+
+
