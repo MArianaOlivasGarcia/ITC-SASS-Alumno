@@ -1,5 +1,6 @@
 import { environment } from '../../environments/environment';
 import { Carrera } from './carrera.model';
+import { Proyecto } from './proyecto.model';
 
 const base_url = environment.base_url;
 
@@ -18,20 +19,30 @@ export class Usuario {
         public creditos_acumulados: number,
         public _id?: string,
         public foto?: string,
+        public firma?: string,
         public email?: string,
         public telefono?: string,
         public domicilio?: string,
         public numero_seguro?: string,
-        public terminos?: string,
-        public video?: string,
-        public examen?: string,
-        public online?: string,
+        public proyecto?: Proyecto,
+        public terminos?: boolean,
+        public video?: boolean,
+        public examen?: boolean,
+        public online?: boolean,
         public password?: string,
     ){}
 
     get fotoUrl(): string {
         if ( this.foto ) {
             return `${ base_url }/upload/alumnos/${ this.foto }`;
+        } else {
+            return `${ base_url }/upload/no-image/no-image`;
+        }
+    }
+
+    get firmaUrl(): string {
+        if ( this.foto ) {
+            return `${ base_url }/upload/firma/alumnos/${ this.firma }`;
         } else {
             return `${ base_url }/upload/no-image/no-image`;
         }

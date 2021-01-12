@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { ChangePasswordForm } from '../interfaces/change-password-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { Usuario } from '../models/usuario.model';
+import { WebSocketService } from './websocket.service';
 
 const base_url = environment.base_url;
 
@@ -19,6 +20,7 @@ export class AuthService {
   public usuario: Usuario;
 
   constructor( private http: HttpClient,
+               private webSocketService: WebSocketService,
                private router: Router ) { }
 
 
@@ -56,10 +58,12 @@ export class AuthService {
                 creditos_acumulados,
                 _id,
                 foto,
+                firma,
                 email,
                 telefono,
                 domicilio,
                 numero_seguro,
+                proyecto,
                 terminos,
                 video,
                 examen,
@@ -75,10 +79,12 @@ export class AuthService {
                                     creditos_acumulados,
                                     _id,
                                     foto,
+                                    firma,
                                     email,
                                     telefono,
                                     domicilio,
                                     numero_seguro,
+                                    proyecto,
                                     terminos,
                                     video,
                                     examen,
@@ -94,6 +100,7 @@ export class AuthService {
 
 
   login( formData: LoginForm ): Observable<any>{
+    this.webSocketService.conectar();
     return this.http.post(`${ base_url }/alumno/login`, formData )
                   .pipe(
                     tap( (resp: any) => {
@@ -107,6 +114,7 @@ export class AuthService {
 
 
   logout(): void {
+    this.webSocketService.desconectar();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('menu');
     this.router.navigateByUrl('/login');

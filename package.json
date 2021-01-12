@@ -21,8 +21,11 @@
     "@angular/router": "~11.0.1",
     "bootstrap": "^4.5.3",
     "jquery": "^3.5.1",
+    "ngx-extended-pdf-viewer": "^7.3.2",
+    "ngx-socket-io": "^3.2.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
+    "signature_pad": "^3.0.0-beta.4",
     "sweetalert2": "^10.12.6",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

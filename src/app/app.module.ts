@@ -1,11 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
+import { registerLocaleData } from '@angular/common';
+
+import localEsMx from '@angular/common/locales/es-MX';
+
+registerLocaleData( localEsMx, 'es-mx');
+
 
 @NgModule({
   declarations: [
@@ -16,9 +22,9 @@ import { AuthModule } from './auth/auth.module';
     BrowserModule,
     AppRoutingModule,
     PagesModule,
-    AuthModule
+    AuthModule,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-mx' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

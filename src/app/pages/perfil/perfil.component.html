@@ -4,6 +4,16 @@
 
 <hr>
 
+<!-- =====================
+== ALERTA
+======================= --> 
+<div class="alert alert-info" role="alert">
+  Debes completar tu perfil.
+</div>
+<!-- =====================
+== FIN ALERTA
+======================= --> 
+
 
 <!-- =====================
 == FOTOGRAFIA
@@ -231,7 +241,11 @@
 ======================= --> 
 
 
-<div class="row animated fadeIn faster m-3">
+
+<!-- =====================
+== CAMBIAR CONTRASEÑA
+======================= -->
+<!-- <div class="row animated fadeIn faster m-3">
 
   <div class="col-md-6">
 
@@ -293,8 +307,41 @@
       
   </div>
 
+</div> -->
+
+<!-- =====================
+== FIN CAMBIAR CONTRASEÑA
+======================= -->
+
+
+
+
+
+<app-signature-pad></app-signature-pad>
+
+
+
+
+
+
+
+<div class="row animated fadeIn faster m-3">
+  <div class="col">
+
+    <h5>Datos de mi Programa</h5>
+    <br>
+
+
+    <!-- =====================
+    == ALERTA
+    ======================= --> 
+    <div class="alert alert-warning" role="alert">
+     Aun no tienes un proyecto asignado. 
+      <a routerLink="/dashboard/proyectos" class="alert-link">Ir a Banco de Proyectos.</a>
+    </div>
+    <!-- =====================
+    == FIN ALERTA
+    ======================= --> 
+
+  </div>
 </div>
-
-
-
-

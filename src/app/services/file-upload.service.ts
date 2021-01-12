@@ -30,4 +30,20 @@ export class FileUploadService {
   }
 
 
+
+  actualizarFirma( archivo: File,  id: string  ): Observable<any>{
+
+    const url = `${ base_url }/upload/firma/alumnos/${ id }`;
+
+    const formData: FormData = new FormData();
+    formData.append('firma', archivo, archivo.name );
+
+    return this.http.put( url, formData, { reportProgress: true } )
+              .pipe(
+                catchError( error => of(false) )
+              );
+
+  }
+
+
 }
