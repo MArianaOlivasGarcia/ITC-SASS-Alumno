@@ -9,6 +9,8 @@ export class ModalProyectoService {
 
   constructor() { }
 
+  
+
   abrirModal() {
     this.modal = true;
   }

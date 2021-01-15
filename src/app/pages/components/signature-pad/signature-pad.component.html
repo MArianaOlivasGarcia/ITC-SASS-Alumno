@@ -1,30 +1,41 @@
 
     
 
-            
-
-
 <div class="row m-3 ">
 
+    <h5>Mi firma Digital</h5>
 
-    <div class="col-12">
-        <div class="row">
-            <h5>Mi Firma Digital</h5> 
-        </div>
+    <div class="col-md-12 text-center" *ngIf="usuario.firma">
+            <img [src]="usuario.firmaUrl" class="border" width="200" height="200">
     </div>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-md-6">
-                <img [src]="usuario.firmaUrl" class="border" width="200" height="200">
-            </div>
-            <div class="col-md-6">
-                <canvas #sPad width="200" height="200" class="border"></canvas>
-                <br>
-                <button class="btn btn-info mr-1" (click)="undo()">Undo</button>
-                <button class="btn btn-info mr-1" (click)="limpiar()">Limpiar</button>
-                <button class="btn btn-success" (click)="guardar()">Guardar</button>
-            </div>    
+
+
+    <div class="col-md-12 p-0 mt-3" *ngIf="!usuario.firma">
+        <div class="alert alert-danger" *ngIf="showMessage" role="alert">
+            <p class="mb-0">No has firmado.</p>
         </div>
+        <div class="alert alert-info" role="alert" *ngIf="!showMessage">
+            <p class="mb-0">Firma dentro del recuadro, ocupando la mayor parte del área disponible.</p>
+        </div>
+        
+    </div>   
+
+    <div class="col text-center p-0 mt-3" [hidden]="usuario.firma">
+        <canvas 
+            #sPad width="200" 
+            height="200" 
+            class="border"
+            [class.border-danger]="showMessage">
+        </canvas>
+        <br>
+        <button class="btn btn-info mr-1" (click)="undo()">Undo</button>
+        <button class="btn btn-info mr-1" (click)="limpiar()">Limpiar</button>
+        <button class="btn btn-success" (click)="guardar()">Guardar</button>
     </div>
 
 </div>
+            
+
+
+
+            

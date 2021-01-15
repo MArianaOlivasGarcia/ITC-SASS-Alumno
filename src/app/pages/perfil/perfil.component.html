@@ -7,9 +7,14 @@
 <!-- =====================
 == ALERTA
 ======================= --> 
-<div class="alert alert-info" role="alert">
-  Debes completar tu perfil.
+<div class="row animated fadeIn faster mt-3" >
+  <div class="col-12">
+      <div class="alert alert-info">
+          <p class="m-0">Debes completar tu perfil.</p>
+      </div> 
+  </div>
 </div>
+
 <!-- =====================
 == FIN ALERTA
 ======================= --> 
@@ -187,7 +192,7 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
             <label>Semestre</label>
             <input type="number"
                    class="form-control"
@@ -197,11 +202,25 @@
               Mensjae errpr
             </div>   
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
+            <label>Periodo</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="periodo"
+                   readonly>
+          </div>
+          <div class="form-group col-md-3">
             <label>Creditos Acumulados</label>
             <input type="text" 
                    class="form-control"
                    formControlName="creditos_acumulados"
+                   readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Porcentaje Avance</label>
+            <input type="text" 
+                   class="form-control"
+                   formControlName="porcentaje_avance"
                    readonly>
           </div>
         </div>
@@ -323,25 +342,42 @@
 
 
 
+ 
 
-
-<div class="row animated fadeIn faster m-3">
+<!-- <div class="row animated fadeIn faster m-3">
   <div class="col">
 
     <h5>Datos de mi Programa</h5>
-    <br>
+    <br> -->
 
 
     <!-- =====================
     == ALERTA
     ======================= --> 
-    <div class="alert alert-warning" role="alert">
+    <!-- <div class="alert alert-warning" role="alert" *ngIf="!usuario.proyecto">
      Aun no tienes un proyecto asignado. 
       <a routerLink="/dashboard/proyectos" class="alert-link">Ir a Banco de Proyectos.</a>
     </div>
+
+
+    <div class="card" *ngIf="usuario.proyecto">
+      <div class="card-body">
+        <div class="modal-body">
+
+          <ul class="list-group text-dark mb-3">
+            <li class="list-group-item active">{{usuario.proyecto.nombre}}</li>
+            <li class="list-group-item">{{usuario.proyecto.dependencia.nombre}}</li>
+            <li class="list-group-item">{{usuario.proyecto.objetivo}}</li>
+            <li class="list-group-item">{{usuario.proyecto.actividades}}</li>
+            <li class="list-group-item">{{usuario.proyecto.periodo}}</li>
+          </ul>
+
+        </div>
+      </div>
+    </div> -->
     <!-- =====================
     == FIN ALERTA
     ======================= --> 
-
+<!-- 
   </div>
-</div>
+</div> -->

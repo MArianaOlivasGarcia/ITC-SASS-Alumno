@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PdfViewerComponent implements OnInit {
 
-  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
+  @Input() pdfSrc: string;
 
   constructor() { }
 

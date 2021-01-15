@@ -14,10 +14,11 @@ import Swal from 'sweetalert2';
 })
 export class SignaturePadComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('sPad', {static: true}) signaturePadElement;
+  @ViewChild('sPad', {static: true})signaturePadElement;
   signaturePad: any;
 
   usuario: Usuario;
+  showMessage: boolean = false;
 
   constructor( private uploadService: FileUploadService,
                private authService: AuthService ) {
@@ -47,12 +48,31 @@ export class SignaturePadComponent implements OnInit, AfterViewInit {
 
   guardar(): void{
     // Obtengo Base64
+
+    const data: [] = this.signaturePad.toData();
+    if ( data.length == 0 ) { 
+      this.showMessage = true;
+      return;
+    } 
+
+    this.showMessage = false;
     const dataURL = this.signaturePad.toDataURL();
     const imageName = 'firma.png';
     const imageBlob = this.dataURLtoBlob(dataURL);
     const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
-    
-    this.uploadService.actualizarFirma( imageFile, this.usuario._id )
+
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "Una vez guardada tu firma no podras cambiarla.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, guardar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.uploadService.actualizarFirma( imageFile, this.usuario._id )
         .subscribe( resp => {
           this.signaturePad.clear();
           this.usuario.firma = resp.nombreFoto;
@@ -62,6 +82,10 @@ export class SignaturePadComponent implements OnInit, AfterViewInit {
             icon: 'success'
           })
         })
+
+      }
+    })
+
 
   }
 

@@ -23,7 +23,7 @@ export class BusquedaService {
                                 proyecto.objetivo,
                                 proyecto.actividades,
                                 proyecto.periodo,
-                                proyecto.lugar_desempeño,
+                                proyecto.lugar_desempeno,
                                 proyecto.modalidad,
                                 proyecto.horario,
                                 proyecto.tipo,

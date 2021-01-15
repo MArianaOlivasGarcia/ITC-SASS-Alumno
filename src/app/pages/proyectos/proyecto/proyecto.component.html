@@ -25,8 +25,12 @@
 <!-- =====================
 == ALERT
 ======================= -->   
-<div class="alert alert-info mt-3" role="alert">
-  En caso de no encontrar la Dependecia comuniquese con el Departamento de Gestión y Vinculación.
+<div class="row animated fadeIn faster mt-3">
+  <div class="col-12">
+      <div class="alert alert-info">
+          <p class="m-0">En caso de no encontrar la Dependencia comuniquese con el <strong>Departamento de Gestión y Vinculación</strong>.</p>
+      </div> 
+  </div>
 </div>
 <!-- =====================
 == FIN ALERT
@@ -51,7 +55,7 @@
             autocomplete="off">
 
         <div class="form-row">
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-6">
             <label>Nombre del Proyecto</label>
             <input type="text" 
                    class="form-control" 
@@ -60,68 +64,6 @@
                    formControlName="nombre">
             <div *ngIf="campoNoValido('nombre')" class="invalid-feedback">
               {{ mensajesError('nombre') }}
-            </div>
-          </div>
-          <div class="form-group col-md-4">
-            <label>Objetivo</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('objetivo') }"
-                   placeholder="Objetivo"
-                   formControlName="objetivo">
-            <div *ngIf="campoNoValido('objetivo')" class="invalid-feedback">
-              {{ mensajesError('objetivo') }}
-            </div>
-          </div>
-          <div class="form-group col-md-4">
-            <label>Actividades</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('actividades') }"
-                   placeholder="Actividades"
-                   formControlName="actividades">
-            <div *ngIf="campoNoValido('actividades')" class="invalid-feedback">
-              {{ mensajesError('actividades') }}
-            </div>
-          </div>
-        </div>
-
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>Periodo</label>
-                <input type="text" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': campoNoValido('periodo') }"
-                       placeholder="Periodo"
-                       formControlName="periodo">
-                <div *ngIf="campoNoValido('periodo')" class="invalid-feedback">
-                  {{ mensajesError('periodo') }}
-                </div>
-              </div>
-          <div class="form-group col-md-6">
-            <label>Lugar</label>
-            <input type="text" 
-                   class="form-control" 
-                   placeholder="Lugar"
-                   [ngClass]="{'is-invalid': campoNoValido('lugar') }"
-                   formControlName="lugar">
-            <div *ngIf="campoNoValido('lugar')" class="invalid-feedback">
-              {{ mensajesError('lugar') }}
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label>Modalidad</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('modalidad') }"
-                   placeholder="Modalidad"
-                   formControlName="modalidad">
-            <div *ngIf="campoNoValido('modalidad')" class="invalid-feedback">
-              {{ mensajesError('modalidad') }}
             </div>
           </div>
           <div class="form-group col-md-6">
@@ -139,10 +81,76 @@
               {{ mensajesError('dependencia') }}
             </div>    
           </div>
+          
         </div>
+
 
         <div class="form-row">
           <div class="form-group col-md-6">
+            <label>Objetivo</label>
+            <textarea
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('objetivo') }"
+                   placeholder="Objetivo"
+                   rows="3"
+                   formControlName="objetivo"></textarea>
+            <div *ngIf="campoNoValido('objetivo')" class="invalid-feedback">
+              {{ mensajesError('objetivo') }}
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Actividades a desarrollar</label>
+            <textarea 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('actividades') }"
+                   placeholder="Actividades a desarrollar"
+                   rows="3"
+                   formControlName="actividades"></textarea>
+            <div *ngIf="campoNoValido('actividades')" class="invalid-feedback">
+              {{ mensajesError('actividades') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Periodo</label>
+                <input type="text" 
+                       class="form-control" 
+                       [ngClass]="{'is-invalid': campoNoValido('periodo') }"
+                       placeholder="Periodo"
+                       formControlName="periodo">
+                <div *ngIf="campoNoValido('periodo')" class="invalid-feedback">
+                  {{ mensajesError('periodo') }}
+                </div>
+              </div>
+          <div class="form-group col-md-4">
+            <label>Lugar de desempeño</label>
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Lugar de desempeño"
+                   [ngClass]="{'is-invalid': campoNoValido('lugar_desempeno') }"
+                   formControlName="lugar_desempeno">
+            <div *ngIf="campoNoValido('lugar_desempeno')" class="invalid-feedback">
+              {{ mensajesError('lugar_desempeno') }}
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Modalidad</label>
+            <input type="text" 
+                   class="form-control" 
+                   [ngClass]="{'is-invalid': campoNoValido('modalidad') }"
+                   placeholder="Modalidad"
+                   formControlName="modalidad">
+            <div *ngIf="campoNoValido('modalidad')" class="invalid-feedback">
+              {{ mensajesError('modalidad') }}
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
             <label>Tipo</label>
             <input type="text" 
                    class="form-control" 
@@ -153,7 +161,7 @@
               {{ mensajesError('tipo') }}
             </div>   
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <label>Horario</label>
             <input type="text" 
                    class="form-control" 
@@ -169,12 +177,6 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-              <label>Apoyo economico</label>
-              <input type="text" 
-                     class="form-control" 
-                     placeholder="Apoyo economico">
-            </div> 
-            <div class="form-group col-md-6">
               <label>Responsable</label>
               <input type="text" 
                      class="form-control" 
@@ -185,7 +187,31 @@
                 {{ mensajesError('responsable') }}
               </div> 
             </div>           
+            <div class="form-group col-md-6">
+              <label>Puesto del responsable</label>
+              <input type="text" 
+                     class="form-control" 
+                     [ngClass]="{'is-invalid': campoNoValido('puesto_responsable') }"
+                     placeholder="Puesto del responsable"
+                     formControlName="puesto_responsable">
+              <div *ngIf="campoNoValido('puesto_responsable')" class="invalid-feedback">
+                {{ mensajesError('responsable') }}
+              </div> 
+            </div>
+          </div>
 
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <div class="form-check">
+                <input class="form-check-input" 
+                      type="checkbox" 
+                      id="gridCheck"
+                      formControlName="apoyo_economico">
+                <label class="form-check-label" for="gridCheck">
+                  Apoyo económico
+                </label>
+              </div>
+            </div>
           </div>
 
           

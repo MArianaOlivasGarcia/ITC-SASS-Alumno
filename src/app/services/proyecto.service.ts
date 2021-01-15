@@ -36,7 +36,7 @@ export class ProyectoService {
                                       proyecto.objetivo,
                                       proyecto.actividades,
                                       proyecto.periodo,
-                                      proyecto.lugar_desempeño,
+                                      proyecto.lugar_desempeno,
                                       proyecto.modalidad,
                                       proyecto.horario,
                                       proyecto.tipo,
@@ -80,17 +80,7 @@ export class ProyectoService {
     return this.http.put( url, proyecto );
   }
 
-  asignarProyecto( proyecto: Proyecto ): Observable<any> {
-
-    const url =  `${ base_url }/alumno`;
-    const token = localStorage.getItem('accessToken') || '';
-
-    return this.http.patch( url, proyecto, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-  }
+  
 
 
 
@@ -102,9 +92,8 @@ export class ProyectoService {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).pipe(
-      map( (resp: { status: boolean, proyecto: Proyecto }) => resp.proyecto )
-    )
+    });
+    
   }
 
 }

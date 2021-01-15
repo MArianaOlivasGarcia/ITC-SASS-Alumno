@@ -3,6 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { WebSocketService } from '../services/websocket.service';
 
 @Injectable({
   providedIn: 'root'

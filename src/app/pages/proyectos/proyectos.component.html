@@ -1,19 +1,9 @@
 
-<!-- =====================
-== MODAL DETALLE PROYECTO
-======================= -->
-<app-detalle-proyecto *ngIf="proyectoSeleccionado" [proyecto] ="proyectoSeleccionado"></app-detalle-proyecto>
-<!-- =====================
-== FIN MODAL DETALLE PROYECTO
-======================= -->
 
-<h4>Banco de Proyectos</h4>
-
-<hr>
 <!-- =====================
 == BUSCAR
 ======================= -->
- <div class="row animated fadeIn faster">
+<!--  <div class="row animated fadeIn faster">
     <div class="col-12">
       <input type="text"
             class="form-control"
@@ -21,16 +11,82 @@
             (keyup)="buscar( inputTermino.value )"
             #inputTermino >
     </div>
-</div> 
+</div>  -->
 <!-- =====================
 == FIN BUSCAR
 ======================= -->
 
 
+
+
+
+
+
+<h5>Banco de Proyectos</h5>
+<hr>
+
+
+<!-- =====================
+== MODAL DETALLE PROYECTO
+======================= -->
+<app-detalle-proyecto *ngIf="proyectoSeleccionado" 
+                [proyecto] ="proyectoSeleccionado"
+                (emitirSolicitud)="addSolicitud($event)"></app-detalle-proyecto>
+<!-- =====================
+== FIN MODAL DETALLE PROYECTO
+======================= -->
+
+
+<!-- =====================
+== MENSAJE SOLICITUD PENDIENTE
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.pendiente">
+    <div class="col-12">
+        <div class="alert alert-warning">
+            <p class="m-0">Tu solicitud de proyecto se ha enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta. Puedes ver tu solicitud <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">aquí.</a></p>
+        </div> 
+    </div>
+  </div>
+<!-- =====================
+== FIN MENSAJE SOLICITUD PENDIENTE
+======================= -->
+<!-- =====================
+== MENSAJE SOLICITUD RECHAZADA
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.rechazado">
+    <div class="col-12">
+        <div class="alert alert-danger">
+            <p class="m-0">Tu solicitud de proyecto se ha sido <strong>rechazada</strong>. Puedes ver más detalles <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">aquí.</a></p>
+            <p class="m-0"><strong>Motivo:</strong> {{ solicitud?.error?.motivo }}</p>
+            <p class="m-0"><strong>Observación:</strong> {{ solicitud?.error?.observacion }}</p>
+        </div> 
+    </div>
+  </div>
+<!-- =====================
+== FIN MENSAJE SOLICITUD RECHAZADA
+======================= -->
+
+<!-- =====================
+== MENSAJE SOLICITUD ACEPTADA
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.aceptado">
+    <div class="col-12">
+        <div class="alert alert-success">
+            <p class="m-0">Tu solicitud de proyecto se ha sido <strong>aceptada</strong>. Puedes ver más detalles <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">aquí.</a></p>
+        </div> 
+    </div>
+  </div>
+<!-- =====================
+== FIN MENSAJE SOLICITUD ACEPTADA
+======================= -->
+
+
+
+  
 <!-- =====================
 == BOTÓN AGREGAR/EDITAR
 ======================= -->
-<div class="row text-right mt-3" *ngIf="!proyectoPersonal">
+<div class="row text-right mt-3" *ngIf="!this.solicitud">
     <div class="col">
         <button class="btn btn-primary"
             routerLink="/dashboard/proyecto/nuevo">
@@ -45,98 +101,80 @@
 
 
 <!-- =====================
-== PROYECTO PERSONAL
+== TABLA PROYECTOS
 ======================= -->
-<div *ngIf="proyectoPersonal" > 
+<div class="row mb-5 mt-3" *ngIf="!cargando && proyectos.length > 0">
+    <div class="col-12">
+        
+                <h5>Total de solicitudes (numero)</h5>
 
-<h5 class="mt-3">Mi Proyecto Personal</h5>
 
-<div class="card border-primary mb-3" style="max-width: 18rem;">
-  
-    <div class="card-body">
-          <h5 class="card-title">Nombre</h5>
-          <h6 class="card-title">Dependencia</h6>
-          <p class="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut iusto culpa, exercitationem ipsum doloremque provident a iure quisquam repellendus molestias quibusdam ab, eveniet eum doloribus, explicabo minima. Eveniet, explicabo dicta?
-          </p>
-          <div class="text-right">
-            <a class="btn btn-info mr-1"
-                [routerLink]="['/dashboard/proyecto/', proyectoPersonal._id]">
-                <i class="fa fa-pen"></i>
-            </a>
-            <a class="btn btn-info"
-                (click)="abrirModal(proyectoPersonal)">
-                Ver más detalles
-            </a>
-          </div>
-    </div>  
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                        <thead class="text-primary">
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Dependencia</th>
+                            <th scope="col">Encargado</th>
+                            <th scope="col">Objetivo</th>
+                            <th scope="col">Periodo</th>
+                            <th scope="col">Ver</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="manita" *ngFor="let proyecto of proyectos">                           
+                                <td>{{proyecto.nombre}}</td>
+                                <td>{{proyecto.dependencia.nombre}}</td>
+                                <td>{{proyecto.responsable}}</td>
+                                <td>{{proyecto.objetivo}}</td>
+                                <td>{{proyecto.periodo }}</td>
+                                <td><button class="btn btn-sm btn-info" (click)="abrirModal(proyecto)">Ver</button></td>
+                          </tr>
+                        </tbody>
+                    </table>    
+                </div>
+
+                <div class="text-center pt-3" >
+                    <button (click)="cambiarPagina( -5 )" class="btn btn-secondary mr-2">Anterior</button>
+                    <button (click)="cambiarPagina( 5 )" class="btn btn-secondary">Siguiente</button>
+                </div>
     
-  </div>
+    </div>
 </div>
 <!-- =====================
-== FIN PROYECTO PERSONAL
+== FIN TABLA PROYECTOS
 ======================= -->
 
-
-
-<!-- =====================
-== CARDS PROYECTOS
-======================= -->
-<h5  *ngIf="!cargando && proyectos.length > 0">Total de proyectos ({{totalProyectos}})</h5>
-
-<div class="card-columns">
-    <div class="card mt-3" *ngFor="let proyecto of proyectos">
-        <div class="card-body">
-          <h5 class="card-title">{{ proyecto.nombre }}</h5>
-          <h6 class="card-title">{{ proyecto.dependencia.nombre }}</h6>
-          <h6 class="card-title">{{ proyecto.responsable }}</h6>
-          <p class="card-text">
-              {{ proyecto.objetivo }}
-          </p>
-          <div class="text-right">
-            <a class="btn btn-info"
-                (click)="abrirModal(proyecto)">
-                Ver más detalles
-            </a>
-          </div>
-        </div>
-      </div>
-</div>
-<!-- =====================
-== FIN CARDS PROYECTOS
-======================= -->
 
 
 <!-- =====================
 == MENSAJE CARGANDO
 ======================= -->
 <div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
-    <div class="col-12">
-        <div class="alert alert-info text-center">
-            <h4 class="alert-heading">Cargando</h4>
-            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
-            <p class="mb-0">Espere por favor</p>
-        </div> 
-    </div>
+  <div class="col-12">
+      <div class="alert alert-info text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+          <p class="mb-0">Espere por favor</p>
+      </div> 
+  </div>
 </div>
 <!-- =====================
 == FIN MENSAJE CARGANDO
 ======================= -->
 
-  
+
 <!-- =====================
 == MENSAJE NO HAY REGISTROS
 ======================= -->
 <div class="row animated fadeIn faster mt-3" *ngIf="!cargando && proyectos.length == 0">
-    <div class="col-12">
-        <div class="alert alert-warning text-center">
-            <h4 class="alert-heading">No hay registros</h4>
-            <i class="fa fa-exclamation fa-2x"></i>
-        </div> 
-    </div>
+  <div class="col-12">
+      <div class="alert alert-warning text-center">
+          <h4 class="alert-heading">No hay registros</h4>
+          <i class="fa fa-exclamation fa-2x"></i>
+      </div> 
+  </div>
 </div>
 <!-- =====================
 == FIN MENSAJE NO HAY REGISTROS
 ======================= -->
-
-

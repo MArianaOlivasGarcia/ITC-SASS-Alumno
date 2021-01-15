@@ -1,9 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Proyecto } from 'src/app/models/proyecto.model';
-import { Usuario } from 'src/app/models/usuario.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { Solicitud } from 'src/app/models/solicitud-proyecto.model';
 import { ModalProyectoService } from 'src/app/services/modal-proyecto.service';
-import { ProyectoService } from 'src/app/services/proyecto.service';
+import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,27 +13,56 @@ import Swal from 'sweetalert2';
 export class DetalleProyectoComponent implements OnInit {
 
   @Input() proyecto: Proyecto;
-  public usuario: Usuario;
+  @Output() emitirSolicitud = new EventEmitter<Solicitud>();
+  public solicitud: Solicitud;
 
   constructor( public modalService: ModalProyectoService,
-               private proyectoService: ProyectoService,
-               private authService: AuthService ) { 
-    this.usuario = this.authService.usuario;
-  }
+               private solicitudService: SolicitudProyectoService ) { 
+ }
 
   ngOnInit(): void {
   }
 
-  seleccionar() {
-    this.proyectoService.asignarProyecto( this.proyecto )
-          .subscribe( resp => {
-            this.usuario.proyecto = resp.alumno.proyecto;
-            Swal.fire({
-              title: 'Guardado',
-              text: 'Proyecto seleccionado con éxito.',
-              icon: 'success'
-            })
+
+  addNuevaSolicitud(solicitud: Solicitud) {
+    this.emitirSolicitud.emit(solicitud);
+  }
+
+
+  postular() {
+
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: '¿Estas seguro que deseas postularte a este proyecto?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'SI',
+      cancelButtonText: 'NO'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.solicitudService.createSolicitud( this.proyecto )
+            .subscribe( ({solicitud}) => {
+              Swal.fire({
+                title: 'Solicitud Enviada',
+                text: 'Tu solicitud ha sido enviada al Departamento de Gestión y Vinculación.',
+                icon: 'success' 
+              })
+              this.solicitud = solicitud;
+              this.addNuevaSolicitud(this.solicitud);
+            }, err => {
+              Swal.fire({
+                title: 'Error',
+                text: err.error.message,
+                icon: 'error' 
+              })
           })
+    
+      }
+    })
+
   }
 
   cerrarModal(): void {

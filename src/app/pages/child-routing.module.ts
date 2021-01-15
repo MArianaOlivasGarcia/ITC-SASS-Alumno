@@ -11,17 +11,19 @@ import { MensajesComponent } from './mensajes/mensajes.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ProyectoComponent } from './proyectos/proyecto/proyecto.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
+import { SolicitudComponent } from './proyectos/solicitud/solicitud.component';
 
 const routes: Routes = [
     { path: 'perfil',       component: PerfilComponent,       data: { titulo: 'Mi Perfil' } },
     { path: 'proyecto/:id', component: ProyectoComponent,     data: { titulo: 'Proyecto' } },
     { path: 'proyectos',    component: ProyectosComponent,    data: { titulo: 'Banco de Proyectos' } },
     { path: 'expediente',   component: ExpedienteComponent,   data: { titulo: 'Mi Expediente' } },
-    { path: 'expediente/ITC-VI-PO-002-02/:item',   component: ItemExpedienteComponent,   data: { titulo: 'Mi Expediente' } },
+    { path: 'expediente/:codigo/:item',   component: ItemExpedienteComponent,   data: { titulo: 'Mi Expediente' } },
     { path: 'mensajes',     component: MensajesComponent,     data: { titulo: 'Mensajes' } },
     { path: 'chat/:id',     component: MensajeComponent,      data: { titulo: 'Chat' } },
     { path: 'avisos',       component: AvisosComponent,       data: { titulo: 'Avisos' } },
     { path: 'aviso/:id',    component: AvisoComponent,        data: { titulo: 'Aviso' } },
+    { path: 'solicitud/:id', component: SolicitudComponent,        data: { titulo: 'Solicitud' } },
     { path: '',             component: DashboardComponent },
 ];
 

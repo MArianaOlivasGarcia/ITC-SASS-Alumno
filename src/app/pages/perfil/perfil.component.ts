@@ -45,7 +45,9 @@ export class PerfilComponent implements OnInit {
       numero_control: [this.usuario.numero_control, Validators.required ],
       carrera: [this.usuario.carrera.nombre, [Validators.required ] ],
       semestre: [this.usuario.semestre, [Validators.required ] ],
+      periodo: [this.usuario.periodo, [Validators.required ] ],
       creditos_acumulados: [this.usuario.creditos_acumulados, [Validators.required ] ],
+      porcentaje_avance: [this.usuario.porcentaje_avance, [Validators.required ] ],
       terminos: [ this.usuario.terminos , [ Validators.requiredTrue ] ],
     });
 

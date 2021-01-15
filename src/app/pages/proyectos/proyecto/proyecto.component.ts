@@ -7,6 +7,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DependenciaService } from 'src/app/services/dependencia.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
+import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,17 +21,14 @@ export class ProyectoComponent implements OnInit {
   public proyectoForm: FormGroup;
   public dependencias: Dependencia[] = [];
   public proyectoSeleccionado: Proyecto; 
-  public usuario: Usuario;
 
-  
   constructor( private fb: FormBuilder,
                private proyectoService: ProyectoService,
                private dependenciaService: DependenciaService,
-               private authService: AuthService,
+               private solicitudService: SolicitudProyectoService,
                private router: Router,
                private activatedRoute: ActivatedRoute  ) {
-  this.usuario = this.authService.usuario;
-  }
+ }
 
 
   ngOnInit(): void {
@@ -47,12 +45,13 @@ export class ProyectoComponent implements OnInit {
       objetivo: ['', Validators.required ],
       actividades: ['', Validators.required ],
       periodo: ['', Validators.required ],
-      lugar: ['', Validators.required ],
+      lugar_desempeno: ['', Validators.required ],
       modalidad: ['', Validators.required ],
       tipo: ['', Validators.required ],
       horario: ['', Validators.required ],
-      /*apoyo_economico: ['', Validators.required ],*/
-      responsable: ['', Validators.required ]
+      apoyo_economico: [false, Validators.required ],
+      responsable: ['', Validators.required ],
+      puesto_responsable: ['', Validators.required ]
     });
   }
 
@@ -80,23 +79,25 @@ export class ProyectoComponent implements OnInit {
                   objetivo,
                   actividades,
                   periodo,
-                  lugar,
+                  lugar_desempeno,
                   modalidad,
                   horario,
                   tipo,
-                  responsable } = proyecto;
+                  responsable,
+                  puesto_responsable } = proyecto;
           this.proyectoSeleccionado = proyecto;
-          this.proyectoForm.setValue({ /* apoyo_economico, */
+          this.proyectoForm.setValue({ apoyo_economico,
                                        nombre,
                                        dependencia: _id,
                                        objetivo,
                                        actividades,
                                        periodo,
-                                       lugar,
+                                       lugar_desempeno,
                                        modalidad,
                                        horario,
                                        tipo,
-                                       responsable});
+                                       responsable,
+                                       puesto_responsable});
 
         });
 
@@ -117,7 +118,7 @@ export class ProyectoComponent implements OnInit {
       };
 
       this.proyectoService.actualizarProyecto( data )
-          .subscribe( () => {
+          .subscribe( resp => {
             Swal.fire({
               title: 'Guardado',
               text: `Proyecto ${nombre} actualizado con éxito.`,
@@ -128,25 +129,32 @@ export class ProyectoComponent implements OnInit {
     } else {
       // CREAR PROYECTO
 
-      this.proyectoService.crearProyecto( this.proyectoForm.value )
-      .subscribe( resp => {
-        Swal.fire({
-          title: 'Creado',
-          text: `Tu proyecto ha sido creado con éxito.`,
-          icon: 'success'
-        });
-        this.router.navigateByUrl(`/dashboard/proyecto/${resp.proyecto._id}`);
-        }, err => {
-          Swal.fire({
-            title: 'No se pudo crear el proyecto.',
-            text:  err.error.message,
-            icon: 'error'
-          });
-        });
+      Swal.fire({
+        title: '¿Estas seguro?',
+        text: 'Al crear el proyecto no podrás seleccionar uno disponible en el Banco de Proyectos',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI',
+        cancelButtonText: 'NO'
+      }).then((result) => {
 
+        if (result.isConfirmed) {
+          this.proyectoService.crearProyecto(this.proyectoForm.value)
+                .subscribe( ({proyecto}) => {
+                  Swal.fire({
+                    title: 'Guardado',
+                    text: 'Tu proyecto ha sido creado y enviado a revision con éxito.',
+                    icon: 'success'
+                  })
+                this.router.navigateByUrl(`/dashboard/proyecto/${proyecto._id}`);
+                })
+  
+        }
+      });
+      
     }
-
-
   }
 
 

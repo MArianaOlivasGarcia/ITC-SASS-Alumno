@@ -25,4 +25,11 @@ export class ItemExpediente {
     },
     public _id?: string ){}
 
+    get archivoSrc(): string {
+        if( this.archivo ){
+            console.log('archivo')
+            return `https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf`;
+        }
+    }
+
 }

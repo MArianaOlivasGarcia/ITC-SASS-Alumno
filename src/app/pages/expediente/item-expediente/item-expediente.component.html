@@ -1,16 +1,5 @@
 
 
-<h4>{{ item?.titulo }}</h4>
-<span *ngIf="item?.aprobado" class="badge badge-pill badge-success p-1">Aprobado</span>
-<span *ngIf="item?.rechazado" class="badge badge-pill badge-danger p-1">Rechazado</span>
-<span *ngIf="item?.revision" class="badge badge-pill badge-warning text-white p-1">En revisión</span>
-<span *ngIf="item?.entrante" class="badge badge-pill badge-info p-1">Entrante</span>
-<span *ngIf="!item?.iniciado && item?.disponible" class="badge badge-pill badge-secondary p-1">No iniciado</span>
-
-<hr>
 
 
-
-
-<app-solicitud-servicio-social *ngIf="item?.codigo == 'ITC-VI-PO-002-02'"></app-solicitud-servicio-social>
 
