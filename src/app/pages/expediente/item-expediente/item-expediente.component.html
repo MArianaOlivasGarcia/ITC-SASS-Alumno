@@ -1,5 +1,120 @@
 
+<h5>{{ item?.titulo }}</h5>
+<hr>
+
+<!-- =====================
+== MENSAJE GENERAR ARCHIVO
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && !item?.pendiente && !item?.rechazado && !item?.aceptado">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <p class="m-0">Da click en <strong>Generar Archivo</strong> para generar y enviar tu <strong>{{item?.titulo}}</strong> a revisión.</p>
+        </div> 
+    </div>
+  </div>
+<!-- =====================
+== FIN MENSAJE GENERAR ARCHIVO
+======================= -->
+
+
+<!-- =====================
+== MENSAJE PENDIENTE
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && this.item?.pendiente">
+  <div class="col-12">
+      <div class="alert alert-warning">
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> se ha generado y enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión y aprobación. Puedes descargar tu archivo <a href="" class="alert-link">aquí.</a></p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE PENDIENTE
+======================= -->
+
+<!-- =====================
+== MENSAJE SOLICITUD RECHAZADA
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && this.item?.rechazado">
+  <div class="col-12">
+      <div class="alert alert-danger">
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>rechazada</strong>. Verifica tus datos y vuelve a generar tu archivo. Puedes descargar tu archivo <a href="" class="alert-link">aquí.</a></p>
+          <p class="m-0"><strong>Motivo:</strong> {{ item?.error?.motivo }}</p>
+          <p class="m-0"><strong>Observación:</strong> {{ item?.error?.observacion }}</p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE SOLICITUD RECHAZADA
+======================= -->
+
+<!-- =====================
+== MENSAJE SOLICITUD ACEPTADA
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && this.item?.aceptado">
+  <div class="col-12">
+      <div class="alert alert-success">
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>aceptada</strong>. Puedes descargar tu archivo <a href="" class="alert-link">aquí.</a></p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE SOLICITUD ACEPTADA
+======================= -->
 
 
 
 
+<!-- =====================
+== VISTA DOCUMENTO
+======================= -->
+<h1 *ngIf="item?.archivo || item?.archivoTemp">DOCUMENTO</h1>
+<!-- =====================
+== FIN VISTA DEL DOCUMENTO
+======================= -->
+
+
+
+<div class="row d-flex justify-content-center" *ngIf="!item?.aceptado">
+    <div class="col-md-4 text-center">
+        <button class="btn btn-success btn-block"
+                (click)="generarDocumento()">Generar Archivo</button> 
+    </div>
+</div>
+
+
+
+<!-- =====================
+== UPLOAD
+======================= --> 
+<div class="row animated fadeIn faster m-3" *ngIf="!cargando && item?.reenvio_required && item?.archivoTemp">
+
+    <div class="col-md-6">
+  
+      <div class="card border-0">
+              
+        <h5>Archivo</h5>
+  
+        <br>
+     
+        <input type="file"
+            (change)="changeArchivo( $event?.target?.files[0] )">
+  
+        <hr>
+  
+        <button class="btn btn-success btn-block"
+        [disabled]="!archivoSubir" 
+            (click)="uploadFoto()">
+            Subir fotografía
+        </button>
+
+  
+    
+      </div>
+    
+    </div>
+    
+  
+  </div>
+  <!-- =====================
+  == FIN UPLOAD
+  ======================= --> 

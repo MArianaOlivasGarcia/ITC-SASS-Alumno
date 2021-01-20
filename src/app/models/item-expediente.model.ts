@@ -1,4 +1,5 @@
 import { Expediente } from "./expediente.model";
+import { Usuario } from "./usuario.model";
 
 
 export class ItemExpediente {
@@ -7,22 +8,26 @@ export class ItemExpediente {
     public numero: number,
     public expediente: Expediente,
     public titulo: string,
-    public template: string,
-    public archivo: string,
     public codigo: string,
-    public aprobado: boolean,
+    public archivoTemp: string,
+    public archivo: string,
+    public aceptado: boolean,
     public rechazado: boolean,
-    public revision: boolean,
+    public pendiente: boolean,
     public disponible: boolean,
     public entrante: boolean,
+    public proceso?: boolean,
     public iniciado?: boolean,
+    public finalizado?: boolean,
+    public reenvio_required?: boolean,
     public fecha_limite?: Date,
     public fecha_entrega?: Date,
     public fecha_aprobacion?: Date,
-    public errores?: { 
-        observacion: string,
+    public error?: { 
+        observacion: string, 
         motivo: string,
     },
+    public alumno?: Usuario,
     public _id?: string ){}
 
     get archivoSrc(): string {

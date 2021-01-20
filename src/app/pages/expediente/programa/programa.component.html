@@ -1,0 +1,41 @@
+<!-- =====================
+== DATOS DEL PROGRAMA ====
+========================== -->
+
+      <form [formGroup]="programaForm"
+          (submit)="guardar()"
+          autocomplete="off">
+        <label>Fecha en las que realizaras tu servicio social</label>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label >Fecha Inicio</label>
+            <input type="date" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido('fecha_inicio') }"
+                   formControlName="fecha_inicio">
+            <div *ngIf="campoNoValido('fecha_inicio')" class="invalid-feedback">
+              {{ mensajesError('fecha_inicio') }}
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label >Fecha Termino</label>
+            <input type="date" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido('fecha_termino') }"
+                   formControlName="fecha_termino">
+            <div *ngIf="campoNoValido('fecha_termino')" class="invalid-feedback">
+              {{ mensajesError('fecha_termino') }}
+            </div>
+          </div>
+  
+          <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-success btn-bloc">Iniciar Expediente</button>
+          </div>
+  
+        </div> 
+      </form>
+
+<!-- ======================
+== FIN DATOS DEL EXPEDIENTE
+======================= --> 
+  

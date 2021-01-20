@@ -1,6 +1,7 @@
 import { environment } from '../../environments/environment';
 import { Carrera } from './carrera.model';
-import { Expediente } from './expediente.model';
+import { Periodo } from './periodo.model';
+import { Programa } from './programa.model';
 import { Proyecto } from './proyecto.model';
 
 const base_url = environment.base_url;
@@ -8,7 +9,6 @@ const base_url = environment.base_url;
 export class Usuario {
 
     constructor(
-        // tslint:disable: variable-name
         public numero_control: string,
         public nombre: string,
         public apellido_paterno: string,
@@ -20,7 +20,7 @@ export class Usuario {
         public semestre: number,
         public creditos_acumulados: number,
         public porcentaje_avance: number,
-        public periodo: number,
+        public periodo: Periodo,
         public _id?: string,
         public foto?: string,
         public firma?: string,
@@ -28,7 +28,8 @@ export class Usuario {
         public telefono?: string,
         public domicilio?: string,
         public numero_seguro?: string,
-        /* public proyecto?: Proyecto, */
+        /* public proyecto?: Proyecto,
+        public programa?: Programa, */
         /* public expediente?: Expediente, */
         public terminos?: boolean,
         public video?: boolean,

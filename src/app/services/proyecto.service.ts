@@ -21,9 +21,9 @@ export class ProyectoService {
   }
 
 
-  getProyectosByCarrera( carrera: Carrera ): Observable<any> {
+  getProyectosByCarrera( desde: number = 0, carrera: Carrera ): Observable<any> {
 
-    const url = `${ base_url }/proyecto/all/${ carrera._id }`;
+    const url = `${ base_url }/proyecto/all/carrera/${ carrera._id }?desde=${ desde }`;
 
     return this.http.get<CargarProyectos>( url )
         .pipe(
@@ -76,15 +76,20 @@ export class ProyectoService {
   }
 
   actualizarProyecto( proyecto: Proyecto ): Observable<any> {
-    const url = `${ base_url }/proyecto/${ proyecto._id }`;
-    return this.http.put( url, proyecto );
+    const url = `${ base_url }/proyecto/alumno/${ proyecto._id }`;
+    const token = localStorage.getItem('accessToken') || '';
+    return this.http.put( url, proyecto, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 
   
 
 
 
-  getPersonal(): Observable<any>{
+  getPersonal(): Observable<any> {
     const url =  `${ base_url }/proyecto/alumno/personal`;
     const token = localStorage.getItem('accessToken') || '';
 
@@ -95,6 +100,22 @@ export class ProyectoService {
     });
     
   }
+
+
+
+  getByAlumno(): Observable<any> {
+    const url =  `${ base_url }/proyecto/alumno`;
+    const token = localStorage.getItem('accessToken') || '';
+
+    return this.http.get( url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      map( (resp: {status: boolean, proyecto: Proyecto}) => resp.proyecto)
+    );
+  }
+
 
 }
 

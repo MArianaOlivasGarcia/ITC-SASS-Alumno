@@ -17,25 +17,19 @@ export class DependenciaService {
 
   getDependencias( desde: number = 0 ): Observable<any> {
 
-    const url = `${ base_url }/dependencia/all?desde=${ desde }`;
-
-    return this.http.get<CargarDependencias>( url )
-        .pipe(
-          map( resp => {
-            const dependencias = resp.dependencias.map(
-                                    dependencia => new Dependencia(
+    return this.http.get(`${base_url}/dependencia/all`)
+      .pipe(
+        map( (resp: { status: boolean, dependencias: Dependencia[] } ) => {
+          const dependencias = resp.dependencias.map(
+                                  dependencia => new Dependencia(
                                     dependencia.nombre,
                                     dependencia.representante_legal,
                                     dependencia.domicilio,
                                     dependencia.email,
-                                    dependencia._id )
-                                  );
-            return {
-              total: resp.total,
-              dependencias,
-            };
-          })
-        );
+                                    dependencia._id ) );
+          return dependencias;
+        })
+      );
 
   }
 

@@ -48,7 +48,7 @@
     </div>
   </div>
 <!-- =====================
-== FIN MENSAJE SOLICITUD PENDIENTE
+== FIN MENSAJE SOLICITUD PENDIENTE 
 ======================= -->
 <!-- =====================
 == MENSAJE SOLICITUD RECHAZADA
@@ -56,7 +56,7 @@
 <div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.rechazado">
     <div class="col-12">
         <div class="alert alert-danger">
-            <p class="m-0">Tu solicitud de proyecto se ha sido <strong>rechazada</strong>. Puedes ver más detalles <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">aquí.</a></p>
+            <p class="m-0">Tu solicitud de proyecto ha sido <strong>rechazada</strong>. Puedes ver más detalles <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">aquí.</a></p>
             <p class="m-0"><strong>Motivo:</strong> {{ solicitud?.error?.motivo }}</p>
             <p class="m-0"><strong>Observación:</strong> {{ solicitud?.error?.observacion }}</p>
         </div> 
@@ -72,7 +72,7 @@
 <div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.aceptado">
     <div class="col-12">
         <div class="alert alert-success">
-            <p class="m-0">Tu solicitud de proyecto se ha sido <strong>aceptada</strong>. Puedes ver más detalles <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">aquí.</a></p>
+            <p class="m-0">Tu solicitud de proyecto ha sido <strong>aceptada</strong>. Puedes ver más detalles <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">aquí.</a></p>
         </div> 
     </div>
   </div>
@@ -91,7 +91,16 @@
         <button class="btn btn-primary"
             routerLink="/dashboard/proyecto/nuevo">
             <i class="fas fa-plus mr-2"></i>Crear un proyecto
-        </button>
+        </button>   
+    </div>
+</div>
+
+<div class="row text-right mt-3"  *ngIf="this.solicitud && editMiProyecto">
+    <div class="col">
+        <button class="btn btn-primary"
+            [routerLink]="['/dashboard/proyecto', solicitud.proyecto._id]">
+            <i class="fa fa-pen mr-2"></i>Editar mi proyecto
+        </button>   
     </div>
 </div>
 <!-- =====================
@@ -106,7 +115,7 @@
 <div class="row mb-5 mt-3" *ngIf="!cargando && proyectos.length > 0">
     <div class="col-12">
         
-                <h5>Total de solicitudes (numero)</h5>
+                <h5>Total de proyectos ({{totalProyectos}})</h5>
 
 
                 <div class="table-responsive">
@@ -127,7 +136,7 @@
                                 <td>{{proyecto.dependencia.nombre}}</td>
                                 <td>{{proyecto.responsable}}</td>
                                 <td>{{proyecto.objetivo}}</td>
-                                <td>{{proyecto.periodo }}</td>
+                                <td>{{proyecto.periodo.nombre }}</td>
                                 <td><button class="btn btn-sm btn-info" (click)="abrirModal(proyecto)">Ver</button></td>
                           </tr>
                         </tbody>

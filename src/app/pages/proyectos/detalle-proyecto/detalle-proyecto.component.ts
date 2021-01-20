@@ -44,10 +44,10 @@ export class DetalleProyectoComponent implements OnInit {
       if (result.isConfirmed) {
 
         this.solicitudService.createSolicitud( this.proyecto )
-            .subscribe( ({solicitud}) => {
+            .subscribe( ({solicitud, message}) => {
               Swal.fire({
                 title: 'Solicitud Enviada',
-                text: 'Tu solicitud ha sido enviada al Departamento de Gestión y Vinculación.',
+                text: message,
                 icon: 'success' 
               })
               this.solicitud = solicitud;

@@ -67,7 +67,8 @@ export class AuthService {
                 domicilio,
                 numero_seguro,
                 /* proyecto,
-                expediente, */
+                programa, */
+                //expediente,
                 terminos,
                 video,
                 examen,
@@ -92,7 +93,8 @@ export class AuthService {
                                     domicilio,
                                     numero_seguro,
                                     /* proyecto,
-                                    expediente, */
+                                    programa, */
+                                    //expediente, */
                                     terminos,
                                     video,
                                     examen,

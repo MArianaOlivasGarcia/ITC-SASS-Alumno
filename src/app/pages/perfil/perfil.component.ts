@@ -40,12 +40,12 @@ export class PerfilComponent implements OnInit {
       fecha_nacimiento: [this.usuario.fecha_nacimiento, Validators.required ],
       domicilio: [this.usuario.domicilio, Validators.required ],
       telefono: [this.usuario.telefono, Validators.required ],
-      email: [this.usuario.email, Validators.required ],
+      email: [this.usuario.email, [Validators.required, Validators.email] ],
       numero_seguro: [this.usuario.numero_seguro, Validators.required ],
       numero_control: [this.usuario.numero_control, Validators.required ],
       carrera: [this.usuario.carrera.nombre, [Validators.required ] ],
       semestre: [this.usuario.semestre, [Validators.required ] ],
-      periodo: [this.usuario.periodo, [Validators.required ] ],
+      periodo: [this.usuario.periodo.nombre, [Validators.required ] ],
       creditos_acumulados: [this.usuario.creditos_acumulados, [Validators.required ] ],
       porcentaje_avance: [this.usuario.porcentaje_avance, [Validators.required ] ],
       terminos: [ this.usuario.terminos , [ Validators.requiredTrue ] ],
@@ -73,18 +73,20 @@ export class PerfilComponent implements OnInit {
     const data = {
       ... this.usuarioForm.value,
       _id: this.usuario._id,
-      carrera: this.usuario.carrera
+      carrera: this.usuario.carrera,
+      periodo: this.usuario.periodo
     };
 
     this.usuarioService.actualizarUsuario( data )
       .subscribe( () => {
 
-        const { domicilio, telefono, email, numero_seguro } = this.usuarioForm.value;
+        const { domicilio, telefono, email, numero_seguro, terminos } = this.usuarioForm.value;
 
         this.usuario.domicilio = domicilio;
         this.usuario.telefono = telefono;
         this.usuario.email = email;
         this.usuario.numero_seguro = numero_seguro;
+        this.usuario.terminos = terminos;
 
         Swal.fire({
           title: 'Guardado',

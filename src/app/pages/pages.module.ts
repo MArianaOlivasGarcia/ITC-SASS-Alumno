@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilComponent } from './perfil/perfil.component';
-import { ExpedienteComponent } from './expediente/expediente.component';
+import { ExpedientePageComponent } from './expediente/expediente-page.component';
 import { ItemExpedienteComponent } from './expediente/item-expediente/item-expediente.component';
 import { PagesComponent } from './pages.component';
 import { AppRoutingModule } from '../app-routing.module';
@@ -16,15 +16,17 @@ import { AvisoComponent } from './avisos/aviso/aviso.component';
 import { MensajesComponent } from './mensajes/mensajes.component';
 import { MensajeComponent } from './mensajes/mensaje/mensaje.component';
 import { DetalleProyectoComponent } from './proyectos/detalle-proyecto/detalle-proyecto.component';
+import { SignaturePadComponent } from './components/signature-pad/signature-pad.component';
+import { UploadFileComponent } from './components/expediente/upload-file/upload-file.component';
+import { SolicitudComponent } from './proyectos/solicitud/solicitud.component';
+import { ProgramaComponent } from './expediente/programa/programa.component';
+
 
 import { environment } from '../../environments/environment';
 
 // SOCKETS
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { SignaturePadComponent } from './components/signature-pad/signature-pad.component';
-import { UploadFileComponent } from './components/expediente/upload-file/upload-file.component';
-import { SolicitudComponent } from './proyectos/solicitud/solicitud.component';
-
+import { ExpedienteComponent } from './expediente/expediente/expediente.component';
 
 const token = localStorage.getItem('accessToken') || '';
 
@@ -40,7 +42,7 @@ const config: SocketIoConfig = {
 @NgModule({
   declarations: [
     DashboardComponent,
-    ExpedienteComponent,
+    ExpedientePageComponent,
     ItemExpedienteComponent,
     PagesComponent,
     PerfilComponent,
@@ -53,7 +55,9 @@ const config: SocketIoConfig = {
     DetalleProyectoComponent,
     SignaturePadComponent,
     UploadFileComponent,
-    SolicitudComponent],
+    SolicitudComponent,
+    ProgramaComponent,
+    ExpedienteComponent],
   imports: [
     CommonModule,
     AppRoutingModule,
@@ -64,3 +68,4 @@ const config: SocketIoConfig = {
   exports: []
 })
 export class PagesModule { }
+ 

@@ -17,7 +17,7 @@ export class ExpedienteService {
   constructor( private http: HttpClient ) { }
 
 
-  abrirExpediente(): Observable<any> {
+  crearExpediente(): Observable<any> {
     const url = `${ base_url }/expediente/create`;
     const token = localStorage.getItem('accessToken') || '';
     return this.http.get( url,{
@@ -30,6 +30,21 @@ export class ExpedienteService {
   }
 
 
+
+  getExpedienteByAlumno(): Observable<any> {
+    const url = `${ base_url }/expediente/alumno`;
+    const token = localStorage.getItem('accessToken') || '';
+    return this.http.get( url,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      map( (resp: {status: boolean, expediente: Expediente}) => resp.expediente )
+    );
+  }
+
+
+
   getItemExpediente( id: string ): Observable<any> {
     const url = `${ base_url }/item/${ id }`;
     return this.http.get( url )
@@ -39,14 +54,20 @@ export class ExpedienteService {
   }
 
 
-  subirArchivo( codigo: string ): Observable<any> {
-    const url = `${ base_url }/file/${codigo}`;
+
+
+  generarArchivo( idItem: string ) {
+    const url = `${ base_url }/file/${ idItem }`;
     const token = localStorage.getItem('accessToken') || '';
+
     return this.http.get( url, {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    })
-  }
+    }).pipe(
+      map( (resp: {stattus:boolean, item: ItemExpediente}) => resp.item)
+    );
 
+  }
+  
 }

@@ -3,11 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dependencia } from 'src/app/models/dependencia.model';
 import { Proyecto } from 'src/app/models/proyecto.model';
-import { Usuario } from 'src/app/models/usuario.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { DependenciaService } from 'src/app/services/dependencia.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
-import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,9 +21,7 @@ export class ProyectoComponent implements OnInit {
 
   constructor( private fb: FormBuilder,
                private proyectoService: ProyectoService,
-               private dependenciaService: DependenciaService,
-               private solicitudService: SolicitudProyectoService,
-               private router: Router,
+               private dependenciaService: DependenciaService,               private router: Router,
                private activatedRoute: ActivatedRoute  ) {
  }
 
@@ -44,7 +39,7 @@ export class ProyectoComponent implements OnInit {
       dependencia: ['', Validators.required ],
       objetivo: ['', Validators.required ],
       actividades: ['', Validators.required ],
-      periodo: ['', Validators.required ],
+      /* periodo: ['', Validators.required ], */
       lugar_desempeno: ['', Validators.required ],
       modalidad: ['', Validators.required ],
       tipo: ['', Validators.required ],
@@ -57,11 +52,11 @@ export class ProyectoComponent implements OnInit {
 
   cargarDependencias(): void {
     this.dependenciaService.getDependencias()
-          .subscribe( resp => {
-            this.dependencias = resp.dependencias;
+          .subscribe( dependencias => {
+            this.dependencias = dependencias;
             }
           );
-  }
+  } 
 
 
   cargarProyecto( id: string ): void{
@@ -78,7 +73,7 @@ export class ProyectoComponent implements OnInit {
                   dependencia: { _id },
                   objetivo,
                   actividades,
-                  periodo,
+                  /* periodo */
                   lugar_desempeno,
                   modalidad,
                   horario,
@@ -91,7 +86,7 @@ export class ProyectoComponent implements OnInit {
                                        dependencia: _id,
                                        objetivo,
                                        actividades,
-                                       periodo,
+                                       /* periodo, */
                                        lugar_desempeno,
                                        modalidad,
                                        horario,
@@ -117,14 +112,37 @@ export class ProyectoComponent implements OnInit {
         _id: this.proyectoSeleccionado._id,
       };
 
-      this.proyectoService.actualizarProyecto( data )
+      Swal.fire({
+        title: '¿Estas seguro?',
+        text: 'Se volvera a enviar tu solicitud para este proyecto ya actualizado.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI',
+        cancelButtonText: 'NO'
+      }).then((result) => {
+
+        if (result.isConfirmed) {
+          
+          this.proyectoService.actualizarProyecto( data )
           .subscribe( resp => {
             Swal.fire({
               title: 'Guardado',
               text: `Proyecto ${nombre} actualizado con éxito.`,
               icon: 'success'
             });
+          }, err => {
+            Swal.fire({
+              title: 'Error',
+              text: err.error.message,
+              icon: 'error'
+            })
           });
+  
+        }
+      });
+
 
     } else {
       // CREAR PROYECTO
@@ -148,7 +166,13 @@ export class ProyectoComponent implements OnInit {
                     text: 'Tu proyecto ha sido creado y enviado a revision con éxito.',
                     icon: 'success'
                   })
-                this.router.navigateByUrl(`/dashboard/proyecto/${proyecto._id}`);
+                this.router.navigateByUrl(`/dashboard/proyectos`);
+                }, err => {
+                  Swal.fire({
+                    title: 'Error',
+                    text: err.error.message,
+                    icon: 'error'
+                  })
                 })
   
         }

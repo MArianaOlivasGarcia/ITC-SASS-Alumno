@@ -46,4 +46,27 @@ export class FileUploadService {
   }
 
 
+
+  subirArchivo( archivo: File, idItem: string ): Observable<any> {
+
+    const url = `${ base_url }/file/item/${ idItem }`;
+    const token = localStorage.getItem('accessToken') || '';
+
+
+    const formData: FormData = new FormData();
+    formData.append('archivo', archivo, archivo.name );
+
+    return this.http.put( url, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(  catchError( error => of(false) ));
+
+  }
+
+
+
+  
+
+
 }

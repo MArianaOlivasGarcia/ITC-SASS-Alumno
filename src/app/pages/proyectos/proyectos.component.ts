@@ -18,14 +18,15 @@ export class ProyectosComponent implements OnInit {
   public totalProyectos = 0;
   public proyectos: Proyecto[] = [];
   public proyectosTemp: Proyecto[] = [];
+  public desde = 0;
   public cargando: boolean = true;
 
   public proyectoSeleccionado: Proyecto;
-  /*   public proyectoPersonal: Proyecto;*/
-  public solicitud: Solicitud;
 
+  public solicitud: Solicitud;
   public usuario: Usuario;
 
+  public editMiProyecto: boolean = false;
 
   constructor( private proyectoService: ProyectoService,
                private authService: AuthService,
@@ -38,9 +39,8 @@ export class ProyectosComponent implements OnInit {
   ngOnInit(): void {
     this.cargarProyectos();
     this.cargarSolicitud();
-/*     this.getProyectoPersonal();
- */  
   }
+
 
   addSolicitud( solicitud: Solicitud ){
     this.solicitud = solicitud;
@@ -52,6 +52,9 @@ export class ProyectosComponent implements OnInit {
             .subscribe( ({solicitud}) => {
               if ( solicitud ) {
                 this.solicitud = solicitud;
+                if( !solicitud.publico && solicitud.rechazado ) {
+                  this.editMiProyecto = true;
+                }
               }
             })
   }
@@ -61,7 +64,7 @@ export class ProyectosComponent implements OnInit {
 
     this.cargando = true;
 
-    this.proyectoService.getProyectosByCarrera( this.usuario.carrera )
+    this.proyectoService.getProyectosByCarrera( this.desde, this.usuario.carrera )
         .subscribe( ({ total, proyectos }) => {
           this.totalProyectos = total;
           this.proyectos = proyectos;
@@ -71,14 +74,6 @@ export class ProyectosComponent implements OnInit {
 
   }
 
-
-  /* getProyectoPersonal():void {
-    this.proyectoService.getPersonal()
-        .subscribe( resp => {
-          this.proyectoPersonal = resp;
-        })
-  } */
-  
 
 
   buscar( termino: string ): void {
@@ -101,5 +96,19 @@ export class ProyectosComponent implements OnInit {
   }
 
   // CAMBIAR PAGINA
+
+  cambiarPagina( valor: number ): void {
+
+    this.desde += valor;
+
+    if ( this.desde < 0 ) {
+      this.desde = 0;
+    } else if ( this.desde >= this.totalProyectos ) {
+      this.desde -= valor;
+    }
+
+    this.cargarProyectos();
+
+  }
 
 }

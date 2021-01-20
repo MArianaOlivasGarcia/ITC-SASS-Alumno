@@ -1,0 +1,70 @@
+
+<h4>Mi expediente</h4>
+
+<hr>
+
+<!-- =====================
+== ALERTA PERFIL COMPLETO
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf="!isCompleto">
+  <div class=" col alert alert-warning" role="alert">
+    <p class="mb-0" *ngIf="!usuario.terminos">• Es necesario que completes tus datos personales.</p>
+    <p class="mb-0" *ngIf="!usuario.firma">• Es necesario que tengas una firma digital.</p>
+    <p class="mb-0" *ngIf="!usuario.foto">• Es necesario que tengas una fotografía.</p>
+    <a routerLink="/dashboard/perfil" class="alert-link">Ir a Mi Perfil.</a>
+  </div>
+</div>
+<!-- =====================
+== FIN ALERTA PERFIL COMPLETO
+======================= --> 
+
+
+
+
+<!-- =====================
+== ALERTA PROYECTO ASIGNADO
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf="!isValido && isCompleto" >
+  <div class=" col alert alert-warning" role="alert">
+    <p class="mb-0">Para poder abrir un expediente tienes que tener asignado un Proyecto.
+    <a routerLink="/dashboard/proyectos" class="alert-link">Ir a Banco de Proyectos.</a></p>
+  </div>
+</div>
+<!-- =====================
+== FIN ALERTA PROYECTO ASIGNADO
+======================= --> 
+
+
+
+<!-- =====================
+== ALERTA
+======================= --> 
+
+<div class="row animated fadeIn m-3" *ngIf="!hasPrograma && isValido && isCompleto">
+  <div class=" col-12 alert alert-info" role="alert">
+    <p class="mb-0">• Verifica que los datos de tu proyecto sean correctos.</p>
+    <p class="mb-0">• Completa y verifica los datos que se piden a continuación.</p>
+    <hr>
+    <p class="mb-0">Si necesitas ayuda, comunicate con el <strong>Departamento de Gestión y Vinculación</strong>.</p>
+  </div>
+</div> 
+<!-- =====================
+== FIN ALERTA
+======================= --> 
+
+<div class="row animated fadeIn m-3" *ngIf="isValido && isCompleto && !hasPrograma">
+  <div class="col-12">
+    <app-programa (emitirHasPrograma)="addSolicitud($event)"></app-programa>
+  </div>
+</div>
+
+
+
+
+
+<div class="row animated fadeIn m-3" *ngIf="hasPrograma">
+  <div class="col-12">
+    <app-expediente></app-expediente>
+  </div>
+</div>
+
