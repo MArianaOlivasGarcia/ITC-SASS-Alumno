@@ -2,7 +2,7 @@
 
 
 
-<h4>Proyecto <small *ngIf="proyectoSeleccionado">{{ proyectoSeleccionado.nombre }}</small></h4>
+<h4>Proyecto <small>{{ solicitud?.proyecto.nombre }}</small></h4>
 <hr>
 
 <!-- =====================
@@ -152,14 +152,23 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Tipo</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('tipo') }"
-                   placeholder="Tipo"
-                   formControlName="tipo">
-            <div *ngIf="campoNoValido('tipo')" class="invalid-feedback">
-              {{ mensajesError('tipo') }}
-            </div>   
+            <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('tipo') }"
+                    formControlName="tipo">
+              <option value="">SELECCIONAR TIPO</option>
+              <option value="Actividades deportivas">Actividades deportivas</option>
+              <option value="Actividades cívicas">Actividades cívicas</option>
+              <option value="Actividades culturales">Actividades culturales</option>
+              <option value="Apoyo a la salud">Apoyo a la salud</option>
+              <option value="Desarrollo de comunidad">Desarrollo de comunidad</option>
+              <option value="Desarrollo sustentable">Desarrollo sustentable</option>
+              <option value="Educación para adultos">Educación para adultos</option>
+              <option value="Medio ambiente">Medio ambiente</option>
+              <option value="Otro">Otro</option>
+            </select>      
+            <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
+              {{ mensajesError('dependencia') }}
+            </div>    
           </div>
           <div class="form-group col-md-4">
             <label>Horario</label>
@@ -177,11 +186,11 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-              <label>Responsable</label>
+              <label>Nombre del Responsable</label>
               <input type="text" 
                      class="form-control" 
                      [ngClass]="{'is-invalid': campoNoValido('responsable') }"
-                     placeholder="Responsable"
+                     placeholder="Nombre del Responsable"
                      formControlName="responsable">
               <div *ngIf="campoNoValido('responsable')" class="invalid-feedback">
                 {{ mensajesError('responsable') }}
@@ -195,7 +204,7 @@
                      placeholder="Puesto del responsable"
                      formControlName="puesto_responsable">
               <div *ngIf="campoNoValido('puesto_responsable')" class="invalid-feedback">
-                {{ mensajesError('responsable') }}
+                {{ mensajesError('puesto_responsable') }}
               </div> 
             </div>
           </div>
@@ -214,11 +223,47 @@
             </div>
           </div>
 
-          
+          <hr>
+ 
+          <div class="row animated fadeIn fast">
+            <div class="col-12">
 
-          
+              <form [formGroup]="solicitudForm"
+                    (submit)="guardar()"
+                    autocomplete="off">
 
-        <br>
+                <h6>Fecha en la que deseas realizar tu servicio social.</h6>
+
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Fecha Inicial</label>
+                    <input type="date" 
+                           #fecha
+                           class="form-control" 
+                           [ngClass]="{'is-invalid': campoNoValido('inicio_servicio') }"
+                           formControlName="inicio_servicio"
+                           (ngModelChange)="cambiarFecha( fecha.value )">
+                    <div *ngIf="campoNoValido('inicio_servicio')" class="invalid-feedback">
+                      {{ mensajesError('inicio_servicio') }}
+                    </div> 
+                  </div>           
+                  <div class="form-group col-md-6">
+                    <label>Fecha Terminación</label>
+                    <input type="date" 
+                           class="form-control" 
+                           [ngClass]="{'is-invalid': campoNoValido('termino_servicio') }"
+                           formControlName="termino_servicio">
+                    <div *ngIf="campoNoValido('termino_servicio')" class="invalid-feedback">
+                      {{ mensajesError('termino_servicio') }}
+                    </div> 
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+          <br>
 
         <div class="row">
           <div class="col-md-6">

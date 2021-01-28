@@ -58,8 +58,17 @@
 == INFORMACIÓN
 ======================= -->
   <div class="row animated fadeIn fast m-3" *ngIf="solicitud">
-  
+
       <div class="col-12">
+
+        <h6>Fecha de Servicio Social</h6>
+
+        <p class="m-0"><strong>Inicio: </strong>{{ solicitud.inicio_servicio | date }}</p>
+        <p class="m-0"><strong>Termino: </strong>{{ solicitud.termino_servicio | date }}</p>
+
+      </div>
+  
+      <div class="col-12 mt-3">
           <div class="row">
               <div class="col-md-8">
   

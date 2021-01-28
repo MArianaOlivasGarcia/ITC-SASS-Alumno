@@ -19,7 +19,6 @@ import { DetalleProyectoComponent } from './proyectos/detalle-proyecto/detalle-p
 import { SignaturePadComponent } from './components/signature-pad/signature-pad.component';
 import { UploadFileComponent } from './components/expediente/upload-file/upload-file.component';
 import { SolicitudComponent } from './proyectos/solicitud/solicitud.component';
-import { ProgramaComponent } from './expediente/programa/programa.component';
 
 
 import { environment } from '../../environments/environment';
@@ -56,7 +55,6 @@ const config: SocketIoConfig = {
     SignaturePadComponent,
     UploadFileComponent,
     SolicitudComponent,
-    ProgramaComponent,
     ExpedienteComponent],
   imports: [
     CommonModule,

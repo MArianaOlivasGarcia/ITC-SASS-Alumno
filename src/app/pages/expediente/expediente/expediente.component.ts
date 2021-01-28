@@ -23,7 +23,6 @@ export class ExpedienteComponent implements OnInit {
           .subscribe( expediente => {
             this.expediente = expediente;
             this.cargando = false;
-            console.log(this.expediente);
           })
   }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Expediente } from 'src/app/models/expediente.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { ExpedienteService } from 'src/app/services/expediente.service';
 import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 
 @Component({
@@ -12,31 +14,57 @@ export class ExpedientePageComponent implements OnInit {
 
 
   public usuario: Usuario;
-  public isValido: boolean = true; // Solicitud de proyecto aceptada
+
+  public expediente: Expediente;
+
+  public hasProyecto: boolean = false; // Solicitud de proyecto aceptada
   public isCompleto: boolean = false; // Perfil completo
-  public hasPrograma: boolean;
+
+  public cargando: boolean = true;
 
   constructor( private authService: AuthService,
-               private solicitudService: SolicitudProyectoService) {
+               private solicitudService: SolicitudProyectoService,
+               private expedienteService: ExpedienteService ) {
       this.usuario = this.authService.usuario;
       if ( this.usuario.firma && this.usuario.foto && this.usuario.terminos ) { this.isCompleto = true}
   }
 
   ngOnInit(): void { 
-    this.cargarProyecto();    
+    this.cargarProyecto();
+    
+
+    this.cargarExpediente();  
+
   }
 
-  addSolicitud( hasPrograma: boolean ){
-    this.hasPrograma = hasPrograma;
-  }
+  
 
   cargarProyecto(): void {
     this.solicitudService.getAceptadoByAlumno()
             .subscribe( proyecto => {
-              if( !proyecto ) {
-                this.isValido = false;
+              if( proyecto ) {
+                this.hasProyecto = true;
               } 
             })
+  }
+
+
+  cargarExpediente(): void {
+    this.expedienteService.getExpedienteByAlumno()
+          .subscribe( expediente => {
+            console.log(expediente)
+            this.expediente = expediente;
+            this.cargando = false;
+          })
+  }
+
+
+
+  abrirExpediente(){
+    this.expedienteService.crearExpediente()
+          .subscribe( () => {
+            this.cargarExpediente();
+          })
   }
 
  

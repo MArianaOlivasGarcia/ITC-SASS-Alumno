@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { CargarProyectos } from '../interfaces/cargar-proyectos.interface';
 import { Carrera } from '../models/carrera.model';
 import { Proyecto } from '../models/proyecto.model';
+import { Solicitud } from '../models/solicitud-proyecto.model';
 
 const base_url = environment.base_url;
 
@@ -35,7 +36,6 @@ export class ProyectoService {
                                       proyecto.dependencia,
                                       proyecto.objetivo,
                                       proyecto.actividades,
-                                      proyecto.periodo,
                                       proyecto.lugar_desempeno,
                                       proyecto.modalidad,
                                       proyecto.horario,
@@ -43,6 +43,9 @@ export class ProyectoService {
                                       proyecto.responsable,
                                       proyecto.puesto_responsable,
                                       proyecto.carreras,
+                                      proyecto.periodo,
+                                      proyecto.fecha_inicial,
+                                      proyecto.fecha_limite,
                                       proyecto._id )
                                   );
             return {
@@ -65,20 +68,20 @@ export class ProyectoService {
   }
 
  
-  crearProyecto( proyecto: Proyecto ): Observable<any> {
+  crearProyecto( solicitud: Solicitud ): Observable<any> {
     const url = `${ base_url }/proyecto/create/alumno`;
     const token = localStorage.getItem('accessToken') || '';
-    return this.http.post( url, proyecto, {
+    return this.http.post( url, solicitud, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
   }
 
-  actualizarProyecto( proyecto: Proyecto ): Observable<any> {
-    const url = `${ base_url }/proyecto/alumno/${ proyecto._id }`;
+  actualizarProyecto( solicitud: Solicitud ): Observable<any> {
+    const url = `${ base_url }/proyecto/alumno/${ solicitud.proyecto._id }`;
     const token = localStorage.getItem('accessToken') || '';
-    return this.http.put( url, proyecto, {
+    return this.http.put( url, solicitud, {
       headers: {
         Authorization: `Bearer ${token}`
       }

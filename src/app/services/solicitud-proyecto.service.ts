@@ -15,11 +15,11 @@ export class SolicitudProyectoService {
 
   constructor( private http: HttpClient) { }
 
-  createSolicitud( proyecto: Proyecto ): Observable<any> {
+  createSolicitud( solicitud: Solicitud ): Observable<any> {
 
     const url = `${ base_url }/solicitud`;
     const token = localStorage.getItem('accessToken') || '';
-    return this.http.post( url, proyecto, {
+    return this.http.post( url, solicitud, {
       headers: {
         Authorization: `Bearer ${token}`
       }

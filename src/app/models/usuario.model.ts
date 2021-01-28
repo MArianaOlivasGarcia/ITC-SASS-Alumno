@@ -1,8 +1,6 @@
 import { environment } from '../../environments/environment';
 import { Carrera } from './carrera.model';
 import { Periodo } from './periodo.model';
-import { Programa } from './programa.model';
-import { Proyecto } from './proyecto.model';
 
 const base_url = environment.base_url;
 
@@ -17,19 +15,18 @@ export class Usuario {
         public fecha_nacimiento: string,
         public edad: string,
         public carrera: Carrera,
-        public semestre: number,
         public creditos_acumulados: number,
         public porcentaje_avance: number,
-        public periodo: Periodo,
+        public periodo_ingreso: Periodo,
         public _id?: string,
+        public semestre?: number,
         public foto?: string,
         public firma?: string,
         public email?: string,
         public telefono?: string,
         public domicilio?: string,
         public numero_seguro?: string,
-        /* public proyecto?: Proyecto,
-        public programa?: Programa, */
+        /* public proyecto?: Proyecto,*/
         /* public expediente?: Expediente, */
         public terminos?: boolean,
         public video?: boolean,

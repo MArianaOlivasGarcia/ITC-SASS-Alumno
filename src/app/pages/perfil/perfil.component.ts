@@ -33,21 +33,21 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
 
     this.usuarioForm = this.fb.group({
-      nombre: [this.usuario.nombre, Validators.required ],
-      apellido_paterno: [this.usuario.apellido_paterno, Validators.required ],
-      apellido_materno: [this.usuario.apellido_materno, Validators.required ],
-      sexo: [this.usuario.sexo, Validators.required ],
-      fecha_nacimiento: [this.usuario.fecha_nacimiento, Validators.required ],
+      nombre: [this.usuario.nombre],
+      apellido_paterno: [this.usuario.apellido_paterno],
+      apellido_materno: [this.usuario.apellido_materno],
+      sexo: [this.usuario.sexo],
+      fecha_nacimiento: [this.usuario.fecha_nacimiento],
       domicilio: [this.usuario.domicilio, Validators.required ],
-      telefono: [this.usuario.telefono, Validators.required ],
+      telefono: [this.usuario.telefono, [Validators.required, Validators.minLength(10), Validators.maxLength(10)] ],
       email: [this.usuario.email, [Validators.required, Validators.email] ],
       numero_seguro: [this.usuario.numero_seguro, Validators.required ],
-      numero_control: [this.usuario.numero_control, Validators.required ],
-      carrera: [this.usuario.carrera.nombre, [Validators.required ] ],
-      semestre: [this.usuario.semestre, [Validators.required ] ],
-      periodo: [this.usuario.periodo.nombre, [Validators.required ] ],
-      creditos_acumulados: [this.usuario.creditos_acumulados, [Validators.required ] ],
-      porcentaje_avance: [this.usuario.porcentaje_avance, [Validators.required ] ],
+      numero_control: [this.usuario.numero_control],
+      carrera: [this.usuario.carrera.nombre],
+      semestre: [this.usuario.semestre],
+      periodo: [this.usuario.periodo_ingreso.nombre],
+      creditos_acumulados: [this.usuario.creditos_acumulados],
+      porcentaje_avance: [this.usuario.porcentaje_avance],
       terminos: [ this.usuario.terminos , [ Validators.requiredTrue ] ],
     });
 
@@ -74,7 +74,7 @@ export class PerfilComponent implements OnInit {
       ... this.usuarioForm.value,
       _id: this.usuario._id,
       carrera: this.usuario.carrera,
-      periodo: this.usuario.periodo
+      periodo: this.usuario.periodo_ingreso
     };
 
     this.usuarioService.actualizarUsuario( data )
@@ -169,6 +169,8 @@ export class PerfilComponent implements OnInit {
   mensajesError( formGroup: FormGroup, campo: string  ): string {
     return formGroup.get(campo)?.hasError('required') ? `Este campo es requerido.` :
            formGroup.get(campo)?.hasError('email') ? `Correo electrónico no valido.` :
+           formGroup.get(campo)?.hasError('maxlength') ? `Máximo 8 caracteres.` :
+           formGroup.get(campo)?.hasError('minlength') ? `Mínimo 8 caracteres.` :
            formGroup.get(campo)?.hasError('requiredTrue') ? `Debe aceptar la Política de privacidad.` :
            formGroup.get(campo)?.hasError('noIgual') ? `Las contraseñas no coinciden.` : '';
   }

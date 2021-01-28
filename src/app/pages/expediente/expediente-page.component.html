@@ -24,7 +24,7 @@
 <!-- =====================
 == ALERTA PROYECTO ASIGNADO
 ======================= --> 
-<div class="row animated fadeIn m-3" *ngIf="!isValido && isCompleto" >
+<div class="row animated fadeIn m-3" *ngIf="!hasProyecto && isCompleto" >
   <div class=" col alert alert-warning" role="alert">
     <p class="mb-0">Para poder abrir un expediente tienes que tener asignado un Proyecto.
     <a routerLink="/dashboard/proyectos" class="alert-link">Ir a Banco de Proyectos.</a></p>
@@ -40,31 +40,85 @@
 == ALERTA
 ======================= --> 
 
-<div class="row animated fadeIn m-3" *ngIf="!hasPrograma && isValido && isCompleto">
+<div class="row animated fadeIn m-3" *ngIf="hasProyecto && isCompleto && !expediente">
   <div class=" col-12 alert alert-info" role="alert">
-    <p class="mb-0">• Verifica que los datos de tu proyecto sean correctos.</p>
-    <p class="mb-0">• Completa y verifica los datos que se piden a continuación.</p>
+    <p class="mb-0">• Verifica que los datos de tu programa sean correctos. </p>
     <hr>
     <p class="mb-0">Si necesitas ayuda, comunicate con el <strong>Departamento de Gestión y Vinculación</strong>.</p>
   </div>
+
+  <button class="btn btn-success" (click)="abrirExpediente()">Abrir Expediente</button>
+
 </div> 
 <!-- =====================
 == FIN ALERTA
 ======================= --> 
 
-<div class="row animated fadeIn m-3" *ngIf="isValido && isCompleto && !hasPrograma">
-  <div class="col-12">
-    <app-programa (emitirHasPrograma)="addSolicitud($event)"></app-programa>
+
+
+
+<!-- =====================
+== DATOS DEL EXPEDIENTE
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf="expediente">
+  <div class="col-lg-8 col-md-6 col-sm-12">
+    <p>Fecha de apertura: {{ expediente.fecha_inicio | date: 'dd MMMM yyyy' }}</p>
   </div>
+  <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped  progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+    </div>
+  </div> -->
 </div>
 
+<!-- =====================
+== DATOS DEL EXPEDIENTE
+======================= --> 
 
 
 
-
-<div class="row animated fadeIn m-3" *ngIf="hasPrograma">
+<!-- =====================
+== TABLA
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf="!cargando && expediente">
   <div class="col-12">
-    <app-expediente></app-expediente>
+ 
+              <div class="table-responsive">
+                  <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                      <thead class="text-primary">
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col" style="width: 400px;">Archivo</th>
+                          <th scope="col">Fecha máxima de entrega</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Ver</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of expediente?.items;" class="manita" >
+                          <!-- <ng-container *ngIf="item.disponible"> -->
+                            <td>{{ item.numero }}</td>
+                            <td>{{ item.titulo }}</td>
+                            <td>{{ item.fecha_limite | date }}</td>
+                            <td>
+                              <span *ngIf="item.aceptado" class="badge badge-pill badge-success p-1">Aceptado</span>
+                              <span *ngIf="item.rechazado" class="badge badge-pill badge-danger p-1">Rechazado</span>
+                              <span *ngIf="item.pendiente" class="badge badge-pill badge-warning text-white p-1">En revisión</span>
+                              <span *ngIf="item.entrante && item.disponible" class="badge badge-pill badge-info p-1">Entrante</span>
+                              <span *ngIf="!item.iniciado && item.disponible" class="badge badge-pill badge-secondary p-1">No iniciado</span>
+                              <span *ngIf="!item.disponible">No disponible</span>
+                            </td>
+                            <td><a class="btn btn-info" [routerLink]="['/dashboard/expediente', item._id]" >Ver</a></td>
+                          <!-- </ng-container> -->
+                        </tr>
+                    
+                      </tbody>
+                  </table>    
+              </div>
+  
   </div>
-</div>
+</div> 
+<!-- =====================
+== FIN TABLA
+======================= --> 
 
