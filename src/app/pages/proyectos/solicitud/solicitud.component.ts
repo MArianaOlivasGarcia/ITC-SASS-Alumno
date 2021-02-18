@@ -27,6 +27,7 @@ export class SolicitudComponent implements OnInit {
     this.solicitudService.getById(id)
           .subscribe( solicitud => {
             this.solicitud = solicitud;
+            console.log(this.solicitud)
           })
   }
 

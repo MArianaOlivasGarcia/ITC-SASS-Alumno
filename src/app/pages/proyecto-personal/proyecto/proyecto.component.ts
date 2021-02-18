@@ -1,10 +1,12 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dependencia } from 'src/app/models/dependencia.model';
-import { Proyecto } from 'src/app/models/proyecto.model';
+import { Periodo } from 'src/app/models/periodo.model';
 import { Solicitud } from 'src/app/models/solicitud-proyecto.model';
 import { DependenciaService } from 'src/app/services/dependencia.service';
+import { PeriodoService } from 'src/app/services/periodo.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
 import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 import Swal from 'sweetalert2';
@@ -18,14 +20,15 @@ export class ProyectoComponent implements OnInit {
 
   public formSubmitted = false;
 
-  public proyectoForm: FormGroup;
   public solicitudForm: FormGroup;
-
+  
   public dependencias: Dependencia[] = [];
-  public solicitud: Solicitud; 
+  public solicitud: Solicitud;
+  public periodo: Periodo; 
 
   constructor( private fb: FormBuilder,
                private proyectoService: ProyectoService,
+               private periodoService: PeriodoService,
                private dependenciaService: DependenciaService,
                private solicitudService: SolicitudProyectoService,               
                private router: Router,
@@ -35,31 +38,33 @@ export class ProyectoComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.cargarPeriodoProximo();
     this.cargarDependencias();
 
-    this.activatedRoute.params.subscribe( ({ id }) => {
-      this.cargarProyecto( id );
-    });
-
-    this.proyectoForm = this.fb.group({
-      nombre: ['', Validators.required ],
-      dependencia: ['', Validators.required ],
-      objetivo: ['', Validators.required ],
-      actividades: ['', Validators.required ],
-      lugar_desempeno: ['', Validators.required ],
-      modalidad: [{value:'Público', disabled: true}],
-      tipo: ['', Validators.required ],
-      horario: ['', Validators.required ],
-      apoyo_economico: [false, Validators.required ],
-      responsable: ['', Validators.required ],
-      puesto_responsable: ['', Validators.required ],
-
+    this.activatedRoute.params.subscribe( ({ tool }) => {
+      if( tool == 'editar') {
+        this.cargarSolicitud();
+      }
     });
 
     this.solicitudForm = this.fb.group({
+      actividades: ['', Validators.required ],
+      apoyo_economico: [false, Validators.required ],
+      dependencia: ['', Validators.required ],
+      horario: ['', Validators.required ],
+      instalacion: [false,  Validators.required],
+      lugar_desempeno: ['', Validators.required ],
+      modalidad: [{value:'Público', disabled: true}],
+      nombre: ['', Validators.required ],
+      objetivo: ['', Validators.required ],
+      puesto_responsable: ['', Validators.required ],
+      responsable: ['', Validators.required ],
+      tipo: ['', Validators.required ],
+      // 
       inicio_servicio: ['', Validators.required ],
       termino_servicio: [{value: '', disabled: true}]
-    })
+    });
+
 
     
   }
@@ -73,32 +78,40 @@ export class ProyectoComponent implements OnInit {
   } 
 
 
-  cargarProyecto( id: string ): void{
+  cargarPeriodoProximo(): void{
+    this.periodoService.getPeriodoProximo()
+        .subscribe( periodo => {
+          this.periodo = periodo;
+        })
+  }
 
-    if ( id === 'nuevo' ) { return; }
 
-    this.solicitudService.getById( id )
-        .subscribe( solicitud => {
-          // TODO: SI NO ENCUENTRA EL PROYECTO O EL ENLACE ES INVENTADO
-          //  return this.router.navigateByUrl(`/dashboard/proyectos`);
+  cargarSolicitud(): void{
 
-          const { apoyo_economico,
-                  nombre,
-                  dependencia: { _id },
-                  objetivo,
-                  actividades,
-                  lugar_desempeno,
-                  modalidad,
-                  horario,
-                  tipo,
-                  responsable,
-                  puesto_responsable } = solicitud.proyecto;
-          const { inicio_servicio,
-                  termino_servicio } = solicitud
+      this.solicitudService.getSolicitudAndProyectoPersonal()
+          .subscribe( solicitud => {  
+
+          const { proyecto: { 
+                    apoyo_economico,
+                    instalacion,
+                    nombre,
+                    dependencia: { _id },
+                    objetivo,
+                    actividades,
+                    lugar_desempeno,
+                    modalidad,
+                    horario,
+                    tipo,
+                    responsable,
+                    puesto_responsable },
+                  inicio_servicio,
+                  termino_servicio } = solicitud;
 
           this.solicitud = solicitud;
+          
 
-          this.proyectoForm.setValue({ apoyo_economico,
+          this.solicitudForm.setValue({ apoyo_economico,
+                                       instalacion,
                                        nombre,
                                        dependencia: _id,
                                        objetivo,
@@ -108,10 +121,9 @@ export class ProyectoComponent implements OnInit {
                                        horario,
                                        tipo,
                                        responsable,
-                                       puesto_responsable});
-          this.solicitudForm.setValue({ inicio_servicio,
-                                        termino_servicio })
-
+                                       puesto_responsable,
+                                       inicio_servicio,
+                                       termino_servicio});
         });
 
   }
@@ -120,11 +132,11 @@ export class ProyectoComponent implements OnInit {
   guardar(): void {
 
     this.formSubmitted = true;
-    if ( this.proyectoForm.invalid || this.solicitudForm.invalid ) { return; }
+    if ( this.solicitudForm.invalid ) { return; }
 
-    const { nombre } = this.proyectoForm.value;
+    const { nombre } = this.solicitudForm.value;
 
-    if ( this.solicitud.proyecto ) {
+    if ( this.solicitud ) {
       
       Swal.fire({
         title: '¿Estas seguro?',
@@ -140,14 +152,14 @@ export class ProyectoComponent implements OnInit {
         if (result.isConfirmed) {
 
           // Actualizar
-          const proyecto = {
-            ... this.proyectoForm.value,
+          const { inicio_servicio, termino_servicio, ...proyecto } = this.solicitudForm.getRawValue();
+
+          const data = {
             _id: this.solicitud.proyecto._id,
+            ...proyecto
           };
         
-          const { inicio_servicio, termino_servicio } = this.solicitudForm.getRawValue()
-        
-          const solicitud = new Solicitud( proyecto, inicio_servicio, termino_servicio )
+          const solicitud = new Solicitud( data, inicio_servicio, termino_servicio )
           
           this.proyectoService.actualizarProyecto( solicitud )
           .subscribe( () => {
@@ -156,6 +168,7 @@ export class ProyectoComponent implements OnInit {
               text: `Proyecto ${nombre} actualizado con éxito.`,
               icon: 'success'
             });
+            this.router.navigateByUrl('/dashboard/proyecto-personal');
           }, err => {
             Swal.fire({
               title: 'Error',
@@ -170,7 +183,6 @@ export class ProyectoComponent implements OnInit {
 
     } else {
       // CREAR PROYECTO
-
       Swal.fire({
         title: '¿Estas seguro?',
         text: 'Al crear el proyecto no podrás seleccionar uno disponible en el Banco de Proyectos',
@@ -182,14 +194,13 @@ export class ProyectoComponent implements OnInit {
         cancelButtonText: 'NO'
       }).then((result) => {
 
-        const { inicio_servicio, termino_servicio } = this.solicitudForm.getRawValue()
+        const { inicio_servicio, termino_servicio, ...proyecto } = this.solicitudForm.getRawValue();
 
         const solicitud = new Solicitud(
-          this.proyectoForm.value,
+          proyecto,
           inicio_servicio,
           termino_servicio
         );
-
         if (result.isConfirmed) {
           this.proyectoService.crearProyecto(solicitud)
                 .subscribe( () => {
@@ -217,7 +228,7 @@ export class ProyectoComponent implements OnInit {
   campoNoValido( campo: string ): boolean {
 
 
-    if ( (this.proyectoForm.get(campo)?.invalid || this.solicitudForm.get(campo)?.invalid) && this.formSubmitted ) {
+    if ( this.solicitudForm.get(campo)?.invalid  && this.formSubmitted ) {
       return true;
     } else {
       return false;
@@ -227,27 +238,26 @@ export class ProyectoComponent implements OnInit {
 
 
   mensajesError( campo: string  ): string {
-    return this.proyectoForm.get(campo)?.hasError('required') ? `Este campo es requerido.` : 
-           this.solicitudForm.get(campo)?.hasError('required') ? `Este campo es requerido.` : 
-           this.solicitudForm.get(campo)?.hasError('noValido') ? `La fecha debe ser posterior a hoy.` : '';
+    return this.solicitudForm.get(campo)?.hasError('required') ? `Este campo es requerido.` : 
+           this.solicitudForm.get(campo)?.hasError('isMenor') ? `Esta fecha tiene que ser posterior ó igual a la fecha de inicio del periodo(${ formatDate( this.periodo.fecha_inicio, 'dd/MM/YYYY','es-mx') }).` :
+           this.solicitudForm.get(campo)?.hasError('isMayor') ? `Esta fecha tiene que ser menor ó igual a la fecha de termino del periodo(${ formatDate( this.periodo.fecha_termino, 'dd/MM/YYYY','es-mx') }).` : '';
   }
 
 
   cambiarFecha( value: any ) {
     let inicioServicio = new Date(value);
-    /* let inicioDisponible = new Date(this.proyecto.fecha_inicial); */
-    /* if ( inicioServicio.getTime() < inicioDisponible.getTime() ){
-      console.log('Es la menor fecha ')
-    } */
 
-    if ( inicioServicio.getTime() <= new Date().getTime() ){
-        this.solicitudForm.controls.inicio_servicio.setErrors({noValido: true});
-    }
-
+   if ( inicioServicio.getTime() < new Date(this.periodo.fecha_inicio).getTime() ){
+      this.solicitudForm.controls.inicio_servicio.setErrors({isMenor: true});
+    } else if ( inicioServicio.getTime() > new Date(this.periodo.fecha_termino).getTime() ){
+      this.solicitudForm.controls.inicio_servicio.setErrors({isMayor: true});
+    } 
+ 
     let terminoServicio =  new Date(inicioServicio.setMonth( inicioServicio.getMonth() + 6 ));
     let tDate =terminoServicio.toISOString().substring(0,10);
     this.solicitudForm.controls.termino_servicio.setValue(tDate);
   }
+
 
 
 }

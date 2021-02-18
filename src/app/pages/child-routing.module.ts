@@ -7,27 +7,28 @@ import { ExpedientePageComponent } from './expediente/expediente-page.component'
 import { ItemExpedienteComponent } from './expediente/item-expediente/item-expediente.component';
 import { MensajeComponent } from './mensajes/mensaje/mensaje.component';
 import { MensajesComponent } from './mensajes/mensajes.component';
-import { PerfilComponent } from './perfil/perfil.component';
-import { ProyectoComponent } from './proyectos/proyecto/proyecto.component';
+import { PerfilComponent } from './perfil/perfil.component'; 
+import { ProyectoPersonalComponent } from './proyecto-personal/proyecto-personal.component';
+import { ProyectoComponent } from './proyecto-personal/proyecto/proyecto.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
 import { SolicitudComponent } from './proyectos/solicitud/solicitud.component';
 
 const routes: Routes = [
-    { path: 'perfil',       component: PerfilComponent,       data: { titulo: 'Mi Perfil' } },
-    { path: 'proyecto/:id', component: ProyectoComponent,     data: { titulo: 'Proyecto' } },
-    { path: 'proyectos',    component: ProyectosComponent,    data: { titulo: 'Banco de Proyectos' } },
-    { path: 'expediente',   component: ExpedientePageComponent,   data: { titulo: 'Mi Expediente' } },
-    { path: 'expediente/:item',   component: ItemExpedienteComponent,   data: { titulo: 'Mi Expediente' } },
-    { path: 'mensajes',     component: MensajesComponent,     data: { titulo: 'Mensajes' } },
-    { path: 'chat/:id',     component: MensajeComponent,      data: { titulo: 'Chat' } },
-    { path: 'avisos',       component: AvisosComponent,       data: { titulo: 'Avisos' } },
-    { path: 'aviso/:id',    component: AvisoComponent,        data: { titulo: 'Aviso' } },
-    { path: 'solicitud/:id', component: SolicitudComponent,        data: { titulo: 'Solicitud' } },
-    { path: '',             component: DashboardComponent },
+    { path: 'perfil',            component: PerfilComponent,           data: { titulo: 'Mi Perfil' } },
+    { path: 'proyecto/:tool',    component: ProyectoComponent,         data: { titulo: 'Proyecto Personal' } },
+    { path: 'proyecto-personal', component: ProyectoPersonalComponent, data: { titulo: 'Proyecto Personal' } },
+    { path: 'proyectos',         component: ProyectosComponent,        data: { titulo: 'Banco de Proyectos' } },
+    { path: 'expediente',        component: ExpedientePageComponent,   data: { titulo: 'Mi Expediente' } },
+    { path: 'expediente/:item',  component: ItemExpedienteComponent,   data: { titulo: 'Mi Expediente' } },
+    { path: 'mensajes',          component: MensajesComponent,         data: { titulo: 'Mensajes' } },
+    { path: 'chat/:id',          component: MensajeComponent,          data: { titulo: 'Chat' } },
+    { path: 'avisos',            component: AvisosComponent,           data: { titulo: 'Avisos' } },
+    { path: 'solicitud/:id',     component: SolicitudComponent,        data: { titulo: 'Solicitud' } },
+    { path: '',                  component: DashboardComponent,        data: { titulo: 'Dashboard' } },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule] 
 })
 export class ChildRoutingModule { }

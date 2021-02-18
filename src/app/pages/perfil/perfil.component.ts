@@ -38,7 +38,12 @@ export class PerfilComponent implements OnInit {
       apellido_materno: [this.usuario.apellido_materno],
       sexo: [this.usuario.sexo],
       fecha_nacimiento: [this.usuario.fecha_nacimiento],
-      domicilio: [this.usuario.domicilio, Validators.required ],
+      /* domicilio: [this.usuario.domicilio, Validators.required ], */
+      domicilio: this.fb.group({
+        calle_numero: [''],
+        colonia: [''],
+        ciudad_estado: ['']
+      }),
       telefono: [this.usuario.telefono, [Validators.required, Validators.minLength(10), Validators.maxLength(10)] ],
       email: [this.usuario.email, [Validators.required, Validators.email] ],
       numero_seguro: [this.usuario.numero_seguro, Validators.required ],
@@ -169,8 +174,8 @@ export class PerfilComponent implements OnInit {
   mensajesError( formGroup: FormGroup, campo: string  ): string {
     return formGroup.get(campo)?.hasError('required') ? `Este campo es requerido.` :
            formGroup.get(campo)?.hasError('email') ? `Correo electrónico no valido.` :
-           formGroup.get(campo)?.hasError('maxlength') ? `Máximo 8 caracteres.` :
-           formGroup.get(campo)?.hasError('minlength') ? `Mínimo 8 caracteres.` :
+           formGroup.get(campo)?.hasError('maxlength') ? `Máximo 10 caracteres.` :
+           formGroup.get(campo)?.hasError('minlength') ? `Mínimo 10 caracteres.` :
            formGroup.get(campo)?.hasError('requiredTrue') ? `Debe aceptar la Política de privacidad.` :
            formGroup.get(campo)?.hasError('noIgual') ? `Las contraseñas no coinciden.` : '';
   }

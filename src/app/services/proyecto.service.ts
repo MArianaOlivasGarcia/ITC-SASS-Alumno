@@ -88,24 +88,6 @@ export class ProyectoService {
     });
   }
 
-  
-
-
-
-  getPersonal(): Observable<any> {
-    const url =  `${ base_url }/proyecto/alumno/personal`;
-    const token = localStorage.getItem('accessToken') || '';
-
-    return this.http.get( url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    
-  }
-
-
-
   getByAlumno(): Observable<any> {
     const url =  `${ base_url }/proyecto/alumno`;
     const token = localStorage.getItem('accessToken') || '';

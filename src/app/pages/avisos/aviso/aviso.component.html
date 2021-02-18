@@ -1,1 +1,31 @@
-<p>aviso works!</p>
+
+<div *ngIf="modalService.modal" class="fondo-modal">
+    <div class="modal" tabindex="-1" role="dialog"  style="display:block;">
+      <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
+        <!-- modal-dialog-centered  -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{aviso.titulo}}</h5>
+            <button (click)="cerrarModal()" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+  
+            <div class="row animated fadeIn fast m-3" *ngIf="solicitud">
+              <div class="col-12">
+  
+                
+              
+      
+              </div>
+            </div>
+  
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="cerrarModal()" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

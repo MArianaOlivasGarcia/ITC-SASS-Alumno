@@ -1,4 +1,3 @@
-
 <div *ngIf="modalService.modal" class="fondo-modal">
   <div class="modal" tabindex="-1" role="dialog"  style="display:block;">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -14,11 +13,6 @@
 
           <div class="row animated fadeIn fast m-3" *ngIf="proyecto">
             <div class="col-12">
-
-
-              <p class="m-0"><strong>Proyecto disponible </strong>del <strong>{{ proyecto.fecha_inicial | date }}</strong> al <strong>{{ proyecto.fecha_limite | date }}</strong></p>
-
-              <br>
 
               <ul class="list-group text-dark mb-3">
                 
@@ -165,7 +159,7 @@
                     <div *ngIf="campoNoValido('inicio_servicio')" class="invalid-feedback">
                       {{ mensajesError('inicio_servicio') }}
                     </div> 
-                  </div>           
+                  </div>            
                   <div class="form-group col-md-6">
                     <label>Fecha Terminación</label>
                     <input type="date" 

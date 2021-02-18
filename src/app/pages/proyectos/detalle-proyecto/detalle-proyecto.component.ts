@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Proyecto } from 'src/app/models/proyecto.model';
@@ -12,7 +13,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detalle-proyecto.component.css']
 })
 export class DetalleProyectoComponent implements OnInit {
-
   @Input() proyecto: Proyecto;
   @Output() emitirSolicitud = new EventEmitter<Solicitud>();
   public solicitud: Solicitud;
@@ -32,6 +32,8 @@ export class DetalleProyectoComponent implements OnInit {
       termino_servicio: [{value: '', disabled: true}]
     })
 
+    console.log(this.proyecto.periodo) 
+
   }
 
 
@@ -44,7 +46,7 @@ export class DetalleProyectoComponent implements OnInit {
 
     this.formSubmitted = true;
     if ( this.solicitudForm.invalid ) { return; }
-
+ 
     Swal.fire({
       title: '¿Estas seguro?',
       text: '¿Estas seguro que deseas postularte a este proyecto?',
@@ -63,7 +65,6 @@ export class DetalleProyectoComponent implements OnInit {
           ...this.solicitudForm.getRawValue(),
           proyecto: this.proyecto
         }
-
         this.solicitudService.createSolicitud(data)
             .subscribe( ({solicitud, message}) => {
               Swal.fire({
@@ -105,25 +106,23 @@ export class DetalleProyectoComponent implements OnInit {
 
   mensajesError( campo: string  ): string {
     return this.solicitudForm.get(campo)?.hasError('required') ? `Este campo es requerido.` :
-           this.solicitudForm.get(campo)?.hasError('noValido') ? `La fecha tiene que ser posterior a hoy.` : '';
+           this.solicitudForm.get(campo)?.hasError('isMenor') ? `Esta fecha tiene que ser posterior ó igual a la fecha de inicio del periodo(${ formatDate(this.proyecto.periodo.fecha_inicio, 'dd/MM/YYYY','es-mx') }).` :
+           this.solicitudForm.get(campo)?.hasError('isMayor') ? `Esta fecha tiene que ser menor ó igual a la fecha de termino del periodo(${ formatDate(this.proyecto.periodo.fecha_termino, 'dd/MM/YYYY','es-mx') }).` : '';
   } 
 
 
   cambiarFecha( value: any ) {
     let inicioServicio = new Date(value);
-    /* let inicioDisponible = new Date(this.proyecto.fecha_inicial); */
-    /* if ( inicioServicio.getTime() < inicioDisponible.getTime() ){
-      console.log('Es la menor fecha ')
-    } */
-
-    if ( inicioServicio.getTime() <= new Date().getTime() ){
-        this.solicitudForm.controls.inicio_servicio.setErrors({noValido: true});
+    
+    if ( inicioServicio.getTime() < new Date(this.proyecto.periodo.fecha_inicio).getTime() ){
+        this.solicitudForm.controls.inicio_servicio.setErrors({isMenor: true});
+    } else if ( inicioServicio.getTime() > new Date(this.proyecto.periodo.fecha_termino).getTime() ){
+      this.solicitudForm.controls.inicio_servicio.setErrors({isMayor: true});
     }
 
     let terminoServicio =  new Date(inicioServicio.setMonth( inicioServicio.getMonth() + 6 ));
     let tDate =terminoServicio.toISOString().substring(0,10);
     this.solicitudForm.controls.termino_servicio.setValue(tDate);
   }
-
 
 }

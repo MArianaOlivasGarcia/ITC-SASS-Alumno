@@ -6,6 +6,11 @@ export class Periodo {
         public fecha_termino: Date,
         public nombre?: string,
         public isActual?: boolean,
+        public isProximo?: boolean,
+        public recepcion_solicitudes?: {
+            fecha_inicio: Date,
+            fecha_termino: Date,
+        },
         public _id?: string
-    ){}
+    ){} 
 }

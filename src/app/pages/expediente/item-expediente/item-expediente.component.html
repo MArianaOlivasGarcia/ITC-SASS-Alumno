@@ -1,5 +1,12 @@
 
-<h5>{{ item?.titulo }}</h5>
+<h5>{{ item?.titulo }}
+  <small>
+    <span *ngIf="item?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
+    <span *ngIf="!item?.iniciado" class="badge badge-pill badge-secondary text-white text-capitalize p-1 ml-1">No iniciado</span>
+    <span *ngIf="item?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
+    <span *ngIf="item?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
+  </small>
+</h5>
 <hr>
 
 <!-- =====================
@@ -67,19 +74,31 @@
 <!-- =====================
 == VISTA DOCUMENTO
 ======================= -->
-<h1 *ngIf="item?.archivo || item?.archivoTemp">DOCUMENTO</h1>
-<!-- =====================
+<ngx-doc-viewer *ngIf="item?.archivo || item?.archivoTemp"
+  url="https://www.gob.mx/guiasinteroperabilidad/contenido_gral/formatos_gral/formato_g14_f4.docx"
+  viewer="office" 
+  style="width:100%;height:80vh;">
+</ngx-doc-viewer>
+<!-- ===================== 
 == FIN VISTA DEL DOCUMENTO
 ======================= -->
 
 
 
-<div class="row d-flex justify-content-center" *ngIf="!item?.aceptado">
+
+<!-- ===================== 
+== BOTÓN GENERAR ARCHIVO
+======================= -->
+<div class="row d-flex justify-content-center" *ngIf="!cargando && !item?.aceptado && !item?.pendiente">
     <div class="col-md-4 text-center">
         <button class="btn btn-success btn-block"
                 (click)="generarDocumento()">Generar Archivo</button> 
     </div>
 </div>
+<!-- ===================== 
+== FIN BOTÓN GENERAR ARCHIVO
+======================= -->
+
 
 
 
@@ -118,3 +137,6 @@
   <!-- =====================
   == FIN UPLOAD
   ======================= --> 
+
+
+  <br>

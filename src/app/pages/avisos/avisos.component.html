@@ -1,1 +1,98 @@
-<p>avisos works!</p>
+<h4>Avisos</h4>
+<hr>
+
+
+
+<!-- =====================
+== MODAL
+======================= -->
+<app-aviso *ngIf="avisoSeleccionado" 
+            [aviso] ="avisoSeleccionado"></app-aviso>
+<!-- =====================
+== FIN MODAL
+======================= -->
+
+
+<!-- =====================
+== BUSCAR
+======================= -->
+<div class="row animated fadeIn faster">
+    <div class="col-12">
+      <input type="text"
+            class="form-control"
+            placeholder="Buscar aviso..."
+            (keyup)="buscar( inputTermino.value )"
+            #inputTermino >
+    </div>
+</div> 
+<!-- =====================
+== FIN BUSCAR
+======================= -->
+
+
+
+<!-- =====================
+== CARDS AVISOS
+======================= -->
+
+<div class="row animated fadeIn fast  m-3">
+
+    <div class="card-columns" *ngIf="!cargando && avisos.length > 0">
+
+        <div class="card manita" 
+            *ngFor="let aviso of avisos"
+            (click)="abrirModal( aviso )">
+            <img [src]="aviso.foto | imagen: 'avisos'" class="card-img-top" [alt]="aviso.titulo" *ngIf="aviso.foto">
+            <div class="card-body">
+              <h5 class="card-title">{{aviso.titulo}}</h5>
+              <p class="card-text">{{aviso.descripcion}}</p>
+              <p class="card-text"><small class="text-muted">{{aviso.fecha_publicacion}}</small></p>
+            </div>
+        </div>
+    
+    </div>
+
+
+</div>
+
+<div class="text-center pb-3" *ngIf="inputTermino.value.length === 0">
+    <button (click)="cambiarPagina( -10 )" class="btn btn-secondary mr-2">Anterior</button>
+    <button (click)="cambiarPagina( 10 )" class="btn btn-secondary">Siguiente</button>
+</div>
+<!-- =====================
+== FIN CARDS AVISOS
+======================= -->
+
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+  
+<!-- =====================
+== MENSAJE NO HAY REGISTROS
+======================= -->
+<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && avisos.length == 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">No hay registros</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </div> 
+    </div>
+</div>
+<!-- =====================
+== FIN MENSAJE NO HAY REGISTROS
+======================= -->

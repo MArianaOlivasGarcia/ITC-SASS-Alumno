@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Proyecto } from '../models/proyecto.model';
 import { Solicitud } from '../models/solicitud-proyecto.model';
@@ -51,8 +51,8 @@ export class SolicitudProyectoService {
   }
 
 
-
-  getAceptadoByAlumno(): Observable<any> {
+  // TODO: Verificar
+  /* getAceptadoByAlumno(): Observable<any> {
 
     const url = `${ base_url }/solicitud/alumno/aceptado`;
     const token = localStorage.getItem('accessToken') || '';
@@ -64,6 +64,22 @@ export class SolicitudProyectoService {
       map( (resp: {status: boolean, proyecto: Proyecto}) => resp.proyecto )
     );
 
+  } */
+
+
+
+  getSolicitudAndProyectoPersonal(): Observable<any> {
+    const url =  `${ base_url }/solicitud/alumno/personal`;
+    const token = localStorage.getItem('accessToken') || '';
+
+    return this.http.get( url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      map( (resp: {status: boolean, solicitud: Solicitud}) => resp.solicitud )
+    );
+    
   }
 
 }

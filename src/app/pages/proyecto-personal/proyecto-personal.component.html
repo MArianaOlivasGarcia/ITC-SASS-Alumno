@@ -1,0 +1,209 @@
+
+<h5>Proyecto Personal
+  <small>
+    <span *ngIf="solicitud?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
+    <span *ngIf="solicitud?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
+    <span *ngIf="solicitud?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
+</small>
+</h5>
+<hr>
+
+<!-- =====================
+== AGREGAR
+======================= -->
+ <div class="row text-right mt-3" *ngIf="!cargando && !solicitud">
+    <div class="col">
+        <button class="btn btn-primary"
+            routerLink="/dashboard/proyecto/nuevo">
+            <i class="fas fa-plus mr-2"></i>Crear
+        </button>   
+    </div>
+</div>
+
+
+<!-- =====================
+== FIN AGREGAR
+======================= -->
+
+
+
+<!-- =====================
+== DETALLE PROYECTO
+======================= -->
+<div class="row animated fadeIn fast m-3" *ngIf="!cargando && solicitud">
+
+    <div class="col-md-8">
+        
+        <p class="m-0"><strong>Servicio social </strong>del <strong>{{ solicitud.inicio_servicio | date }}</strong> al <strong>{{ solicitud.termino_servicio | date }}</strong></p>
+
+              <br>
+
+              <ul class="list-group text-dark mb-3">
+                
+                <li class="list-group-item active"><p class="m-0"><strong>{{solicitud.proyecto.nombre}}</strong></p></li>
+                
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3 text-bold">
+                    <strong>Dependencia:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.dependencia.nombre}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3 text-bold">
+                    <strong>Responsable:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.responsable}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Objetivo:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.objetivo}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Actividades:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.actividades}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Periodo:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.periodo.nombre}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Lugar de Desempeño:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.lugar_desempeno}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Modalidad:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.modalidad}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Tipo:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.tipo}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Horario:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{solicitud.proyecto.horario}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Apoyo Económico:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0" *ngIf="solicitud.proyecto.apoyo_economico">SI</p>
+                      <p class="m-0" *ngIf="!solicitud.proyecto.apoyo_economico">NO</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item" *ngIf="solicitud?.rechazado">
+                    <div class="row">
+                      <div class="col mt-md-0 mt-1 text-right">
+                        <a [routerLink]="['/dashboard/proyecto/editar']" 
+                           class="btn btn-info"><i class="fa fa-pen"></i></a>
+                      </div>
+                    </div>
+                  </li>
+
+              </ul>
+
+    </div>
+
+</div>
+
+
+<!-- =====================
+== FIN DETALLE PROYECTO
+======================= -->
+
+
+<!-- <iframe src="http://docs.google.com/gview?url=http://www.snee.com/xml/xslt/sample.doc&embedded=true" style="width:500px; height:500px;" frameborder="0"></iframe>-->
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            <p class="mb-0">Espere por favor</p>
+        </div> 
+    </div>
+  </div>
+  <!-- =====================
+  == FIN MENSAJE CARGANDO
+  ======================= -->
+  
+  
+  <!-- =====================
+  == MENSAJE NO HAY REGISTROS
+  ======================= -->
+  <div class="row animated fadeIn faster mt-3" *ngIf="!cargando && !solicitud">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">No tienes un proyecto personal.</h4>
+            <p class="m-0">Al crear un proyecto personal no podras seleccionar alguno de los disponibles en el <strong>Banco de Proyectos.</strong></p>
+        </div> 
+    </div>
+  </div>
+  <!-- =====================
+  == FIN MENSAJE NO HAY REGISTROS
+  ======================= -->

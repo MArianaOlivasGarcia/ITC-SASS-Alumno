@@ -120,19 +120,9 @@
         </div>
 
 
+
         <div class="form-row">
-          <div class="form-group col-md-8">
-            <label>Domicilio</label>
-            <input type="text" 
-                   class="form-control"
-                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'domicilio') }"
-                   placeholder="Domicilio"
-                   formControlName="domicilio">
-             <div *ngIf="campoNoValido( usuarioForm, 'domicilio')" class="invalid-feedback">
-              {{ mensajesError( usuarioForm, 'domicilio') }}
-            </div>
-          </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-3">
             <label>Teléfono</label>
             <input type="text" 
                    class="form-control"
@@ -143,11 +133,7 @@
               {{ mensajesError( usuarioForm, 'telefono') }}
             </div>
           </div>
-        </div>
-
-
-        <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-5">
             <label>Correo electrónico</label>
             <input type="text" 
                    class="form-control"
@@ -158,7 +144,7 @@
               {{ mensajesError( usuarioForm, 'email') }}
             </div>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <label>Número de Seguro Social</label>
             <input type="text" 
                    class="form-control"
@@ -169,6 +155,46 @@
               {{ mensajesError( usuarioForm, 'numero_seguro') }}
             </div>
           </div>
+        </div>
+
+        
+        <p>Domicilio Completo</p>
+        <div class="form-row"  formGroupName="domicilio">
+
+          <div class="form-group col-md-4">
+            <label>Calle y Numero</label>
+            <input type="text" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'calle_numero') }"
+                   placeholder="Calle y Numero"
+                   formControlName="calle_numero">
+             <div *ngIf="campoNoValido( usuarioForm, 'calle_numero')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'calle_numero') }}
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Colonia</label>
+            <input type="text" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'colonia') }"
+                   placeholder="Colonia"
+                   formControlName="colonia">
+             <div *ngIf="campoNoValido( usuarioForm, 'colonia')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'colonia') }}
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Ciudad y Estado</label>
+            <input type="text" 
+                   class="form-control"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'ciudad_estado') }"
+                   placeholder="Ciudad y Estado"
+                   formControlName="ciudad_estado">
+             <div *ngIf="campoNoValido( usuarioForm, 'ciudad_estado')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'ciudad_estado') }}
+            </div>
+          </div>
+          
         </div>
 
         <br>

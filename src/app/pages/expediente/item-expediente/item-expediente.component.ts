@@ -17,6 +17,9 @@ export class ItemExpedienteComponent implements OnInit {
   public archivoTemporal: any;
   public cargando: boolean = true;
 
+  fileUrl = 'http://localhost:3000/uploads/expedientes/17530051-ITC-VI-PO-002-05.docx';
+
+
   constructor( private expedienteService: ExpedienteService,
                private activatedRoute: ActivatedRoute,
                private fileUploadService: FileUploadService) { }
@@ -26,12 +29,14 @@ export class ItemExpedienteComponent implements OnInit {
     this.activatedRoute.params.subscribe( ({ item }) => {
       this.cargarItemExpediente( item );
     });
+
   }
 
 
   cargarItemExpediente( id: string ): void {
     this.expedienteService.getItemExpediente( id )
             .subscribe( item => {
+              console.log(item)
               this.cargando = false
               this.item = item
             })

@@ -24,11 +24,24 @@ export class PeriodoService {
                                   periodo.fecha_termino,
                                   periodo.nombre,
                                   periodo.isActual,
+                                  periodo.isProximo,
+                                  periodo.recepcion_solicitudes,
                                   periodo._id) );
           return periodos;
         })
       );
 
   }
+
+  getPeriodoProximo(): Observable<any> {
+
+    return this.http.get(`${base_url}/periodo/proximo`)
+        .pipe(
+          map( (resp: { status: boolean, periodo: Periodo } ) => resp.periodo )
+        );
+
+  }
+  
+
   
 }

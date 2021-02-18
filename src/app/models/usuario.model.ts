@@ -24,7 +24,11 @@ export class Usuario {
         public firma?: string,
         public email?: string,
         public telefono?: string,
-        public domicilio?: string,
+        public domicilio?: {
+            calle_numero: string,
+            colonia: string,
+            ciudad_estado: string,
+        },
         public numero_seguro?: string,
         /* public proyecto?: Proyecto,*/
         /* public expediente?: Expediente, */
@@ -44,7 +48,7 @@ export class Usuario {
     }
 
     get firmaUrl(): string {
-        if ( this.foto ) {
+        if ( this.firma ) {
             return `${ base_url }/upload/firma/alumnos/${ this.firma }`;
         } else {
             return `${ base_url }/upload/no-image/no-image`;

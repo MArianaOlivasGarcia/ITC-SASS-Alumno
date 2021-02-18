@@ -6,7 +6,7 @@
 <!-- =====================
 == ALERTA PERFIL COMPLETO
 ======================= --> 
-<div class="row animated fadeIn m-3" *ngIf="!isCompleto">
+<div class="row animated fadeIn m-3" *ngIf=" !isCompleto">
   <div class=" col alert alert-warning" role="alert">
     <p class="mb-0" *ngIf="!usuario.terminos">• Es necesario que completes tus datos personales.</p>
     <p class="mb-0" *ngIf="!usuario.firma">• Es necesario que tengas una firma digital.</p>
@@ -17,17 +17,26 @@
 <!-- =====================
 == FIN ALERTA PERFIL COMPLETO
 ======================= --> 
-
-
+<!-- =====================
+== ALERTA NO TIENE PROYECTO
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf="!cargando && isCompleto && !proyecto" >
+  <div class=" col alert alert-warning" role="alert">
+    <p class="mb-0">Para poder abrir un expediente tienes que tener asignado un Proyecto.
+    <a routerLink="/dashboard/proyectos" class="alert-link">Ir a Banco de Proyectos.</a></p>
+  </div>
+</div>
+<!-- =====================
+== FIN ALERTA NO TIENE PROYECTO
+======================= --> 
 
 
 <!-- =====================
 == ALERTA PROYECTO ASIGNADO
 ======================= --> 
-<div class="row animated fadeIn m-3" *ngIf="!hasProyecto && isCompleto" >
+<div class="row animated fadeIn m-3" *ngIf="!cargando && isCompleto && proyecto && !expediente" >
   <div class=" col alert alert-warning" role="alert">
-    <p class="mb-0">Para poder abrir un expediente tienes que tener asignado un Proyecto.
-    <a routerLink="/dashboard/proyectos" class="alert-link">Ir a Banco de Proyectos.</a></p>
+    <p class="mb-0">Ya se ha aceptado tu Solicitud de Servicio Social. Espera a que el administrador habilite la apertura del expediente.
   </div>
 </div>
 <!-- =====================
@@ -35,34 +44,12 @@
 ======================= --> 
 
 
-
-<!-- =====================
-== ALERTA
-======================= --> 
-
-<div class="row animated fadeIn m-3" *ngIf="hasProyecto && isCompleto && !expediente">
-  <div class=" col-12 alert alert-info" role="alert">
-    <p class="mb-0">• Verifica que los datos de tu programa sean correctos. </p>
-    <hr>
-    <p class="mb-0">Si necesitas ayuda, comunicate con el <strong>Departamento de Gestión y Vinculación</strong>.</p>
-  </div>
-
-  <button class="btn btn-success" (click)="abrirExpediente()">Abrir Expediente</button>
-
-</div> 
-<!-- =====================
-== FIN ALERTA
-======================= --> 
-
-
-
-
 <!-- =====================
 == DATOS DEL EXPEDIENTE
 ======================= --> 
-<div class="row animated fadeIn m-3" *ngIf="expediente">
+<div class="row animated fadeIn" *ngIf="!cargando && expediente">
   <div class="col-lg-8 col-md-6 col-sm-12">
-    <p>Fecha de apertura: {{ expediente.fecha_inicio | date: 'dd MMMM yyyy' }}</p>
+    <p class="m-0">Fecha de apertura: {{ expediente.fecha_inicio | date: 'dd MMMM yyyy' }}</p>
   </div>
   <!-- <div class="col-lg-4 col-md-6 col-sm-12">
     <div class="progress">
@@ -84,7 +71,7 @@
   <div class="col-12">
  
               <div class="table-responsive">
-                  <table class="table table-borderless table-hover mt-3 animated fadeIn faster">
+                  <table class="table table-borderless table-hover">
                       <thead class="text-primary">
                         <tr>
                           <th scope="col">#</th>
@@ -108,7 +95,7 @@
                               <span *ngIf="!item.iniciado && item.disponible" class="badge badge-pill badge-secondary p-1">No iniciado</span>
                               <span *ngIf="!item.disponible">No disponible</span>
                             </td>
-                            <td><a class="btn btn-info" [routerLink]="['/dashboard/expediente', item._id]" >Ver</a></td>
+                            <td><a class="btn btn-sm btn-info" [routerLink]="['/dashboard/expediente', item._id]" >Ver</a></td>
                           <!-- </ng-container> -->
                         </tr>
                     

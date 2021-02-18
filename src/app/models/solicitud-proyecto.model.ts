@@ -13,11 +13,12 @@ export class Solicitud {
         public pendiente?: boolean,
         public aceptado?: boolean,        
         public rechazado?: boolean,
-        public usuario_reviso?: any,
+        public usuario_valido?: any,
         public error?: {
             motivo: string,
             observacion: string
         },
+        public fecha_validacion?: Date,
         public _id?: string
     ){}
 

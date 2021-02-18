@@ -26,7 +26,6 @@ export class ProyectosComponent implements OnInit {
   public solicitud: Solicitud;
   public usuario: Usuario;
 
-  public editMiProyecto: boolean = false;
 
   constructor( private proyectoService: ProyectoService,
                private authService: AuthService,
@@ -50,12 +49,9 @@ export class ProyectosComponent implements OnInit {
   cargarSolicitud(): void {
     this.solicitudService.getByAlumno()
             .subscribe( ({solicitud}) => {
-              if ( solicitud ) {
+              /* if ( solicitud ) { */
                 this.solicitud = solicitud;
-                if( !solicitud.publico && solicitud.rechazado ) {
-                  this.editMiProyecto = true;
-                }
-              }
+              /* } */
             })
   }
 
@@ -100,7 +96,7 @@ export class ProyectosComponent implements OnInit {
   cambiarPagina( valor: number ): void {
 
     this.desde += valor;
-
+ 
     if ( this.desde < 0 ) {
       this.desde = 0;
     } else if ( this.desde >= this.totalProyectos ) {

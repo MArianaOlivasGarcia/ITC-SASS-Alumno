@@ -17,7 +17,7 @@ export class ExpedienteService {
   constructor( private http: HttpClient ) { }
 
 
-  crearExpediente(): Observable<any> {
+  /* crearExpediente(): Observable<any> {
     const url = `${ base_url }/expediente/create`;
     const token = localStorage.getItem('accessToken') || '';
     return this.http.get( url,{
@@ -27,7 +27,7 @@ export class ExpedienteService {
     }).pipe(
       map( (resp: {status: boolean, expediente: Expediente}) => resp.expediente )
     );
-  }
+  } */
 
 
 

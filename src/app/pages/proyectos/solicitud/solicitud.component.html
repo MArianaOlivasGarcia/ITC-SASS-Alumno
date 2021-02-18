@@ -1,22 +1,36 @@
-<h5>Solicitud de Proyecto de <small>{{solicitud?.alumno.nombre}}</small>
-    <small>
-            <span *ngIf="solicitud?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
-            <span *ngIf="solicitud?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
-            <span *ngIf="solicitud?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
-    </small>
-  </h5>
+<h4>Solicitud de Servicio Social
+  <small>
+          <span *ngIf="solicitud?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
+          <span *ngIf="solicitud?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
+          <span *ngIf="solicitud?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
+  </small>
+</h4>
   
-  <hr>
+<hr>
 
+<!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right">
+  <div class="col">
+      <button class="btn btn-danger"
+          routerLink="/dashboard/proyectos">
+          <i class="fas fa-arrow-left mr-2"></i>Regresar
+      </button>
+  </div>
+</div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= -->   
 
  
 <!-- =====================
 == MENSAJE SOLICITUD PENDIENTE
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.pendiente">
+<div class="row animated fadeIn faster m-3" *ngIf="this.solicitud?.pendiente">
     <div class="col-12">
         <div class="alert alert-warning">
-            <p class="m-0">Tu solicitud de proyecto se ha enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta.</p>
+            <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> se ha enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta.</p>
         </div> 
     </div>
   </div>
@@ -26,10 +40,10 @@
 <!-- =====================
 == MENSAJE SOLICITUD RECHAZADA
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.rechazado">
+<div class="row animated fadeIn faster m-3" *ngIf="this.solicitud?.rechazado">
     <div class="col-12">
         <div class="alert alert-danger">
-            <p class="m-0">Tu solicitud de proyecto se ha sido <strong>rechazada</strong>.</p>
+            <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> ha sido <strong>rechazada</strong>.</p>
             <p class="m-0"><strong>Motivo:</strong> {{ solicitud?.error?.motivo }}</p>
             <p class="m-0"><strong>Observación:</strong> {{ solicitud?.error?.observacion }}</p>
         </div> 
@@ -42,16 +56,20 @@
 <!-- =====================
 == MENSAJE SOLICITUD ACEPTADA
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.aceptado">
+<div class="row animated fadeIn faster m-3" *ngIf="solicitud?.aceptado">
     <div class="col-12">
         <div class="alert alert-success">
-            <p class="m-0">Tu solicitud de proyecto se ha sido <strong>aceptada</strong>.</p>
+            <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> ha sido <strong>aceptada</strong>.</p>
+            <hr>
+            <button class="btn btn-success"><i class="fas fa-file-download mr-2"></i>Descargar Archivo</button>
         </div> 
     </div>
   </div>
 <!-- =====================
 == FIN MENSAJE SOLICITUD ACEPTADA
 ======================= -->
+
+
 
 
 <!-- =====================
@@ -74,7 +92,10 @@
   
                   <ul class="list-group text-dark mb-3">
                     
-                    <li class="list-group-item active"><p class="m-0"><strong>Datos de la Dependencia</strong></p></li>
+                    <li class="list-group-item active"
+                    [class.aceptado]="solicitud?.aceptado"
+                    [class.pendiente]="solicitud?.pendiente"
+                    [class.rechazado]="solicitud?.rechazado"><p class="m-0"><strong>Datos de la Dependencia</strong></p></li>
                     
                     <li class="list-group-item">
                       <div class="row">
@@ -135,7 +156,10 @@
   
                   <ul class="list-group text-dark mb-3">
                     
-                    <li class="list-group-item active"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
+                    <li class="list-group-item active"
+                    [class.aceptado]="solicitud?.aceptado"
+                    [class.pendiente]="solicitud?.pendiente"
+                    [class.rechazado]="solicitud?.rechazado"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
                     
                     <li class="list-group-item">
                       <div class="row">
@@ -285,3 +309,15 @@
 == FIN INFORMACIÓN
 ======================= -->
   
+<!-- =====================
+== INFO VALIDACIÓN
+======================= --> 
+<div class="row animated fadeIn m-3 text-right" *ngIf="solicitud && !solicitud?.pendiente">
+  <div class="col">
+    <p class="mb-0"><strong>Usuario que valido:</strong> {{solicitud?.usuario_valido.nombre}}.</p>
+    <p class="mb-0"><strong>Fecha de validación:</strong> {{solicitud?.fecha_validacion | date}}.</p>
+  </div>
+</div>
+<!-- =====================
+== FIN INFO VALIDACIÓN
+======================= --> 
