@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilComponent } from './perfil/perfil.component';
@@ -20,6 +21,10 @@ import { DetalleProyectoComponent } from './proyectos/detalle-proyecto/detalle-p
 import { SignaturePadComponent } from './components/signature-pad/signature-pad.component';
 import { UploadFileComponent } from './components/expediente/upload-file/upload-file.component';
 import { SolicitudComponent } from './proyectos/solicitud/solicitud.component';
+import { ExpedienteComponent } from './expediente/expediente/expediente.component';
+import { AvisoPrivacidadComponent } from './perfil/aviso-privacidad/aviso-privacidad.component';
+import { DependenciasComponent } from './dependencias/dependencias.component';
+import { DetalleDependenciaComponent } from './dependencias/detalle-dependencia/detalle-dependencia.component';
 
 import { ImagenPipe } from '../pipes/imagen.pipe';
 
@@ -27,9 +32,8 @@ import { environment } from '../../environments/environment';
 
 // SOCKETS
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { ExpedienteComponent } from './expediente/expediente/expediente.component';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
-import { AvisoPrivacidadComponent } from './perfil/aviso-privacidad/aviso-privacidad.component';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+import { ArchivoPipe } from '../pipes/archivo.pipe';
 
 const token = localStorage.getItem('accessToken') || '';
 
@@ -45,6 +49,7 @@ const config: SocketIoConfig = {
 @NgModule({
   declarations: [
     ImagenPipe,
+    ArchivoPipe,
     DashboardComponent,
     ExpedientePageComponent,
     ItemExpedienteComponent,
@@ -62,14 +67,16 @@ const config: SocketIoConfig = {
     SolicitudComponent,
     ExpedienteComponent,
     ProyectoPersonalComponent,
-    AvisoPrivacidadComponent],
+    AvisoPrivacidadComponent,
+    DependenciasComponent,
+    DetalleDependenciaComponent ],
   imports: [
     CommonModule,
     AppRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    NgxDocViewerModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    NgxExtendedPdfViewerModule
   ],
   exports: []
 })

@@ -4,7 +4,7 @@ import { Solicitud } from 'src/app/models/solicitud-proyecto.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { BusquedaService } from 'src/app/services/busqueda.service';
-import { ModalProyectoService } from 'src/app/services/modal-proyecto.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { ProyectoService } from 'src/app/services/proyecto.service';
 import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 
@@ -23,7 +23,7 @@ export class ProyectosComponent implements OnInit {
 
   public proyectoSeleccionado: Proyecto;
 
-  public solicitud: Solicitud;
+  public solicitud: Solicitud; 
   public usuario: Usuario;
 
 
@@ -31,7 +31,7 @@ export class ProyectosComponent implements OnInit {
                private authService: AuthService,
                private busquedaService: BusquedaService,
                private solicitudService: SolicitudProyectoService,
-               private modalService: ModalProyectoService ) {
+               private modalService: ModalService ) {
     this.usuario = this.authService.usuario;
   }
 
@@ -79,7 +79,7 @@ export class ProyectosComponent implements OnInit {
       return;
     }
 
-    this.busquedaService.busqueda( this.authService.usuario.carrera, termino )
+    this.busquedaService.busquedaProyectoByCarrera( this.authService.usuario.carrera, termino )
         .subscribe( resp => this.proyectos = resp );
 
   }

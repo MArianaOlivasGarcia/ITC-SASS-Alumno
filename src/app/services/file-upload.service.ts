@@ -65,7 +65,18 @@ export class FileUploadService {
   }
 
 
+  getArchivo( archivo: string ): Observable<any> {
 
+    const url = `${ base_url }/file/archivo/${ archivo }`;
+    const token = localStorage.getItem('accessToken') || '';
+
+    return this.http.get( url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+  }
   
 
 

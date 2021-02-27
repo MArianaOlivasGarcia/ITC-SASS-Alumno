@@ -49,7 +49,7 @@
 ======================= --> 
 <div class="row animated fadeIn" *ngIf="!cargando && expediente">
   <div class="col-lg-8 col-md-6 col-sm-12">
-    <p class="m-0">Fecha de apertura: {{ expediente.fecha_inicio | date: 'dd MMMM yyyy' }}</p>
+    <p class="m-0">Fecha de apertura: {{ expediente.apertura | date: 'dd MMMM yyyy' }}</p>
   </div>
   <!-- <div class="col-lg-4 col-md-6 col-sm-12">
     <div class="progress">
@@ -75,7 +75,8 @@
                       <thead class="text-primary">
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col" style="width: 400px;">Archivo</th>
+                          <th scope="col" style="width: 350px;">Archivo</th>
+                          <th scope="col">Fecha inicial de entrega</th>
                           <th scope="col">Fecha máxima de entrega</th>
                           <th scope="col">Estado</th>
                           <th scope="col">Ver</th>
@@ -86,6 +87,7 @@
                           <!-- <ng-container *ngIf="item.disponible"> -->
                             <td>{{ item.numero }}</td>
                             <td>{{ item.titulo }}</td>
+                            <td>{{ item.fecha_inicial | date }}</td>
                             <td>{{ item.fecha_limite | date }}</td>
                             <td>
                               <span *ngIf="item.aceptado" class="badge badge-pill badge-success p-1">Aceptado</span>

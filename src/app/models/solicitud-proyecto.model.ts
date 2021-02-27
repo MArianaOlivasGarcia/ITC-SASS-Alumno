@@ -19,6 +19,7 @@ export class Solicitud {
             observacion: string
         },
         public fecha_validacion?: Date,
+        public archivo?: String,
         public _id?: string
     ){}
 

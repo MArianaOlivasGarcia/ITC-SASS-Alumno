@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dependencia } from 'src/app/models/dependencia.model';
 import { Periodo } from 'src/app/models/periodo.model';
@@ -25,6 +25,15 @@ export class ProyectoComponent implements OnInit {
   public dependencias: Dependencia[] = [];
   public solicitud: Solicitud;
   public periodo: Periodo; 
+
+  public optionsTipoActividades: {value: string, label: string}[] = [
+    { value: 'Administrativas', label: 'Administrativas'},
+    { value: 'Asesoria', label: 'Asesoria'},
+    { value: 'Docentes', label: 'Docentes'},
+    { value: 'Investigación', label: 'Investigación'},
+    { value: 'Técnicas', label: 'Técnicas'},
+    { value: 'Otro', label: 'Otro'},
+  ];
 
   constructor( private fb: FormBuilder,
                private proyectoService: ProyectoService,
@@ -54,13 +63,13 @@ export class ProyectoComponent implements OnInit {
       horario: ['', Validators.required ],
       instalacion: [false,  Validators.required],
       lugar_desempeno: ['', Validators.required ],
-      modalidad: [{value:'Público', disabled: true}],
+      modalidad: ['', Validators.required ],
       nombre: ['', Validators.required ],
       objetivo: ['', Validators.required ],
       puesto_responsable: ['', Validators.required ],
       responsable: ['', Validators.required ],
       tipo: ['', Validators.required ],
-      // 
+      tipo_actividades: ['', Validators.required ],
       inicio_servicio: ['', Validators.required ],
       termino_servicio: [{value: '', disabled: true}]
     });
@@ -102,6 +111,7 @@ export class ProyectoComponent implements OnInit {
                     modalidad,
                     horario,
                     tipo,
+                    tipo_actividades,
                     responsable,
                     puesto_responsable },
                   inicio_servicio,
@@ -109,21 +119,48 @@ export class ProyectoComponent implements OnInit {
 
           this.solicitud = solicitud;
           
+          let existe = false;
+          this.optionsTipoActividades.forEach((opt: {value: string, label: string}) => {
+            if( tipo_actividades === opt.value ){
+              existe = true;
+            }
+          })
 
-          this.solicitudForm.setValue({ apoyo_economico,
-                                       instalacion,
-                                       nombre,
-                                       dependencia: _id,
-                                       objetivo,
-                                       actividades,
-                                       lugar_desempeno,
-                                       modalidad,
-                                       horario,
-                                       tipo,
-                                       responsable,
-                                       puesto_responsable,
-                                       inicio_servicio,
-                                       termino_servicio});
+          if ( !existe ) {
+            this.solicitudForm.addControl('otro', new FormControl('', Validators.required));
+            this.solicitudForm.setValue({ apoyo_economico,
+              instalacion,
+              nombre,
+              dependencia: _id,
+              objetivo,
+              actividades,
+              tipo_actividades: 'Otro',
+              lugar_desempeno,
+              modalidad,
+              horario,
+              tipo,
+              otro: tipo_actividades,
+              responsable,
+              puesto_responsable,
+              inicio_servicio,
+              termino_servicio});
+          } else {
+            this.solicitudForm.setValue({ apoyo_economico,
+              instalacion,
+              nombre,
+              dependencia: _id,
+              objetivo,
+              actividades,
+              tipo_actividades,
+              lugar_desempeno,
+              modalidad,
+              horario,
+              tipo,
+              responsable,
+              puesto_responsable,
+              inicio_servicio,
+              termino_servicio});
+          }
         });
 
   }
@@ -135,6 +172,13 @@ export class ProyectoComponent implements OnInit {
     if ( this.solicitudForm.invalid ) { return; }
 
     const { nombre } = this.solicitudForm.value;
+
+    if ( this.solicitudForm.get('otro') ) {
+      this.solicitudForm.get('tipo_actividades').setValue(this.solicitudForm.get('otro').value)
+      this.solicitudForm.removeControl('otro');
+    }
+    console.log(this.solicitudForm.value)
+
 
     if ( this.solicitud ) {
       
@@ -183,7 +227,7 @@ export class ProyectoComponent implements OnInit {
 
     } else {
       // CREAR PROYECTO
-      Swal.fire({
+      Swal.fire({  
         title: '¿Estas seguro?',
         text: 'Al crear el proyecto no podrás seleccionar uno disponible en el Banco de Proyectos',
         icon: 'question',
@@ -256,6 +300,18 @@ export class ProyectoComponent implements OnInit {
     let terminoServicio =  new Date(inicioServicio.setMonth( inicioServicio.getMonth() + 6 ));
     let tDate =terminoServicio.toISOString().substring(0,10);
     this.solicitudForm.controls.termino_servicio.setValue(tDate);
+  }
+
+
+
+  cambioTipoActividad( value: string ): void {
+    
+    if ( value !== 'Otro') {
+      this.solicitudForm.removeControl('otro');
+    } else {
+      this.solicitudForm.addControl('otro', new FormControl('', Validators.required));
+    }
+    
   }
 
 

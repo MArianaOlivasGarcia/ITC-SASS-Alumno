@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Aviso } from 'src/app/models/aviso.model';
-import { ModalProyectoService } from 'src/app/services/modal-proyecto.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-aviso',
@@ -11,7 +11,7 @@ export class AvisoComponent implements OnInit {
 
   @Input() aviso: Aviso;
 
-  constructor( public modalService: ModalProyectoService ) { }
+  constructor( public modalService: ModalService ) { }
 
   ngOnInit(): void {
   }

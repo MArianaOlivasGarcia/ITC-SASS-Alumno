@@ -28,7 +28,7 @@
 <div class="row animated fadeIn faster mt-3">
   <div class="col-12">
       <div class="alert alert-info">
-          <p class="m-0">En caso de no encontrar la Dependencia comuniquese con el <strong>Departamento de Gestión y Vinculación</strong>.</p>
+          <p class="m-0">En caso de no encontrar la Dependencia comuniquese con el <strong>Depto. de Gestión Tecnológica y Vinculación</strong>.</p>
       </div> 
   </div>
 </div>
@@ -49,7 +49,7 @@
       <h5>Información del Proyecto</h5>
 
       <br>
-
+ 
       <form [formGroup]="solicitudForm"
             (submit)="guardar()"
             autocomplete="off">
@@ -112,6 +112,60 @@
           </div>
         </div>
 
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Tipo de actividades</label>
+            <select class="custom-select mr-sm-2"
+                      [ngClass]="{'is-invalid': campoNoValido('tipo_actividades') }"
+                      formControlName="tipo_actividades"
+                      #tipoActividad
+                      (ngModelChange)="cambioTipoActividad( tipoActividad.value )">
+                <option value="">SELECCIONAR TIPO</option>
+                <option *ngFor="let option of optionsTipoActividades"
+                        [value]="option.value">
+                        {{ option.label }}
+                </option>
+              </select>       
+              <div *ngIf="campoNoValido('tipo_actividades')" class="invalid-feedback">
+                {{ mensajesError('tipo_actividades') }}
+              </div>
+          </div>
+
+          <div class="form-group col-md-4" *ngIf="solicitudForm.get('otro')">
+            <label>Especifique tipo</label>
+            <input formControlName="otro"
+                  [ngClass]="{'is-invalid': campoNoValido('otro') }"
+                   class="form-control"
+                   placeholder="Tipo de actividad">
+              <div *ngIf="campoNoValido('otro')" class="invalid-feedback">
+                {{ mensajesError('otro') }}
+              </div>
+          </div>
+
+            <div class="form-group col-md-4">
+              <label>Tipo de proyecto</label>
+              <select class="custom-select mr-sm-2"
+                      [ngClass]="{'is-invalid': campoNoValido('tipo') }"
+                      formControlName="tipo">
+                <option value="">SELECCIONAR TIPO</option>
+                <option value="Actividades deportivas">Actividades deportivas</option>
+                <option value="Actividades cívicas">Actividades cívicas</option>
+                <option value="Actividades culturales">Actividades culturales</option>
+                <option value="Apoyo a la salud">Apoyo a la salud</option>
+                <option value="Desarrollo de comunidad">Desarrollo de comunidad</option>
+                <option value="Desarrollo sustentable">Desarrollo sustentable</option>
+                <option value="Educación para adultos">Educación para adultos</option>
+                <option value="Medio ambiente">Medio ambiente</option>
+                <option value="Otro">Otro</option>
+              </select>      
+              <div *ngIf="campoNoValido('tipo')" class="invalid-feedback">
+                {{ mensajesError('tipo') }}
+              </div>    
+            </div> 
+        </div>
+        
+
         <div class="form-row">
           <div class="form-group col-md-4">
             <label>Lugar de desempeño</label>
@@ -134,41 +188,24 @@
             <option [ngValue]="true">SI</option>
           </select>    
         </div>
-          <div class="form-group col-md-4">
-            <label>Modalidad</label>
-            <input type="text" 
-                   class="form-control" 
-                   [ngClass]="{'is-invalid': campoNoValido('modalidad') }"
-                   placeholder="Modalidad"
-                   formControlName="modalidad">
+        <div class="form-group col-md-4">
+          <label>Modalidad</label>
+          <select class="custom-select mr-sm-2"
+                    [ngClass]="{'is-invalid': campoNoValido('modalidad') }"
+                    formControlName="modalidad">
+              <option value="">SELECCIONAR MODALIDAD</option>
+              <option value="Público">Público</option>
+              <option value="Privado">Privado</option>
+            </select>      
             <div *ngIf="campoNoValido('modalidad')" class="invalid-feedback">
               {{ mensajesError('modalidad') }}
             </div>
-          </div>
+        </div>
         </div>
 
 
         <div class="form-row">
-          <div class="form-group col-md-4">
-            <label>Tipo</label>
-            <select class="custom-select mr-sm-2"
-                    [ngClass]="{'is-invalid': campoNoValido('tipo') }"
-                    formControlName="tipo">
-              <option value="">SELECCIONAR TIPO</option>
-              <option value="Actividades deportivas">Actividades deportivas</option>
-              <option value="Actividades cívicas">Actividades cívicas</option>
-              <option value="Actividades culturales">Actividades culturales</option>
-              <option value="Apoyo a la salud">Apoyo a la salud</option>
-              <option value="Desarrollo de comunidad">Desarrollo de comunidad</option>
-              <option value="Desarrollo sustentable">Desarrollo sustentable</option>
-              <option value="Educación para adultos">Educación para adultos</option>
-              <option value="Medio ambiente">Medio ambiente</option>
-              <option value="Otro">Otro</option>
-            </select>      
-            <div *ngIf="campoNoValido('dependencia')" class="invalid-feedback">
-              {{ mensajesError('dependencia') }}
-            </div>    
-          </div>
+          
           <div class="form-group col-md-4">
             <label>Horario</label>
             <input type="text" 

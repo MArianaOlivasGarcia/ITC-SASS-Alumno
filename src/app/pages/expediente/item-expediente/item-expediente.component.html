@@ -60,7 +60,7 @@
 <div class="row animated fadeIn faster mt-3" *ngIf="!cargando && this.item?.aceptado">
   <div class="col-12">
       <div class="alert alert-success">
-          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>aceptada</strong>. Puedes descargar tu archivo <a href="" class="alert-link">aquí.</a></p>
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>aceptada</strong>. Puedes descargar tu archivo <a href="" routerLinkActive="router-link-active"  class="alert-link">aquí.</a></p>
       </div> 
   </div>
 </div>
@@ -74,13 +74,8 @@
 <!-- =====================
 == VISTA DOCUMENTO
 ======================= -->
-<ngx-doc-viewer *ngIf="item?.archivo || item?.archivoTemp"
-  url="https://www.gob.mx/guiasinteroperabilidad/contenido_gral/formatos_gral/formato_g14_f4.docx"
-  viewer="office" 
-  style="width:100%;height:80vh;">
-</ngx-doc-viewer>
-<!-- ===================== 
-== FIN VISTA DEL DOCUMENTO
+
+<!--== FIN VISTA DEL DOCUMENTO
 ======================= -->
 
 
@@ -123,7 +118,7 @@
         <button class="btn btn-success btn-block"
         [disabled]="!archivoSubir" 
             (click)="uploadFoto()">
-            Subir fotografía
+            Subir Archivo
         </button>
 
   

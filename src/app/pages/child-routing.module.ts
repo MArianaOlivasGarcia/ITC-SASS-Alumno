@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AvisoComponent } from './avisos/aviso/aviso.component';
 import { AvisosComponent } from './avisos/avisos.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DependenciasComponent } from './dependencias/dependencias.component';
 import { ExpedientePageComponent } from './expediente/expediente-page.component';
 import { ItemExpedienteComponent } from './expediente/item-expediente/item-expediente.component';
 import { MensajeComponent } from './mensajes/mensaje/mensaje.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'perfil',            component: PerfilComponent,           data: { titulo: 'Mi Perfil' } },
     { path: 'proyecto/:tool',    component: ProyectoComponent,         data: { titulo: 'Proyecto Personal' } },
     { path: 'proyecto-personal', component: ProyectoPersonalComponent, data: { titulo: 'Proyecto Personal' } },
+    { path: 'dependencias',      component: DependenciasComponent,     data: { titulo: 'Banco de convenios vigentes' } },
     { path: 'proyectos',         component: ProyectosComponent,        data: { titulo: 'Banco de Proyectos' } },
     { path: 'expediente',        component: ExpedientePageComponent,   data: { titulo: 'Mi Expediente' } },
     { path: 'expediente/:item',  component: ItemExpedienteComponent,   data: { titulo: 'Mi Expediente' } },

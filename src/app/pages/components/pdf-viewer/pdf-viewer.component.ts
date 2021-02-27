@@ -8,8 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PdfViewerComponent implements OnInit {
 
-  @Input() pdfSrc: string;
-
+ 
   constructor() { }
 
   ngOnInit(): void {

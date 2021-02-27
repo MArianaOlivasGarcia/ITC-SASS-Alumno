@@ -43,7 +43,7 @@
 <div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.pendiente">
     <div class="col-12">
         <div class="alert alert-warning">
-            <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> se ha enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta. Puedes <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">ver tu solicitud aquí.</a></p>
+            <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> se ha enviado al <strong>Depto. de Gestión Tecnológica y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta. Puedes <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">ver tu solicitud aquí.</a></p>
         </div> 
     </div>
   </div>
@@ -126,7 +126,7 @@
                                 <td>{{proyecto.dependencia.nombre}}</td>
                                 <td>{{proyecto.responsable}}</td>
                                 <td>{{proyecto.objetivo}}</td>
-                                <td>{{proyecto.periodo.nombre }}</td>
+                               <td>{{proyecto.periodo.nombre }}</td>
                                 <td><button class="btn btn-sm btn-info" (click)="abrirModal(proyecto)">Ver</button></td>
                           </tr>
                         </tbody>

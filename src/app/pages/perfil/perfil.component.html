@@ -1,4 +1,15 @@
 
+<!-- =====================
+== AVISO PRIVACIDAD
+======================= --> 
+<app-aviso-privacidad *ngIf="showModal"
+                  (emitirCerrar)="addCerrar($event)"
+                    [nombre] ="usuario.nombre"></app-aviso-privacidad>
+<!-- =====================
+== FIN AVISO PRIVACIDAD 
+======================= --> 
+
+
 
 <h4>Mi pefil</h4>
 
@@ -14,7 +25,6 @@
       </div> 
   </div>
 </div>
-
 <!-- =====================
 == FIN ALERTA
 ======================= --> 
@@ -165,33 +175,33 @@
             <label>Calle y Numero</label>
             <input type="text" 
                    class="form-control"
-                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'calle_numero') }"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'calle_numero', 'domicilio') }"
                    placeholder="Calle y Numero"
                    formControlName="calle_numero">
-             <div *ngIf="campoNoValido( usuarioForm, 'calle_numero')" class="invalid-feedback">
-              {{ mensajesError( usuarioForm, 'calle_numero') }}
+             <div *ngIf="campoNoValido( usuarioForm, 'calle_numero', 'domicilio')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'calle_numero', 'domicilio') }}
             </div>
           </div>
           <div class="form-group col-md-4">
             <label>Colonia</label>
             <input type="text" 
                    class="form-control"
-                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'colonia') }"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'colonia', 'domicilio') }"
                    placeholder="Colonia"
                    formControlName="colonia">
-             <div *ngIf="campoNoValido( usuarioForm, 'colonia')" class="invalid-feedback">
-              {{ mensajesError( usuarioForm, 'colonia') }}
+             <div *ngIf="campoNoValido( usuarioForm, 'colonia', 'domicilio')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'colonia', 'domicilio') }}
             </div>
           </div>
           <div class="form-group col-md-4">
             <label>Ciudad y Estado</label>
             <input type="text" 
                    class="form-control"
-                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'ciudad_estado') }"
+                   [ngClass]="{'is-invalid': campoNoValido( usuarioForm, 'ciudad_estado', 'domicilio') }"
                    placeholder="Ciudad y Estado"
                    formControlName="ciudad_estado">
-             <div *ngIf="campoNoValido( usuarioForm, 'ciudad_estado')" class="invalid-feedback">
-              {{ mensajesError( usuarioForm, 'ciudad_estado') }}
+             <div *ngIf="campoNoValido( usuarioForm, 'ciudad_estado', 'domicilio')" class="invalid-feedback">
+              {{ mensajesError( usuarioForm, 'ciudad_estado', 'domicilio') }}
             </div>
           </div>
           
@@ -257,7 +267,7 @@
                    type="checkbox"
                    formControlName="terminos">
             <label class="form-check-label">
-              He leído y acepto la <a href="">Política de privacidad</a> al respecto del tratamiento de datos personales.
+              He leído y acepto la <a class="text-primary manita" (click)="abrirModal()">Política de privacidad</a> al respecto del tratamiento de datos personales.
             </label>
             <div *ngIf="campoNoValido( usuarioForm, 'terminos')" >
               <small class="text-danger">Debe aceptar la Política de privacidad.</small>

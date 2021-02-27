@@ -110,7 +110,18 @@ export class ItemExpedienteComponent implements OnInit {
           });
         });
 
-    }
+  }
+
+
+
+  descargarArchivo( archivo: string ): void {
+
+    this.fileUploadService.getArchivo( archivo )
+          .subscribe( resp => {
+            console.log(resp)
+          })
+
+  }
 
 
 }

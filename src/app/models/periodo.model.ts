@@ -8,8 +8,8 @@ export class Periodo {
         public isActual?: boolean,
         public isProximo?: boolean,
         public recepcion_solicitudes?: {
-            fecha_inicio: Date,
-            fecha_termino: Date,
+            inicio: Date,
+            termino: Date,
         },
         public _id?: string
     ){} 

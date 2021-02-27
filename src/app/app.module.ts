@@ -8,6 +8,7 @@ import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
 import { registerLocaleData } from '@angular/common';
 
+
 import localEsMx from '@angular/common/locales/es-MX';
 
 registerLocaleData( localEsMx, 'es-mx');
@@ -16,7 +17,7 @@ registerLocaleData( localEsMx, 'es-mx');
 @NgModule({
   declarations: [
     AppComponent,
-    NopagefoundComponent
+    NopagefoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,3 +29,4 @@ registerLocaleData( localEsMx, 'es-mx');
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

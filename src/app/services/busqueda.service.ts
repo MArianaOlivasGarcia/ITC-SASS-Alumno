@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Carrera } from '../models/carrera.model';
+import { Dependencia } from '../models/dependencia.model';
 import { Proyecto } from '../models/proyecto.model';
 
 const base_url = environment.base_url;
@@ -14,6 +15,15 @@ const base_url = environment.base_url;
 export class BusquedaService {
 
   constructor( private http: HttpClient ) { }
+
+  private transformarDependencias( resultados: any[] ): Dependencia[] {
+    return resultados.map(
+      dep => new Dependencia( dep.nombre,
+                              dep.representante_legal,
+                              dep.domicilio,
+                              dep.email,
+                              dep.id ));
+  }
 
   private transformarProyectos( resultados: any[] ): Proyecto[] {
     return resultados.map(
@@ -33,7 +43,7 @@ export class BusquedaService {
                                 proyecto._id ));
   }
 
-  busqueda( carrera: Carrera,
+  busquedaProyectoByCarrera( carrera: Carrera,
             termino: string ): Observable<any> {
 
     const url = `${ base_url }/busqueda/proyectos/${ carrera._id }/${ termino }`;
@@ -42,6 +52,31 @@ export class BusquedaService {
                 .pipe(
                   map( (resp: any) => this.transformarProyectos( resp.respuesta )         
                 ));
+  }
+ 
+
+
+   busqueda( tipo: 'dependencias',
+            termino: string ): Observable<any> {
+
+    const url = `${ base_url }/busqueda/coleccion/${ tipo }/${ termino }`;
+
+    return this.http.get( url )
+                .pipe(
+                  map( (resp: any) => {
+
+                    switch ( tipo ) {
+
+                      case 'dependencias':
+                        return this.transformarDependencias( resp.respuesta );
+
+                      
+                      default:
+                        return [];
+                    }
+
+                  })
+                );
   }
 
 }

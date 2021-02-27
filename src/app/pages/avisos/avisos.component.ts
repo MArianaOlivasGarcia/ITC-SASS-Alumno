@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalProyectoService } from 'src/app/services/modal-proyecto.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { Aviso } from 'src/app/models/aviso.model';
 import { AvisoService } from 'src/app/services/aviso.service';
 
@@ -21,7 +21,7 @@ export class AvisosComponent implements OnInit {
 
 
   constructor( private avisoService: AvisoService,
-               private modalService: ModalProyectoService ) { }
+               private modalService: ModalService ) { }
 
   ngOnInit(): void {
     this.cargarAvisos();

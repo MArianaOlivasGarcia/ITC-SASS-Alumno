@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 
@@ -23,9 +24,12 @@ export class PerfilComponent implements OnInit {
   public fotoSubir: File;
   public fotoTemporal: any;
 
+  public showModal: boolean = false;
+
   constructor( private fb: FormBuilder,
                private authService: AuthService,
                private usuarioService: UsuarioService,
+               private modalService: ModalService,
                private fileUploadService: FileUploadService ) {
     this.usuario = this.authService.usuario;
   }
@@ -40,9 +44,9 @@ export class PerfilComponent implements OnInit {
       fecha_nacimiento: [this.usuario.fecha_nacimiento],
       /* domicilio: [this.usuario.domicilio, Validators.required ], */
       domicilio: this.fb.group({
-        calle_numero: [''],
-        colonia: [''],
-        ciudad_estado: ['']
+        calle_numero: [this.usuario.domicilio.calle_numero, Validators.required],
+        colonia: [this.usuario.domicilio.colonia, Validators.required],
+        ciudad_estado: [this.usuario.domicilio.ciudad_estado, Validators.required]
       }),
       telefono: [this.usuario.telefono, [Validators.required, Validators.minLength(10), Validators.maxLength(10)] ],
       email: [this.usuario.email, [Validators.required, Validators.email] ],
@@ -166,13 +170,15 @@ export class PerfilComponent implements OnInit {
     }
 
 
-  campoNoValido( formGroup: FormGroup, campo: string ): boolean {
+  campoNoValido( formGroup: FormGroup, campo: string, formGroup2?: string ): boolean {
     return formGroup === this.usuarioForm && formGroup.get(campo)?.invalid && this.formSubmitted ? true :
-           formGroup === this.changePasswordForm && formGroup.get(campo)?.invalid && this.formSubmitted2 ? true : false;
+              formGroup === this.usuarioForm && formGroup.get(formGroup2)?.get(campo)?.invalid && this.formSubmitted ? true :
+              formGroup === this.changePasswordForm && formGroup.get(campo)?.invalid && this.formSubmitted2 ? true : false;
   }
 
-  mensajesError( formGroup: FormGroup, campo: string  ): string {
+  mensajesError( formGroup: FormGroup, campo: string, formGroup2?: string  ): string {
     return formGroup.get(campo)?.hasError('required') ? `Este campo es requerido.` :
+           formGroup.get(formGroup2).get(campo)?.hasError('required') ? `Este campo es requerido.` :
            formGroup.get(campo)?.hasError('email') ? `Correo electrónico no valido.` :
            formGroup.get(campo)?.hasError('maxlength') ? `Máximo 10 caracteres.` :
            formGroup.get(campo)?.hasError('minlength') ? `Mínimo 10 caracteres.` :
@@ -204,6 +210,16 @@ export class PerfilComponent implements OnInit {
     };
 
 
+  }
+
+  abrirModal(): void {
+    this.showModal = true;
+    this.modalService.abrirModal()
+  }
+
+
+  addCerrar(){
+    this.showModal = false;
   }
 
 }

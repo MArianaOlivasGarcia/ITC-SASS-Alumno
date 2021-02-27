@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-aviso-privacidad',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AvisoPrivacidadComponent implements OnInit {
 
-  constructor() { }
+  @Input() nombre: string;
+  @Output() emitirCerrar = new EventEmitter<boolean>();
 
-  ngOnInit(): void {
+  constructor( public modalService: ModalService) { }
+
+  ngOnInit(): void {}
+
+  addNuevoCerrar() {
+    this.emitirCerrar.emit(true);
+  }
+  
+  cerrarModal(): void {
+    this.modalService.cerrarModal();
+    this.addNuevoCerrar();
   }
 
 }

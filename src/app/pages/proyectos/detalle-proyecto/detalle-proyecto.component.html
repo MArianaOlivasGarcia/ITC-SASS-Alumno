@@ -154,12 +154,14 @@
                            #fecha
                            class="form-control" 
                            [ngClass]="{'is-invalid': campoNoValido('inicio_servicio') }"
-                           formControlName="inicio_servicio"
+                            formControlName="inicio_servicio"
                            (ngModelChange)="cambiarFecha( fecha.value )">
                     <div *ngIf="campoNoValido('inicio_servicio')" class="invalid-feedback">
                       {{ mensajesError('inicio_servicio') }}
                     </div> 
-                  </div>            
+                  </div>      
+                  
+                  
                   <div class="form-group col-md-6">
                     <label>Fecha Terminación</label>
                     <input type="date" 

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Proyecto } from 'src/app/models/proyecto.model';
 import { Solicitud } from 'src/app/models/solicitud-proyecto.model';
-import { ModalProyectoService } from 'src/app/services/modal-proyecto.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { SolicitudProyectoService } from 'src/app/services/solicitud-proyecto.service';
 import Swal from 'sweetalert2';
 
@@ -20,7 +20,7 @@ export class DetalleProyectoComponent implements OnInit {
   public formSubmitted: boolean = false;
   public solicitudForm: FormGroup;
 
-  constructor( public modalService: ModalProyectoService,
+  constructor( public modalService: ModalService,
                private solicitudService: SolicitudProyectoService,
                private fb: FormBuilder) {
  }
@@ -44,6 +44,7 @@ export class DetalleProyectoComponent implements OnInit {
 
   postular() {
 
+    
     this.formSubmitted = true;
     if ( this.solicitudForm.invalid ) { return; }
  
@@ -100,7 +101,7 @@ export class DetalleProyectoComponent implements OnInit {
     } else {
       return false;
     }
-
+ 
   }
 
 

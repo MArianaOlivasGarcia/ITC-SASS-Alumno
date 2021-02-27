@@ -30,7 +30,7 @@
 <div class="row animated fadeIn faster m-3" *ngIf="this.solicitud?.pendiente">
     <div class="col-12">
         <div class="alert alert-warning">
-            <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> se ha enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta.</p>
+            <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> se ha enviado al <strong>Depto. de Gestión Tecnológica y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta.</p>
         </div> 
     </div>
   </div>
@@ -60,8 +60,6 @@
     <div class="col-12">
         <div class="alert alert-success">
             <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> ha sido <strong>aceptada</strong>.</p>
-            <hr>
-            <button class="btn btn-success"><i class="fas fa-file-download mr-2"></i>Descargar Archivo</button>
         </div> 
     </div>
   </div>
@@ -70,12 +68,21 @@
 ======================= -->
 
 
+<!-- =====================
+== VISTA ARCHIVO
+======================= --> 
+<div class="row animated fadeIn faster m-3">
+  <ngx-extended-pdf-viewer class="col-12" *ngIf="solicitud?.archivo" [src]="'17530051-ITC-VI-PO-002-02.pdf' | archivo" useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
+</div>
+<!-- =====================
+== FIN VISTA ARCHIVO
+======================= -->
 
 
 <!-- =====================
 == INFORMACIÓN
 ======================= -->
-  <div class="row animated fadeIn fast m-3" *ngIf="solicitud">
+  <div class="row animated fadeIn fast m-3" *ngIf="solicitud && !solicitud?.aceptado">
 
       <div class="col-12">
 
@@ -92,10 +99,7 @@
   
                   <ul class="list-group text-dark mb-3">
                     
-                    <li class="list-group-item active"
-                    [class.aceptado]="solicitud?.aceptado"
-                    [class.pendiente]="solicitud?.pendiente"
-                    [class.rechazado]="solicitud?.rechazado"><p class="m-0"><strong>Datos de la Dependencia</strong></p></li>
+                    <li class="list-group-item active"><p class="m-0"><strong>Datos de la Dependencia</strong></p></li>
                     
                     <li class="list-group-item">
                       <div class="row">
@@ -156,10 +160,7 @@
   
                   <ul class="list-group text-dark mb-3">
                     
-                    <li class="list-group-item active"
-                    [class.aceptado]="solicitud?.aceptado"
-                    [class.pendiente]="solicitud?.pendiente"
-                    [class.rechazado]="solicitud?.rechazado"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
+                    <li class="list-group-item active"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
                     
                     <li class="list-group-item">
                       <div class="row">
@@ -308,6 +309,9 @@
 <!-- =====================
 == FIN INFORMACIÓN
 ======================= -->
+
+
+
   
 <!-- =====================
 == INFO VALIDACIÓN
@@ -321,3 +325,6 @@
 <!-- =====================
 == FIN INFO VALIDACIÓN
 ======================= --> 
+
+
+ 
