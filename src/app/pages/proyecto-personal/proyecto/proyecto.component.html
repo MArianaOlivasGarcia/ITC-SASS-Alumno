@@ -44,7 +44,7 @@
 ======================= --> 
 
 <div class="row animated fadeIn faster m-3">
-    <div class="col">
+    <div class="col-md-10">
 
       <h5>Información del Proyecto</h5>
 
@@ -229,10 +229,11 @@
           </div>
         </div>
 
+        <h6>Datos del Responsable</h6>
 
         <div class="form-row">
             <div class="form-group col-md-6">
-              <label>Nombre del Responsable</label>
+              <label>Nombre </label>
               <input type="text" 
                      class="form-control" 
                      [ngClass]="{'is-invalid': campoNoValido('responsable') }"
@@ -243,7 +244,7 @@
               </div> 
             </div>           
             <div class="form-group col-md-6">
-              <label>Puesto del responsable</label>
+              <label>Puesto</label>
               <input type="text" 
                      class="form-control" 
                      [ngClass]="{'is-invalid': campoNoValido('puesto_responsable') }"
@@ -251,6 +252,31 @@
                      formControlName="puesto_responsable">
               <div *ngIf="campoNoValido('puesto_responsable')" class="invalid-feedback">
                 {{ mensajesError('puesto_responsable') }}
+              </div> 
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Correo electrónico</label>
+              <input type="text" 
+                     class="form-control" 
+                     [ngClass]="{'is-invalid': campoNoValido('email_responsable') }"
+                     placeholder="ejemplo@ejemplo.com"
+                     formControlName="email_responsable">
+              <div *ngIf="campoNoValido('email_responsable')" class="invalid-feedback">
+                {{ mensajesError('email_responsable') }}
+              </div> 
+            </div>           
+            <div class="form-group col-md-6">
+              <label>Teléfono</label>
+              <input type="text" 
+                     class="form-control" 
+                     [ngClass]="{'is-invalid': campoNoValido('telefono_responsable') }"
+                     placeholder="Teléfono del responsable"
+                     formControlName="telefono_responsable">
+              <div *ngIf="campoNoValido('telefono_responsable')" class="invalid-feedback">
+                {{ mensajesError('telefono_responsable') }}
               </div> 
             </div>
           </div>

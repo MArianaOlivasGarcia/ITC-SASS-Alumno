@@ -60,6 +60,7 @@ export class ProyectoComponent implements OnInit {
       actividades: ['', Validators.required ],
       apoyo_economico: [false, Validators.required ],
       dependencia: ['', Validators.required ],
+      email_responsable: ['', Validators.required ],
       horario: ['', Validators.required ],
       instalacion: [false,  Validators.required],
       lugar_desempeno: ['', Validators.required ],
@@ -68,6 +69,7 @@ export class ProyectoComponent implements OnInit {
       objetivo: ['', Validators.required ],
       puesto_responsable: ['', Validators.required ],
       responsable: ['', Validators.required ],
+      telefono_responsable: ['', Validators.required ],
       tipo: ['', Validators.required ],
       tipo_actividades: ['', Validators.required ],
       inicio_servicio: ['', Validators.required ],
@@ -113,7 +115,9 @@ export class ProyectoComponent implements OnInit {
                     tipo,
                     tipo_actividades,
                     responsable,
-                    puesto_responsable },
+                    puesto_responsable,
+                    telefono_responsable,
+                    email_responsable },
                   inicio_servicio,
                   termino_servicio } = solicitud;
 
@@ -143,7 +147,9 @@ export class ProyectoComponent implements OnInit {
               responsable,
               puesto_responsable,
               inicio_servicio,
-              termino_servicio});
+              termino_servicio,
+              telefono_responsable,
+              email_responsable});
           } else {
             this.solicitudForm.setValue({ apoyo_economico,
               instalacion,
@@ -159,7 +165,9 @@ export class ProyectoComponent implements OnInit {
               responsable,
               puesto_responsable,
               inicio_servicio,
-              termino_servicio});
+              termino_servicio,
+              telefono_responsable,
+              email_responsable});
           }
         });
 

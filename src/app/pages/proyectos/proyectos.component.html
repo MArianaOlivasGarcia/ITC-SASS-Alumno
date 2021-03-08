@@ -37,10 +37,30 @@
 ======================= -->
 
 
+
+<!-- =====================
+== ALERTA PERFIL COMPLETO
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf=" !perfilCompleto; else page">
+  <div class=" col alert alert-warning" role="alert">
+    <p class="mb-0" *ngIf="!usuario.terminos">• Es necesario que completes tus datos personales.</p>
+<!--     <p class="mb-0" *ngIf="!usuario.firma">• Es necesario que tengas una firma digital.</p>
+ --><p class="mb-0" *ngIf="!usuario.foto">• Es necesario que tengas una fotografía.</p>
+    <a routerLink="/dashboard/perfil" class="alert-link">Ir a Mi Perfil.</a>
+  </div>
+</div>
+<!-- =====================
+== FIN ALERTA PERFIL COMPLETO
+======================= --> 
+
+<ng-template #page>
+
+
+
 <!-- =====================
 == MENSAJE SOLICITUD PENDIENTE
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.pendiente">
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="solicitud?.pendiente">
     <div class="col-12">
         <div class="alert alert-warning">
             <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> se ha enviado al <strong>Depto. de Gestión Tecnológica y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta. Puedes <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">ver tu solicitud aquí.</a></p>
@@ -50,10 +70,26 @@
 <!-- =====================
 == FIN MENSAJE SOLICITUD PENDIENTE 
 ======================= -->
+
+<!-- =====================
+== MENSAJE PROYECTO PERSONAL
+======================= -->
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="!cargando && (!solicitud?.pendiente || !solicitud?.aceptado)">
+  <div class="col-12">
+      <div class="alert alert-info">
+          <p class="m-0">Si no encuentras el Proyecto de tu preferencia puedes crear un <a [routerLink]="['/dashboard/proyecto-personal']" class="alert-link">Proyecto Personal aquí.</a></p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE PROYECTO PERSONAL
+======================= -->
+
+
 <!-- =====================
 == MENSAJE SOLICITUD RECHAZADA
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.rechazado">
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="solicitud?.rechazado">
     <div class="col-12">
         <div class="alert alert-danger">
             <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> ha sido <strong>rechazada</strong>. Puedes <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">ver más detalles aquí.</a></p>
@@ -69,7 +105,7 @@
 <!-- =====================
 == MENSAJE SOLICITUD ACEPTADA
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="this.solicitud?.aceptado">
+<div class="row animated fadeIn faster m-0  mt-3 m-md-3" *ngIf="solicitud?.aceptado">
     <div class="col-12">
         <div class="alert alert-success">
             <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> ha sido <strong>aceptada</strong>. Puedes <a [routerLink]="['/dashboard/solicitud', this.solicitud?._id]" class="alert-link">ver más detalles aquí</a> y descargar tu archivo.</p>
@@ -83,26 +119,14 @@
 
 
   
-<!-- =====================
-== AGREGAR/EDITAR
-======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="!cargando">
-    <div class="col-12">
-        <div class="alert alert-info">
-            <p class="m-0">Si no encuentras el Proyecto de tu preferencia puedes crear un <a [routerLink]="['/dashboard/proyecto-personal']" class="alert-link">Proyecto Personal aquí.</a></p>
-        </div> 
-    </div>
-  </div>
-<!-- =====================
-== FIN AGREGAR/EDITAR
-======================= -->
+
 
 
 
 <!-- =====================
 == TABLA PROYECTOS
 ======================= -->
-<div class="row mb-5 mt-3" *ngIf="!cargando && proyectos.length > 0">
+<div class="row mb-5 m-0 mt-3 m-md-3" *ngIf="!cargando && proyectos.length > 0">
     <div class="col-12">
         
                 <h5>Total de proyectos ({{totalProyectos}})</h5>
@@ -114,18 +138,18 @@
                           <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Dependencia</th>
-                            <th scope="col">Encargado</th>
-                            <th scope="col">Objetivo</th>
+<!--                             <th scope="col">Encargado</th>
+ -->                            <th scope="col">Objetivo</th>
                             <th scope="col">Periodo</th>
                             <th scope="col">Ver</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr class="manita" *ngFor="let proyecto of proyectos">                           
-                                <td>{{proyecto.nombre}}</td>
+                            <td>{{(proyecto.nombre.length>120)? (proyecto.nombre | slice:0:120)+'... ':(proyecto.nombre)}}</td>
                                 <td>{{proyecto.dependencia.nombre}}</td>
-                                <td>{{proyecto.responsable}}</td>
-                                <td>{{proyecto.objetivo}}</td>
+<!--                                 <td>{{proyecto.responsable}}</td>
+ -->                                <td>{{(proyecto.objetivo.length>120)? (proyecto.objetivo | slice:0:120)+'... ':(proyecto.objetivo)}}</td>
                                <td>{{proyecto.periodo.nombre }}</td>
                                 <td><button class="btn btn-sm btn-info" (click)="abrirModal(proyecto)">Ver</button></td>
                           </tr>
@@ -149,7 +173,7 @@
 <!-- =====================
 == MENSAJE CARGANDO
 ======================= -->
-<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+<div class="row mt-3 animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="cargando">
   <div class="col-12">
       <div class="alert alert-info text-center">
           <h4 class="alert-heading">Cargando</h4>
@@ -166,7 +190,7 @@
 <!-- =====================
 == MENSAJE NO HAY REGISTROS
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && proyectos.length == 0">
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="!cargando && proyectos.length == 0">
   <div class="col-12">
       <div class="alert alert-warning text-center">
           <h4 class="alert-heading">No hay registros</h4>
@@ -177,3 +201,6 @@
 <!-- =====================
 == FIN MENSAJE NO HAY REGISTROS
 ======================= -->
+
+</ng-template>
+

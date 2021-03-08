@@ -18,12 +18,7 @@ export class SolicitudProyectoService {
   createSolicitud( solicitud: Solicitud ): Observable<any> {
 
     const url = `${ base_url }/solicitud`;
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.post( url, solicitud, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    return this.http.post( url, solicitud );
 
   }
 
@@ -31,12 +26,7 @@ export class SolicitudProyectoService {
   getByAlumno( ): Observable<any> {
 
     const url = `${ base_url }/solicitud/alumno`;
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.get( url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    return this.http.get( url );
 
   }
 
@@ -70,13 +60,8 @@ export class SolicitudProyectoService {
 
   getSolicitudAndProyectoPersonal(): Observable<any> {
     const url =  `${ base_url }/solicitud/alumno/personal`;
-    const token = localStorage.getItem('accessToken') || '';
 
-    return this.http.get( url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).pipe(
+    return this.http.get( url ).pipe(
       map( (resp: {status: boolean, solicitud: Solicitud}) => resp.solicitud )
     );
     

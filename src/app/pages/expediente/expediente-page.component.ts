@@ -18,15 +18,14 @@ export class ExpedientePageComponent implements OnInit {
   public expediente: Expediente;
   public proyecto: Proyecto;
 
-  public isCompleto: boolean = false; // Perfil completo
   public cargando: boolean = true;
 
   constructor( private authService: AuthService,
                private expedienteService: ExpedienteService,
                private proyectoService: ProyectoService ) {
-      this.usuario = this.authService.usuario;
+     /*  this.usuario = this.authService.usuario;
       if ( this.usuario.firma && this.usuario.foto && this.usuario.terminos ) { this.isCompleto = true }
-  }
+   */}
 
   ngOnInit(): void { 
     this.cargarProyecto(); 
@@ -38,6 +37,7 @@ export class ExpedientePageComponent implements OnInit {
     this.expedienteService.getExpedienteByAlumno()
           .subscribe( expediente => {
             this.expediente = expediente;
+            console.log(this.expediente)
             this.cargando = false;
           })
   }

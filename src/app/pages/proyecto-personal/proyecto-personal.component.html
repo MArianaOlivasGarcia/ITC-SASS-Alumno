@@ -8,6 +8,28 @@
 </h5>
 <hr>
 
+
+<!-- =====================
+== ALERTA PERFIL COMPLETO
+======================= --> 
+<div class="row animated fadeIn m-3" *ngIf=" !perfilCompleto; else page">
+  <div class=" col alert alert-warning" role="alert">
+    <p class="mb-0" *ngIf="!usuario.terminos">• Es necesario que completes tus datos personales.</p>
+<!--     <p class="mb-0" *ngIf="!usuario.firma">• Es necesario que tengas una firma digital.</p>
+ --><p class="mb-0" *ngIf="!usuario.foto">• Es necesario que tengas una fotografía.</p>
+    <a routerLink="/dashboard/perfil" class="alert-link">Ir a Mi Perfil.</a>
+  </div>
+</div>
+<!-- =====================
+== FIN ALERTA PERFIL COMPLETO
+======================= --> 
+
+
+
+
+<ng-template #page>
+
+
 <!-- =====================
 == AGREGAR
 ======================= -->
@@ -19,173 +41,92 @@
         </button>   
     </div>
 </div>
-
-
 <!-- =====================
 == FIN AGREGAR
 ======================= -->
 
 
 
+
 <!-- =====================
 == DETALLE PROYECTO
 ======================= -->
-<div class="row animated fadeIn fast m-3" *ngIf="!cargando && solicitud">
+<div *ngIf="solicitud">
 
+  <div class="row animated fadeIn fast m-0 mt-3 m-md-3">
     <div class="col-md-8">
-        
-        <p class="m-0"><strong>Servicio social </strong>del <strong>{{ solicitud.inicio_servicio | date }}</strong> al <strong>{{ solicitud.termino_servicio | date }}</strong></p>
-
-              <br>
-
-              <ul class="list-group text-dark mb-3">
-                
-                <li class="list-group-item active"><p class="m-0"><strong>{{solicitud.proyecto.nombre}}</strong></p></li>
-                
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3 text-bold">
-                    <strong>Dependencia:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.dependencia.nombre}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3 text-bold">
-                    <strong>Responsable:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.responsable}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Objetivo:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.objetivo}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Actividades:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.actividades}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Tipo de actividades:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.tipo_actividades}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Periodo:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.periodo.nombre}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Lugar de Desempeño:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.lugar_desempeno}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Modalidad:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.modalidad}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Tipo de proyecto:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.tipo}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Horario:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{solicitud.proyecto.horario}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Apoyo Económico:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0" *ngIf="solicitud.proyecto.apoyo_economico">SI</p>
-                      <p class="m-0" *ngIf="!solicitud.proyecto.apoyo_economico">NO</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item" *ngIf="solicitud?.rechazado">
-                    <div class="row">
-                      <div class="col mt-md-0 mt-1 text-right">
-                        <a [routerLink]="['/dashboard/proyecto/editar']" 
-                           class="btn btn-info"><i class="fa fa-pen"></i></a>
-                      </div>
-                    </div>
-                  </li>
-
-              </ul>
-
+  
+      <h6>Fecha de Servicio Social</h6>
+  
+      <p class="m-0"><strong>Inicio: </strong>{{ solicitud.inicio_servicio | date }}</p>
+      <p class="m-0"><strong>Termino: </strong>{{ solicitud.termino_servicio | date }}</p>
+  
     </div>
+  </div>
+  
+  
+  
+  <div class="row animated fadeIn fast m-0 mt-3 m-md-3">
+    <div class="col-md-8 card m-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">{{solicitud.proyecto.nombre}}</h6>
 
+        <hr>
+          <p class="m-0"><strong>Dependencia</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.nombre}}</p>
+
+          <p class="m-0"><strong>Periodo</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.periodo.nombre}}</p>
+  
+          <p class="m-0"><strong>Modalidad</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.modalidad}}</p>
+
+          <p class="m-0"><strong>Responsable del Programa</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.responsable}}</p>
+  
+          <p class="m-0"><strong>Objetivo</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.objetivo}}</p>
+  
+          <p class="m-0"><strong>Actividades</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.actividades}}</p>
+
+          <p class="m-0"><strong>Tipo de Actividades</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.tipo_actividades}}</p>
+
+          <p class="m-0"><strong>Tipo de Proyecto</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.tipo}}</p>
+
+          <p class="m-0"><strong>Lugar de Desempeño</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.lugar_desempeno}}</p>
+
+          <p class="m-0"><strong>Horario</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.horario}}</p>
+
+          <p class="m-0"><strong>¿Apoyo económico?</strong></p>
+          <p class="m-0 mb-1" *ngIf="solicitud.proyecto.apoyo_economico">SI</p>
+          <p class="m-0 mb-1" *ngIf="!solicitud.proyecto.apoyo_economico">NO</p>
+
+
+          <hr *ngIf="solicitud?.rechazado">
+
+          <div class="col mt-md-0 mt-1 text-right" *ngIf="solicitud?.rechazado">
+            <a [routerLink]="['/dashboard/proyecto/editar']" 
+               class="btn btn-info"><i class="fa fa-pen"></i></a>
+          </div>
+
+      </div>
+    </div>
+  
+  </div>
+  
+  
 </div>
-
-
 <!-- =====================
 == FIN DETALLE PROYECTO
 ======================= -->
 
 
-<!-- <iframe src="http://docs.google.com/gview?url=http://www.snee.com/xml/xslt/sample.doc&embedded=true" style="width:500px; height:500px;" frameborder="0"></iframe>-->
+
 
 <!-- =====================
 == MENSAJE CARGANDO
@@ -218,3 +159,5 @@
   <!-- =====================
   == FIN MENSAJE NO HAY REGISTROS
   ======================= -->
+
+</ng-template>

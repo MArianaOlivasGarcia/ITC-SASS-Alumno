@@ -27,12 +27,18 @@ export class ProyectosComponent implements OnInit {
   public usuario: Usuario;
 
 
+  public perfilCompleto: boolean = false;
+
+
   constructor( private proyectoService: ProyectoService,
                private authService: AuthService,
                private busquedaService: BusquedaService,
                private solicitudService: SolicitudProyectoService,
                private modalService: ModalService ) {
     this.usuario = this.authService.usuario;
+
+    if ( /* this.usuario.firma && */ this.usuario.foto && this.usuario.terminos ) { this.perfilCompleto = true }
+
   }
 
   ngOnInit(): void {

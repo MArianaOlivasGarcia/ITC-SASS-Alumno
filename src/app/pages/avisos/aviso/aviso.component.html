@@ -12,11 +12,14 @@
           </div>
           <div class="modal-body">
   
-            <div class="row animated fadeIn fast m-3" *ngIf="solicitud">
-              <div class="col-12">
-  
-                
-              
+            <div class="row animated fadeIn fast m-3" >
+              <div class="card col-md-12 p-0">
+               
+                 <img [src]="aviso.foto | imagen: 'avisos'" class="card-img-top" [alt]="aviso.titulo" *ngIf="aviso.foto">
+                 <div class="card-body">
+                   <p class="card-text">{{aviso.descripcion}}</p>
+                   <p class="card-text"><small class="text-muted">{{aviso.fecha_publicacion | date}}</small></p>
+                 </div>
       
               </div>
             </div>

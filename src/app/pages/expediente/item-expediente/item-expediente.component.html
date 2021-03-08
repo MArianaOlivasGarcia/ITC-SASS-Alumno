@@ -1,18 +1,36 @@
 
-<h5>{{ item?.titulo }}
+<h5 class="animated fadeIn fast" *ngIf="!cargando && item"> {{ item.titulo }}
   <small>
-    <span *ngIf="item?.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
-    <span *ngIf="!item?.iniciado" class="badge badge-pill badge-secondary text-white text-capitalize p-1 ml-1">No iniciado</span>
-    <span *ngIf="item?.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
-    <span *ngIf="item?.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
+    <span *ngIf="item.pendiente" class="badge badge-pill badge-warning text-white text-capitalize p-1 ml-1">Pendiente</span>
+    <span *ngIf="item.proceso" class="badge badge-pill badge-primary text-white text-capitalize p-1 ml-1">En progreso</span>
+    <span *ngIf="!item.iniciado" class="badge badge-pill badge-secondary text-white text-capitalize p-1 ml-1">No iniciado</span>
+    <span *ngIf="item.rechazado" class="badge badge-pill badge-danger text-white text-capitalize p-1 ml-1">Rechazado</span>
+    <span *ngIf="item.aceptado" class="badge badge-pill badge-success text-white text-capitalize p-1 ml-1">Aceptado</span>
   </small>
 </h5>
 <hr>
 
 <!-- =====================
+== BOTÓN REGRESAR
+======================= -->
+<div class="row text-right">
+  <div class="col">
+      <button class="btn btn-danger"
+          routerLink="/dashboard/expediente">
+          <i class="fas fa-arrow-left mr-2"></i>Regresar
+      </button>
+  </div>
+</div>
+<!-- =====================
+== FIN BOTÓN REGRESAR
+======================= --> 
+
+
+
+<!-- =====================
 == MENSAJE GENERAR ARCHIVO
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && !item?.pendiente && !item?.rechazado && !item?.aceptado">
+<div class="row animated fadeIn mt-3" *ngIf="!cargando && !item?.pendiente && !item?.rechazado && !item?.aceptado && !item?.isEntrante && !item?.entrega && !item?.reenvio_required">
     <div class="col-12">
         <div class="alert alert-info">
             <p class="m-0">Da click en <strong>Generar Archivo</strong> para generar y enviar tu <strong>{{item?.titulo}}</strong> a revisión.</p>
@@ -23,14 +41,59 @@
 == FIN MENSAJE GENERAR ARCHIVO
 ======================= -->
 
+<!-- =====================
+== MENSAJE GENERAR ARCHIVO CUANDO SE REQUIERE REENVIO
+======================= -->
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && !item?.pendiente && !item?.rechazado && !item?.aceptado && !item?.isEntrante && !item?.entrega && item?.reenvio_required && !item?.proceso">
+  <div class="col-12">
+      <div class="alert alert-info">
+          <p class="m-0">Da click en <strong>Generar Archivo</strong> para generar tu <strong>{{item?.titulo}}</strong>.</p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE GENERAR ARCHIVO CUANDO SE REQUIERE REENVIO
+======================= -->
+
+
+<!-- =====================
+== MENSAJE INSTRUCCIONES REQUIERE REENVIO
+======================= -->
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && !item?.pendiente && !item?.rechazado && !item?.aceptado && !item?.isEntrante && !item?.entrega && item?.reenvio_required && item?.proceso">
+  <div class="col-12">
+      <div class="alert alert-info">
+          <p class="m-0">Descarga, firma y adjunta tu <strong>{{item?.titulo}}</strong> para enviar a revisión.</p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE INSTRUCCIONES REQUIERE REENVIO
+======================= -->
+
+
+<!-- =====================
+== MENSAJE ENTRAGAR
+======================= -->
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && item?.entrega && !item?.pendiente && !item?.aceptado">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <p class="m-0">Adjunta y envia tu <strong>{{item?.titulo}}</strong> a revisión.</p>
+        </div> 
+    </div>
+  </div>
+<!-- =====================
+== FIN MENSAJE ENTRAGAR
+======================= -->
+
+
 
 <!-- =====================
 == MENSAJE PENDIENTE
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && this.item?.pendiente">
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && item?.pendiente && !item?.entrega">
   <div class="col-12">
       <div class="alert alert-warning">
-          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> se ha generado y enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión y aprobación. Puedes descargar tu archivo <a href="" class="alert-link">aquí.</a></p>
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> se ha generado y enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión y aprobación.</p>
       </div> 
   </div>
 </div>
@@ -38,45 +101,172 @@
 == FIN MENSAJE PENDIENTE
 ======================= -->
 
+
 <!-- =====================
-== MENSAJE SOLICITUD RECHAZADA
+== MENSAJE PENDIENTE PARA ENTREGAS
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && this.item?.rechazado">
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && item?.pendiente && item?.entrega">
+  <div class="col-12">
+      <div class="alert alert-warning">
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> fue enviado al <strong>Departamento de Gestión y Vinculación</strong> para su revisión y aprobación.</p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE PENDIENTE PARA ENTREGAS
+======================= -->
+
+
+<!-- =====================
+== MENSAJE ITEM RECHAZADA
+======================= -->
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && item?.rechazado">
   <div class="col-12">
       <div class="alert alert-danger">
-          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>rechazada</strong>. Verifica tus datos y vuelve a generar tu archivo. Puedes descargar tu archivo <a href="" class="alert-link">aquí.</a></p>
-          <p class="m-0"><strong>Motivo:</strong> {{ item?.error?.motivo }}</p>
-          <p class="m-0"><strong>Observación:</strong> {{ item?.error?.observacion }}</p>
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>rechazada</strong>. Verifica tus datos y vuelve a generar tu archivo.</p>
+          <p class="m-0"><strong>Motivo:</strong> {{ item.error?.motivo }}</p>
+          <p class="m-0"><strong>Observación:</strong> {{ item.error?.observacion }}</p>
       </div> 
   </div>
 </div>
 <!-- =====================
-== FIN MENSAJE SOLICITUD RECHAZADA
+== FIN MENSAJE ITEM RECHAZADA
 ======================= -->
 
 <!-- =====================
-== MENSAJE SOLICITUD ACEPTADA
+== MENSAJE ITEM ACEPTADA
 ======================= -->
-<div class="row animated fadeIn faster mt-3" *ngIf="!cargando && this.item?.aceptado">
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && item?.aceptado ">
   <div class="col-12">
       <div class="alert alert-success">
-          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>aceptada</strong>. Puedes descargar tu archivo <a href="" routerLinkActive="router-link-active"  class="alert-link">aquí.</a></p>
+          <p class="m-0">Tu <strong>{{item.titulo}}</strong> ha sido <strong>aceptada</strong>.</p>
       </div> 
   </div>
 </div>
 <!-- =====================
-== FIN MENSAJE SOLICITUD ACEPTADA
+== FIN MENSAJE ITEM ACEPTADA
 ======================= -->
+
+
+<!-- =====================
+== MENSAJE ITEM ENTRANTE
+======================= -->
+<div class="row animated fadeIn  mt-3" *ngIf="!cargando && item?.isEntrante">
+  <div class="col-12">
+      <div class="alert alert-info">
+          <p class="m-0">Tu <strong>{{item?.titulo}}</strong> ha sido <strong>recibida.</strong></p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE ITEM ENTRANTE
+======================= -->
+
+
+
 
 
 
 
 <!-- =====================
-== VISTA DOCUMENTO
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="generandoArchivo">
+  <div class="col-12 text-center">
+      
+          <h5 class="alert-heading">Generando Archivo...</h5>
+          <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+          <p class="mb-0">Puede tomar algunos segundos. Espere por favor</p>
+
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
 ======================= -->
 
-<!--== FIN VISTA DEL DOCUMENTO
+
+<!-- =====================
+== VISTA ARCHIVO
+======================= --> 
+<div class="row animated fadeIn  m-3">
+  <ngx-extended-pdf-viewer class="col-12" *ngIf="item?.archivoOriginal && !item?.archivoTemp && !generandoArchivo" [src]="item.archivoOriginal | archivo: 'original' " useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
+  <ngx-extended-pdf-viewer class="col-12" *ngIf="item?.archivoTemp" [src]="item.archivoTemp | archivo: 'temp' " useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
+  <ngx-extended-pdf-viewer class="col-12" *ngIf="item?.archivo" [src]="item.archivo | archivo" useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
+</div>
+<!-- =====================
+== FIN VISTA ARCHIVO
 ======================= -->
+
+
+
+
+
+<!-- =====================
+== PLAN DE TRABAJO / REPORTE BIMESTRAL
+======================= -->
+<div class="row" *ngIf="(item?.codigo == 'ITC-VI-PO-002-07' || item?.codigo == 'ITC-VI-PO-002-08') && (!item?.iniciado || item?.rechazado)">
+  <div class="col-6">
+    <form [formGroup]="itemForm"
+            (submit)="generarDocumento()"
+            autocomplete="off">
+            <div class="form-group">
+              <label *ngIf="item?.codigo == 'ITC-VI-PO-002-07'">Plan de trabajo</label>
+              <label *ngIf="item?.codigo == 'ITC-VI-PO-002-08'">Resumen de Actividades</label>
+              <textarea class="form-control"
+                        formControlName="descripcion"
+                        placeholder="Escribe aquí..."
+                        [ngClass]="{'is-invalid': campoNoValido( itemForm, 'descripcion') }"
+                        rows="3"></textarea>
+              <!-- <div class="text-seconday"> -->
+                  <p class="m-0 text-secondary" *ngIf="item?.codigo == 'ITC-VI-PO-002-07'">Describe detalladamente tu Plan de Trabajo.</p>
+                  <p class="m-0 text-secondary" *ngIf="item?.codigo == 'ITC-VI-PO-002-08'">Describe detalladamente tu Resumen de Actividades.</p>
+             <!--  </div> -->
+              <div *ngIf="campoNoValido( itemForm, 'descripcion')" class="invalid-feedback">
+                {{ mensajesError(itemForm, 'descripcion') }}
+              </div>
+          </div>
+    </form>
+  </div>
+</div>
+<!-- =====================
+== FIN PLAN DE TRABAJO / REPORTE BIMESTRAL
+======================= -->
+
+
+
+
+<div class="row"  *ngIf="(item?.isEvaluacion || item?.isAutoEvaluacion || item?.isEvaluacionFinal) && (!item?.iniciado || item?.rechazado)">
+
+  <form (ngSubmit)="generarDocumento()" [formGroup]="evaluacionForm" class="col-md-10" >
+
+    <div class="form-group row" *ngFor="let item of preguntas; let i = index">
+      <div class="col-md-8 col-form-label">
+        <label class="m-0">{{ i+1 }}. {{ item.pregunta }}</label>
+        <p class="m-0 text-secondary"><small>Valor máximo sugerido {{item.max}}</small></p>
+      </div>  
+    
+      <div class="col-md-4">
+        <input type="number" 
+        class="form-control" 
+        [max]="item.max" 
+        min="0"
+        [ngClass]="{'is-invalid': campoNoValido( evaluacionForm, item.controlName) }"
+        [formControlName]="item.controlName">
+        <div *ngIf="campoNoValido( evaluacionForm, item.controlName)" class="invalid-feedback">
+          {{ mensajesError(evaluacionForm, item.controlName) }}
+        </div>
+      </div>
+    </div>
+
+  </form> 
+
+</div>
+
+
+
+
+
+
 
 
 
@@ -84,7 +274,7 @@
 <!-- ===================== 
 == BOTÓN GENERAR ARCHIVO
 ======================= -->
-<div class="row d-flex justify-content-center" *ngIf="!cargando && !item?.aceptado && !item?.pendiente">
+<div class="row d-flex justify-content-center" *ngIf="!cargando && !item?.aceptado && !item?.pendiente && !item?.isEntrante && !item?.entrega && !item?.proceso">
     <div class="col-md-4 text-center">
         <button class="btn btn-success btn-block"
                 (click)="generarDocumento()">Generar Archivo</button> 
@@ -100,7 +290,7 @@
 <!-- =====================
 == UPLOAD
 ======================= --> 
-<div class="row animated fadeIn faster m-3" *ngIf="!cargando && item?.reenvio_required && item?.archivoTemp">
+<div class="row animated fadeIn  m-3" *ngIf="!cargando && ((item?.reenvio_required && item?.archivoOriginal) || (item?.entrega && !item?.pendiente )) && !item?.pendiente">
 
     <div class="col-md-6">
   
@@ -113,7 +303,7 @@
         <input type="file"
             (change)="changeArchivo( $event?.target?.files[0] )">
   
-        <hr>
+        <hr> 
   
         <button class="btn btn-success btn-block"
         [disabled]="!archivoSubir" 
@@ -132,6 +322,27 @@
   <!-- =====================
   == FIN UPLOAD
   ======================= --> 
+
+
+
+
+<!-- =====================
+== MENSAJE CARGANDO
+======================= -->
+<div class="row mt-3 animated fadeIn faster" *ngIf="cargando">
+  <div class="col-12">
+      <div class="alert alert-info text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+          <p class="mb-0">Espere por favor</p>
+      </div> 
+  </div>
+</div>
+<!-- =====================
+== FIN MENSAJE CARGANDO
+======================= -->
+
+
 
 
   <br>

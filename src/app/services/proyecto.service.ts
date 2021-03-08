@@ -37,11 +37,15 @@ export class ProyectoService {
                                       proyecto.objetivo,
                                       proyecto.actividades,
                                       proyecto.lugar_desempeno,
+                                      proyecto.instalacion,
                                       proyecto.modalidad,
                                       proyecto.horario,
                                       proyecto.tipo,
+                                      proyecto.tipo_actividades,
                                       proyecto.responsable,
                                       proyecto.puesto_responsable,
+                                      proyecto.email_responsable,
+                                      proyecto.telefono_responsable,
                                       proyecto.carreras,
                                       proyecto.periodo,
                                       proyecto.fecha_inicial,
@@ -70,33 +74,18 @@ export class ProyectoService {
  
   crearProyecto( solicitud: Solicitud ): Observable<any> {
     const url = `${ base_url }/proyecto/create/alumno`;
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.post( url, solicitud, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    return this.http.post( url, solicitud );
   }
 
   actualizarProyecto( solicitud: Solicitud ): Observable<any> {
     const url = `${ base_url }/proyecto/alumno/${ solicitud.proyecto._id }`;
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.put( url, solicitud, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    return this.http.put( url, solicitud );
   }
 
   getByAlumno(): Observable<any> {
     const url =  `${ base_url }/proyecto/alumno`;
-    const token = localStorage.getItem('accessToken') || '';
 
-    return this.http.get( url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).pipe(
+    return this.http.get( url ).pipe(
       map( (resp: {status: boolean, proyecto: Proyecto}) => resp.proyecto)
     );
   }

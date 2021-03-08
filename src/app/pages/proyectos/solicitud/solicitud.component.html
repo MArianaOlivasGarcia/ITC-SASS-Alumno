@@ -27,7 +27,7 @@
 <!-- =====================
 == MENSAJE SOLICITUD PENDIENTE
 ======================= -->
-<div class="row animated fadeIn faster m-3" *ngIf="this.solicitud?.pendiente">
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="solicitud?.pendiente">
     <div class="col-12">
         <div class="alert alert-warning">
             <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> se ha enviado al <strong>Depto. de Gestión Tecnológica y Vinculación</strong> para su revisión, te informaremos cuando tengamos una respuesta.</p>
@@ -40,7 +40,7 @@
 <!-- =====================
 == MENSAJE SOLICITUD RECHAZADA
 ======================= -->
-<div class="row animated fadeIn faster m-3" *ngIf="this.solicitud?.rechazado">
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="solicitud?.rechazado">
     <div class="col-12">
         <div class="alert alert-danger">
             <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> ha sido <strong>rechazada</strong>.</p>
@@ -56,7 +56,7 @@
 <!-- =====================
 == MENSAJE SOLICITUD ACEPTADA
 ======================= -->
-<div class="row animated fadeIn faster m-3" *ngIf="solicitud?.aceptado">
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3" *ngIf="solicitud?.aceptado">
     <div class="col-12">
         <div class="alert alert-success">
             <p class="m-0">Tu <strong>Solicitud de Servicio Social</strong> ha sido <strong>aceptada</strong>.</p>
@@ -71,8 +71,8 @@
 <!-- =====================
 == VISTA ARCHIVO
 ======================= --> 
-<div class="row animated fadeIn faster m-3">
-  <ngx-extended-pdf-viewer class="col-12" *ngIf="solicitud?.archivo" [src]="'17530051-ITC-VI-PO-002-02.pdf' | archivo" useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
+<div class="row animated fadeIn faster m-0 mt-3 m-md-3">
+  <ngx-extended-pdf-viewer class="col-12" *ngIf="solicitud?.archivo" [src]="solicitud.archivo | archivo" useBrowserLocale="true" height="70vh"></ngx-extended-pdf-viewer>
 </div>
 <!-- =====================
 == FIN VISTA ARCHIVO
@@ -82,233 +82,123 @@
 <!-- =====================
 == INFORMACIÓN
 ======================= -->
-  <div class="row animated fadeIn fast m-3" *ngIf="solicitud && !solicitud?.aceptado">
+<div *ngIf="solicitud &&!solicitud.aceptado">
 
-      <div class="col-12">
-
-        <h6>Fecha de Servicio Social</h6>
-
-        <p class="m-0"><strong>Inicio: </strong>{{ solicitud.inicio_servicio | date }}</p>
-        <p class="m-0"><strong>Termino: </strong>{{ solicitud.termino_servicio | date }}</p>
-
-      </div>
+  <div class="row animated fadeIn fast m-0 mt-3 m-md-3">
+    <div class="col-12">
   
-      <div class="col-12 mt-3">
-          <div class="row">
-              <div class="col-md-8">
+      <h6>Fecha de Servicio Social</h6>
   
-                  <ul class="list-group text-dark mb-3">
-                    
-                    <li class="list-group-item active"><p class="m-0"><strong>Datos de la Dependencia</strong></p></li>
-                    
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-5 text-bold">
-                            <strong>Nombre:</strong>
-                        </div>
-                        <div class="col-md-7 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.dependencia.nombre }}</p>
-                        </div>
-                      </div>
-                    </li>
-            
-                    <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-5 text-bold">
-                              <strong>Titular:</strong>
-                          </div>
-                          <div class="col-md-7 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.dependencia.representante_legal }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-            
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-5 text-bold">
-                              <strong>Correo electrónico:</strong>
-                          </div>
-                          <div class="col-md-7 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.dependencia.email }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-5 text-bold">
-                              <strong>Domicilio:</strong>
-                          </div>
-                          <div class="col-md-7 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.dependencia.domicilio }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-                  </ul>
-            
-                </div>
-          </div>
+      <p class="m-0"><strong>Inicio: </strong>{{ solicitud.inicio_servicio | date }}</p>
+      <p class="m-0"><strong>Termino: </strong>{{ solicitud.termino_servicio | date }}</p>
+  
+    </div>
+  </div>
+  
+  
+  
+  <div class="row animated fadeIn fast m-0 mt-3 m-md-3">
+    <div class="col-sm-12 col-md card m-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Datos de la Dependencia</h6>
+
+        <hr>
+          <p class="m-0"><strong>Nombre</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.nombre}}</p>
+  
+          <p class="m-0"><strong>Representante legal</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.representante_legal}}</p>
+  
+          <p class="m-0"><strong>Domicilio</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.domicilio}}</p>
+  
+          <p class="m-0"><strong>Correo electrónico</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.email}}</p>
+
+          <p class="m-0"><strong>Teléfono</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.dependencia.telefono}}</p>
       </div>
+    </div>
+  
+    <div class="col-sm-12 col-md card m-2 mt-3 mt-md-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Datos del Responsable del Programa</h6>
+        
+        <hr>
+
+        <p class="m-0"><strong>Nombre</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.responsable}}</p>
+  
+        <p class="m-0"><strong>Puesto</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.puesto_responsable}}</p>
+  
+        <p class="m-0"><strong>Correo eléctronico</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.email_responsable}}</p>
+  
+        <p class="m-0"><strong>Teléfono</strong></p>
+        <p class="m-0 mb-1">{{solicitud.proyecto.telefono_responsable}}</p>
+  
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="row animated fadeIn fast m-0 mt-3 m-md-3">
+  
+    <div class="col card m-2 p-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Descripción del Programa</h6>
+  
+          <hr>  
+
+          <p class="m-0"><strong>Objetivo</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.objetivo}}</p>
+  
+          <p class="m-0"><strong>Actividades</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.actividades}}</p>
+  
+          <p class="m-0"><strong>Tipo de actividades</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.tipo_actividades}}</p>
+  
+          <p class="m-0"><strong>Periodo de realización</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.periodo.nombre}}</p>
+  
+          <p class="m-0"><strong>Modalidad</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.modalidad}}</p>
+  
+          <p class="m-0"><strong>Tipo de programa</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.tipo}}</p>
+  
+          <p class="m-0"><strong>Lugar de desempeño</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.lugar_desempeno}}</p>
+  
+          <p class="m-0"><strong>¿Dentro de las instalaciones?</strong></p>
+          <p class="m-0 mb-1" *ngIf="solicitud.proyecto.instalacion else instalacion">SI</p>
+          <ng-template #instalacion>
+            <p class="m-0 mb-1">NO</p>
+          </ng-template>
+          
+  
       
-      
+          <p class="m-0"><strong>Horario</strong></p>
+          <p class="m-0 mb-1">{{solicitud.proyecto.horario}}</p>
   
-      <div class="col-12">
-          <div class="row">
-              <div class="col-md-12">
-  
-                  <ul class="list-group text-dark mb-3">
-                    
-                    <li class="list-group-item active"><p class="m-0"><strong>Datos del Proyecto</strong></p></li>
-                    
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-md-3 text-bold">
-                            <strong>Nombre:</strong>
-                        </div>
-                        <div class="col-md-9 mt-md-0 mt-1">
-                          <p class="m-0">{{ solicitud.proyecto.nombre }}</p>
-                        </div>
-                      </div>
-                    </li>
-            
-                    <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-3 text-bold">
-                              <strong>Dependencia:</strong>
-                          </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.dependencia.nombre }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-            
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-3 text-bold">
-                              <strong>Responsable:</strong>
-                          </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.responsable }}</p>
-                          </div>
-                        </div>
-                      </li>
-            
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-3 text-bold">
-                              <strong>Puesto del responsable:</strong>
-                          </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.puesto_responsable }}</p>
-                          </div>
-                        </div>
-                      </li>
-  
-                      <li class="list-group-item">
-                          <div class="row">
-                            <div class="col-md-3 text-bold">
-                                <strong>Objetivo:</strong>
-                            </div>
-                            <div class="col-md-9 mt-md-0 mt-1">
-                              <p class="m-0">{{ solicitud.proyecto.objetivo }}</p>
-                            </div>
-                          </div>
-                        </li>
-  
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-3 text-bold">
-                              <strong>Actividades:</strong>
-                          </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.actividades }}</p>
-                          </div>
-                        </div>
-                      </li>
-  
-  
-                      <li class="list-group-item">
-                          <div class="row">
-                            <div class="col-md-3 text-bold">
-                                <strong>Periodo:</strong>
-                            </div>
-                            <div class="col-md-9 mt-md-0 mt-1">
-                              <p class="m-0">{{ solicitud.proyecto.periodo.nombre }}</p>
-                            </div>
-                          </div>
-                      </li>
-  
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-3 text-bold">
-                              <strong>Lugar de desempeño:</strong>
-                          </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.lugar_desempeno }}</p>
-                          </div>
-                        </div>
-                      </li>
-  
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-3 text-bold">
-                              <strong>Modalidad:</strong>
-                          </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.modalidad }}</p>
-                          </div>
-                        </div>
-                      </li>
-  
-  
-                      <li class="list-group-item">
-                          <div class="row">
-                            <div class="col-md-3 text-bold">
-                                <strong>Tipo:</strong>
-                            </div>
-                            <div class="col-md-9 mt-md-0 mt-1">
-                              <p class="m-0">{{ solicitud.proyecto.tipo }}</p>
-                            </div>
-                          </div>
-                      </li>
-  
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-3 text-bold">
-                              <strong>Horario:</strong>
-                          </div>
-                          <div class="col-md-9 mt-md-0 mt-1">
-                            <p class="m-0">{{ solicitud.proyecto.horario }}</p>
-                          </div>
-                        </div>
-                      </li>
-  
-  
-                      <li class="list-group-item">
-                          <div class="row">
-                            <div class="col-md-3 text-bold">
-                                <strong>Apoyo Económico:</strong>
-                            </div>
-                            <div class="col-md-9 mt-md-0 mt-1">
-                              <p class="m-0" *ngIf="solicitud.proyecto.apoyo_economico">SI</p>
-                              <p class="m-0" *ngIf="!solicitud.proyecto.apoyo_economico">NO</p>
-                            </div>
-                          </div>
-                        </li>
-            
-                  </ul>
-            
-                </div>
-          </div>
+          <p class="m-0"><strong>¿Incluye apoco economico?</strong></p>
+          <p class="m-0 mb-1" *ngIf="solicitud.proyecto.apoyo_economico else apoyoEconomico">SI</p>
+          <ng-template #apoyoEconomico>
+            <p class="m-0 mb-1">NO</p>
+          </ng-template>
+          
       </div>
+    </div>
   
   </div>
+</div>
 <!-- =====================
 == FIN INFORMACIÓN
 ======================= -->
+
+
 
 
 
@@ -316,7 +206,7 @@
 <!-- =====================
 == INFO VALIDACIÓN
 ======================= --> 
-<div class="row animated fadeIn m-3 text-right" *ngIf="solicitud && !solicitud?.pendiente">
+<div class="row animated fadeIn m-0 mt-3 mb-3 m-md-3 text-right" *ngIf="solicitud && !solicitud?.pendiente">
   <div class="col">
     <p class="mb-0"><strong>Usuario que valido:</strong> {{solicitud?.usuario_valido.nombre}}.</p>
     <p class="mb-0"><strong>Fecha de validación:</strong> {{solicitud?.fecha_validacion | date}}.</p>

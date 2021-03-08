@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Aviso } from '../models/aviso.model';
 import { Carrera } from '../models/carrera.model';
 import { Dependencia } from '../models/dependencia.model';
 import { Proyecto } from '../models/proyecto.model';
@@ -22,7 +23,19 @@ export class BusquedaService {
                               dep.representante_legal,
                               dep.domicilio,
                               dep.email,
+                              dep.telefono,
                               dep.id ));
+  }
+
+  private transformarAvisos( resultados: any[] ): Aviso[] {
+    return resultados.map(
+      aviso => new Aviso( aviso.titulo,
+                          aviso.descripcion,
+                          aviso.foto,
+                          aviso.disponible,
+                          aviso.fecha_publicacion,
+                          aviso.enlace,
+                          aviso._id ));
   }
 
   private transformarProyectos( resultados: any[] ): Proyecto[] {
@@ -34,11 +47,15 @@ export class BusquedaService {
                                 proyecto.actividades,
                                 proyecto.periodo,
                                 proyecto.lugar_desempeno,
+                                proyecto.instalacion,
                                 proyecto.modalidad,
                                 proyecto.horario,
                                 proyecto.tipo,
+                                proyecto.tipo_actividades,
                                 proyecto.responsable,
                                 proyecto.puesto_responsable,
+                                proyecto.email_responsable,
+                                proyecto.telefono_responsable,
                                 proyecto.carreras,
                                 proyecto._id ));
   }
@@ -56,7 +73,7 @@ export class BusquedaService {
  
 
 
-   busqueda( tipo: 'dependencias',
+   busqueda( tipo: 'dependencias' | 'avisos',
             termino: string ): Observable<any> {
 
     const url = `${ base_url }/busqueda/coleccion/${ tipo }/${ termino }`;
@@ -69,6 +86,9 @@ export class BusquedaService {
 
                       case 'dependencias':
                         return this.transformarDependencias( resp.respuesta );
+
+                      case 'avisos':
+                        return this.transformarAvisos( resp.respuesta );
 
                       
                       default:

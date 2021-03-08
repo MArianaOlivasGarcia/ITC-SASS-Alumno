@@ -10,6 +10,8 @@ import { registerLocaleData } from '@angular/common';
 
 
 import localEsMx from '@angular/common/locales/es-MX';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 registerLocaleData( localEsMx, 'es-mx');
 
@@ -25,7 +27,13 @@ registerLocaleData( localEsMx, 'es-mx');
     PagesModule,
     AuthModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-mx' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es-mx' },
+    { provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

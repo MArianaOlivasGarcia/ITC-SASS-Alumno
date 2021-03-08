@@ -4,138 +4,116 @@
       <!-- modal-dialog-centered  -->
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Detalles del Proyecto</h5>
+          <h5 class="modal-title">Detalles del Programa</h5>
           <button (click)="cerrarModal()" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-          <div class="row animated fadeIn fast m-3" *ngIf="proyecto">
-            <div class="col-12">
+          
+          <h5 class="m-3">{{proyecto.nombre}}</h5>
 
-              <ul class="list-group text-dark mb-3">
+          <div class="row animated fadeIn fast m-md-3 m-2">
+            <div class="col-sm-12 col-md card m-2 p-0 shadow-sm">
+              <div class="card-body">
+                <h6 class="card-title">Datos de la Dependencia</h6>
+                <hr>
                 
-                <li class="list-group-item active"><p class="m-0"><strong>{{proyecto.nombre}}</strong></p></li>
+                  <p class="m-0"><strong>Nombre</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.dependencia.nombre}}</p>
+
+                  <p class="m-0"><strong>Representante legal</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.dependencia.representante_legal}}</p>
+
+                  <p class="m-0"><strong>Domicilio</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.dependencia.domicilio}}</p>
+
+                  <p class="m-0"><strong>Correo electrónico</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.dependencia.email}}</p>
+              
+                  <p class="m-0"><strong>Teléfono</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.dependencia.telefono}}</p>
+              
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md card m-2 mt-3 mt-md-2 p-0 shadow-sm">
+              <div class="card-body">
+                <h6 class="card-title">Datos del Responsable del Programa</h6>
+                <hr>
                 
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3 text-bold">
-                    <strong>Dependencia:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.dependencia.nombre}}</p>
-                    </div>
-                  </div>
-                </li>
+                <p class="m-0"><strong>Nombre</strong></p>
+                <p class="m-0 mb-1">{{proyecto.responsable}}</p>
 
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3 text-bold">
-                    <strong>Responsable:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.responsable}}</p>
-                    </div>
-                  </div>
-                </li>
+                <p class="m-0"><strong>Puesto</strong></p>
+                <p class="m-0 mb-1">{{proyecto.puesto_responsable}}</p>
 
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Objetivo:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.objetivo}}</p>
-                    </div>
-                  </div>
-                </li>
+                <p class="m-0"><strong>Correo electrónico</strong></p>
+                <p class="m-0 mb-1">{{proyecto.email_responsable}}</p>
 
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Actividades:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.actividades}}</p>
-                    </div>
-                  </div>
-                </li>
 
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Periodo:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.periodo.nombre}}</p>
-                    </div>
-                  </div>
-                </li>
+                <p class="m-0"><strong>Teléfono</strong></p>
+                <p class="m-0 mb-1">{{proyecto.telefono_responsable}}</p>
 
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Lugar de Desempeño:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.lugar_desempeno}}</p>
-                    </div>
-                  </div>
-                </li>
 
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Modalidad:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.modalidad}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Tipo:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.tipo}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Horario:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0">{{proyecto.horario}}</p>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <strong>Apoyo Económico:</strong>
-                    </div>
-                    <div class="col-md-9 mt-md-0 mt-1">
-                      <p class="m-0" *ngIf="proyecto.apoyo_economico">SI</p>
-                      <p class="m-0" *ngIf="!proyecto.apoyo_economico">NO</p>
-                    </div>
-                  </div>
-                </li>
-
-              </ul>
-            
-    
+              </div>
             </div>
           </div>
 
-          <hr>
+          <div class="row animated fadeIn fast m-md-3 m-2">
+
+            <div class="col card m-2 p-0 shadow-sm">
+              <div class="card-body">
+                <h6 class="card-title">Descripción del Programa</h6>
+                <hr>
+
+                  
+                  <p class="m-0"><strong>Objetivo</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.objetivo}}</p>
+
+                  <p class="m-0"><strong>Actividades</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.actividades}}</p>
+
+                  <p class="m-0"><strong>Tipo de actividades</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.tipo_actividades}}</p>
+
+                  <p class="m-0"><strong>Periodo de realización</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.periodo.nombre}}</p>
+
+                  <p class="m-0"><strong>Modalidad</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.modalidad}}</p>
+
+                  <p class="m-0"><strong>Tipo de programa</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.tipo}}</p>
+
+                  <p class="m-0"><strong>Lugar de desempeño</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.lugar_desempeno}}</p>
+
+                  <p class="m-0"><strong>¿Dentro de las instalaciones?</strong></p>
+                  <p class="m-0 mb-1" *ngIf="proyecto.instalacion else instalacion">SI</p>
+                  <ng-template #instalacion>
+                    <p class="m-0 mb-1">NO</p>
+                  </ng-template>
+                  
+
+              
+                  <p class="m-0"><strong>Horario</strong></p>
+                  <p class="m-0 mb-1">{{proyecto.horario}}</p>
+
+                  <p class="m-0"><strong>¿Incluye apoco economico?</strong></p>
+                  <p class="m-0 mb-1" *ngIf="proyecto.apoyo_economico else apoyoEconomico">SI</p>
+                  <ng-template #apoyoEconomico>
+                    <p class="m-0 mb-1">NO</p>
+                  </ng-template>
+                  
+              </div>
+            </div>
+
+          </div>
+
+
+          <hr class="m-3">
 
 
           <div class="row animated fadeIn fast m-3">
@@ -178,12 +156,63 @@
             </div>
           </div>
 
-        </div>
+      
         <div class="modal-footer">
           <button class="btn btn-secondary" (click)="cerrarModal()" data-dismiss="modal">Cerrar</button>
-          <button class="btn btn-success" (click)="postular()">Postularme</button>
+          <button class="btn btn-primary" (click)="postular()">Postularme</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+<!-- 
+
+              
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Lugar de Desempeño:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.lugar_desempeno}}</p>
+                    </div>
+                  </div>
+                </li>
+
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Horario:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0">{{proyecto.horario}}</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <strong>Apoyo Económico:</strong>
+                    </div>
+                    <div class="col-md-9 mt-md-0 mt-1">
+                      <p class="m-0" *ngIf="proyecto.apoyo_economico">SI</p>
+                      <p class="m-0" *ngIf="!proyecto.apoyo_economico">NO</p>
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+            
+    
+            </div>
+ -->

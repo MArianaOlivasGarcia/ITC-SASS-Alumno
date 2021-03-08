@@ -29,20 +29,14 @@ export class AuthService {
   }
 
 
-  get id(): string {
+ /*  get id(): string {
     return this.usuario._id || '';
   }
-
+ */
 
   validarToken(): Observable<any> {
 
-    const token = localStorage.getItem('accessToken') || '';
-
-    return this.http.get(`${ base_url }/alumno/renovar`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).pipe(
+    return this.http.get(`${ base_url }/alumno/renovar` ).pipe(
       tap( (resp: any) => {
 
         localStorage.setItem('accessToken', resp.accessToken );
@@ -93,7 +87,6 @@ export class AuthService {
                                     video,
                                     examen,
                                     online );
-        console.log(this.usuario);
       }),
       map( resp => true ),
       catchError( error => of(false) )
@@ -128,12 +121,7 @@ export class AuthService {
 
 
   changePassword( formData: ChangePasswordForm ): Observable<any> {
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.put(`${ base_url }/alumno/password`, formData, {
-      headers: {
-        Authorization: `Bearer ${ token }`
-      }
-    });
+    return this.http.put(`${ base_url }/alumno/password`, formData );
   }
 
 }

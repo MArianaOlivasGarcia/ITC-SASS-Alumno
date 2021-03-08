@@ -15,7 +15,7 @@ export class DependenciaService {
 
   constructor( private http: HttpClient ) { }
 
-  getDependencias( desde: number = 0 ): Observable<any> {
+  getDependencias(): Observable<any> {
 
     return this.http.get(`${base_url}/dependencia/all`)
       .pipe(
@@ -26,6 +26,7 @@ export class DependenciaService {
                                     dependencia.representante_legal,
                                     dependencia.domicilio,
                                     dependencia.email,
+                                    dependencia.telefono,
                                     dependencia._id ) );
           return dependencias;
         })

@@ -11,15 +11,14 @@ export class ArchivoPipe implements PipeTransform {
 
   constructor( private authService: AuthService ){}
 
-  transform(archivo: string): string {
+  transform(archivo: string, carpeta?: string  ): string {
     
-    
-    /* if ( !imagen ) {
-      return `${ public_url }/upload/no-image/no-image`;
-    } else { */
+    if ( carpeta ) {
+      return `${ public_url }/${carpeta}/${archivo}`;
+    } else {
       return `${ public_url }/${this.authService.usuario.numero_control}/${archivo}`;
-    /* }
- */
+    }
+
   }
 
 }

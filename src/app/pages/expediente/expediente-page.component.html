@@ -3,24 +3,26 @@
 
 <hr>
 
+
+
 <!-- =====================
-== ALERTA PERFIL COMPLETO
-======================= --> 
-<div class="row animated fadeIn m-3" *ngIf=" !isCompleto">
-  <div class=" col alert alert-warning" role="alert">
-    <p class="mb-0" *ngIf="!usuario.terminos">• Es necesario que completes tus datos personales.</p>
-    <p class="mb-0" *ngIf="!usuario.firma">• Es necesario que tengas una firma digital.</p>
-    <p class="mb-0" *ngIf="!usuario.foto">• Es necesario que tengas una fotografía.</p>
-    <a routerLink="/dashboard/perfil" class="alert-link">Ir a Mi Perfil.</a>
+== EXPEDIENTE CONCLUSIO
+======================= -->
+<div class="row animated fadeIn mt-3" *ngIf="!cargando && expediente?.finalizado">
+  <div class="col-12">
+      <div class="alert alert-success">
+          <p class="m-0"><strong>¡Felicidades!</strong> has concluido tu expediente con éxito.</p>
+      </div> 
   </div>
 </div>
 <!-- =====================
-== FIN ALERTA PERFIL COMPLETO
-======================= --> 
+== FIN EXPEDIENTE CONCLUSIO
+======================= -->
+
 <!-- =====================
 == ALERTA NO TIENE PROYECTO
 ======================= --> 
-<div class="row animated fadeIn m-3" *ngIf="!cargando && isCompleto && !proyecto" >
+<div class="row animated fadeIn m-3" *ngIf="!cargando && !proyecto" >
   <div class=" col alert alert-warning" role="alert">
     <p class="mb-0">Para poder abrir un expediente tienes que tener asignado un Proyecto.
     <a routerLink="/dashboard/proyectos" class="alert-link">Ir a Banco de Proyectos.</a></p>
@@ -34,7 +36,7 @@
 <!-- =====================
 == ALERTA PROYECTO ASIGNADO
 ======================= --> 
-<div class="row animated fadeIn m-3" *ngIf="!cargando && isCompleto && proyecto && !expediente" >
+<div class="row animated fadeIn m-3" *ngIf="!cargando && proyecto && !expediente" >
   <div class=" col alert alert-warning" role="alert">
     <p class="mb-0">Ya se ha aceptado tu Solicitud de Servicio Social. Espera a que el administrador habilite la apertura del expediente.
   </div>
@@ -49,8 +51,10 @@
 ======================= --> 
 <div class="row animated fadeIn" *ngIf="!cargando && expediente">
   <div class="col-lg-8 col-md-6 col-sm-12">
-    <p class="m-0">Fecha de apertura: {{ expediente.apertura | date: 'dd MMMM yyyy' }}</p>
+    <p class="m-0">Fecha de apertura: <strong>{{ expediente.apertura | date: 'dd MMMM yyyy' }}</strong></p>
+    <p class="m-0" *ngIf="expediente.finalizado">Fecha de finalización: <strong>{{ expediente.cierre | date: 'dd MMMM yyyy' }}</strong></p>
   </div>
+  
   <!-- <div class="col-lg-4 col-md-6 col-sm-12">
     <div class="progress">
       <div class="progress-bar progress-bar-striped  progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
@@ -89,15 +93,19 @@
                             <td>{{ item.titulo }}</td>
                             <td>{{ item.fecha_inicial | date }}</td>
                             <td>{{ item.fecha_limite | date }}</td>
-                            <td>
+                            <td> 
                               <span *ngIf="item.aceptado" class="badge badge-pill badge-success p-1">Aceptado</span>
                               <span *ngIf="item.rechazado" class="badge badge-pill badge-danger p-1">Rechazado</span>
                               <span *ngIf="item.pendiente" class="badge badge-pill badge-warning text-white p-1">En revisión</span>
-                              <span *ngIf="item.entrante && item.disponible" class="badge badge-pill badge-info p-1">Entrante</span>
+                              <span *ngIf="item.proceso" class="badge badge-pill badge-primary p-1">En progreso</span>
+                              <span *ngIf="item.isEntrante && item.disponible" class="badge badge-pill badge-info p-1">Entrante</span>
                               <span *ngIf="!item.iniciado && item.disponible" class="badge badge-pill badge-secondary p-1">No iniciado</span>
                               <span *ngIf="!item.disponible">No disponible</span>
                             </td>
-                            <td><a class="btn btn-sm btn-info" [routerLink]="['/dashboard/expediente', item._id]" >Ver</a></td>
+                            <td><button class="btn btn-sm btn-info" 
+                              [routerLink]="['/dashboard/expediente', item._id]" 
+                              [disabled]="!item.disponible"
+                              *ngIf="item.disponible">Ver</button></td>
                           <!-- </ng-container> -->
                         </tr>
                     

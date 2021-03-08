@@ -44,13 +44,13 @@ export class PerfilComponent implements OnInit {
       fecha_nacimiento: [this.usuario.fecha_nacimiento],
       /* domicilio: [this.usuario.domicilio, Validators.required ], */
       domicilio: this.fb.group({
-        calle_numero: [this.usuario.domicilio.calle_numero, Validators.required],
-        colonia: [this.usuario.domicilio.colonia, Validators.required],
-        ciudad_estado: [this.usuario.domicilio.ciudad_estado, Validators.required]
+        calle_numero: [this.usuario.domicilio?.calle_numero || '', Validators.required],
+        colonia: [this.usuario.domicilio?.colonia ||'', Validators.required],
+        ciudad_estado: [this.usuario.domicilio?.ciudad_estado||'', Validators.required]
       }),
-      telefono: [this.usuario.telefono, [Validators.required, Validators.minLength(10), Validators.maxLength(10)] ],
-      email: [this.usuario.email, [Validators.required, Validators.email] ],
-      numero_seguro: [this.usuario.numero_seguro, Validators.required ],
+      telefono: [this.usuario.telefono || '', [Validators.required, Validators.minLength(10), Validators.maxLength(10)] ],
+      email: [this.usuario.email || '', [Validators.required, Validators.email] ],
+      numero_seguro: [this.usuario.numero_seguro || '', Validators.required ],
       numero_control: [this.usuario.numero_control],
       carrera: [this.usuario.carrera.nombre],
       semestre: [this.usuario.semestre],

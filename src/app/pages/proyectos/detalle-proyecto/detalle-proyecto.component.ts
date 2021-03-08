@@ -31,9 +31,6 @@ export class DetalleProyectoComponent implements OnInit {
       inicio_servicio: ['', Validators.required],
       termino_servicio: [{value: '', disabled: true}]
     })
-
-    console.log(this.proyecto.periodo) 
-
   }
 
 

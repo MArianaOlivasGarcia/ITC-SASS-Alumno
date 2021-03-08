@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/services/modal.service';
 import { Aviso } from 'src/app/models/aviso.model';
 import { AvisoService } from 'src/app/services/aviso.service';
+import { BusquedaService } from 'src/app/services/busqueda.service';
 
 @Component({
   selector: 'app-avisos',
@@ -21,7 +22,8 @@ export class AvisosComponent implements OnInit {
 
 
   constructor( private avisoService: AvisoService,
-               private modalService: ModalService ) { }
+               private modalService: ModalService,
+               private busquedaService: BusquedaService ) { }
 
   ngOnInit(): void {
     this.cargarAvisos();
@@ -64,8 +66,8 @@ export class AvisosComponent implements OnInit {
       return;
     }
 
-    /* this.busquedaService.busqueda( 'avisos', termino )
-        .subscribe( resp => this.avisos = resp ); */
+    this.busquedaService.busqueda( 'avisos', termino )
+        .subscribe( resp => this.avisos = resp );
 
   }
 

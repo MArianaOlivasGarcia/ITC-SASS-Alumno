@@ -33,12 +33,7 @@ export class ExpedienteService {
 
   getExpedienteByAlumno(): Observable<any> {
     const url = `${ base_url }/expediente/alumno`;
-    const token = localStorage.getItem('accessToken') || '';
-    return this.http.get( url,{
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).pipe(
+    return this.http.get( url ).pipe(
       map( (resp: {status: boolean, expediente: Expediente}) => resp.expediente )
     );
   }
@@ -56,15 +51,10 @@ export class ExpedienteService {
 
 
 
-  generarArchivo( idItem: string ) {
+  generarArchivo( idItem: string, data?: any ) {
     const url = `${ base_url }/file/${ idItem }`;
-    const token = localStorage.getItem('accessToken') || '';
 
-    return this.http.get( url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).pipe(
+    return this.http.post( url, data ).pipe(
       map( (resp: {stattus:boolean, item: ItemExpediente}) => resp.item)
     );
 
